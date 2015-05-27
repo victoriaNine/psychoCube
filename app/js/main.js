@@ -46,7 +46,7 @@ function saveGame() {
   $game.totalTime += $currentTime - $startTime;
 
   $(".cube").each(function(i) {
-    $game.cubes[this.id] = $(this).data("position");
+    $game.cubes[this.id] = $(this).data();
   });
 
   setLocalStorage("game", $game);
@@ -89,10 +89,10 @@ function buildCube(callback) {
         if(y == 1) leftPyramid.appendTo(newCube);
         if(y == 3) rightPyramid.appendTo(newCube);
 
-        if($isNewGame) newCube.data("position", z+"-"+x+"-"+y);
+        if($isNewGame) newCube.data({ "z": z, "x": x, "y": y });
         else {
           var position = $game.cubes[id];
-          newCube.data("position", position);
+          newCube.data(position);
         }
 
         newCube.appendTo("#psychoCube");

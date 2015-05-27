@@ -127,18 +127,51 @@ function getPosition(cube) {
   return array;
 }
 
-function rotateRow(row, direction) {
-  var row = $(".row"+row);
+function rotateRow(rowNb, direction) {
+  var row = $(".row"+rowNb);
+  $
   
   row.each(function() {
-    var translate = getPosition(this);
-    //console.log(translate);
+    var transform = getCurrentTransform(this);
+    var newRotateY = transform[1] + 90 * direction * -1;
+    if(Math.abs(newRotateY) == 360) newRotateY = 0;
 
-    var newTranslateX = translate[0] + 9 * direction;
-    if(newTranslateX > 18) newTranslateX = 0;
+    var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
+    var newTransform = "rotateX("+transform[0]+"deg) rotateY("+newRotateY+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
+    $(this).css("transform", newTransform);
 
-    $(this).css("transform", "translate3d("+newTranslateX+"em, "+translate[1]+"em, "+translate[2]+"em)");
+    var newRow = $(this).data("x") + 1;
+    if(newRow > 3) newRow = 1;
+    $(this).data("x", newRow);
   })
+}
+
+function rotateColumn(columnNb, direction) {
+  var column = $(".column"+columnNb);
+  
+  column.each(function() {
+    var transform = getCurrentTransform(this);
+    var newRotateX = transform[0] + 90 * direction * -1;
+    if(Math.abs(newRotateX) == 360) newRotateX = 0;
+
+    var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
+    var newTransform = "rotateX("+newRotateX+"deg) rotateY("+transform[1]+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
+    $(this).css("transform", newTransform);
+
+    var newColumn = $(this).data("y") + 1;
+    if(newColumn > 3) newColumn = 1;
+    $(this).data("y", newColumn);
+  })
+}
+
+function findCube(data, value) {
+  var cubeArray = [];
+
+  $(".cube").each(function() {
+    if($(this).data(data) == value) cubeArray.push(this);
+  });
+
+  return cubeArray;
 }
 
 function getCSSstyle(selector, property, valueOnly) {
