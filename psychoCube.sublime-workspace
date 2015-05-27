@@ -360,18 +360,23 @@
 	"buffers":
 	[
 		{
-			"file": "index.html",
+			"file": "app/index.html",
 			"settings":
 			{
-				"buffer_size": 3696,
-				"line_ending": "Unix"
+				"buffer_size": 7162,
+				"line_ending": "Windows"
 			}
 		}
 	],
 	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 490.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -404,9 +409,8 @@
 	},
 	"expanded_folders":
 	[
-		"/E/labs/psychoCube",
-		"/E/labs/psychoCube/app",
-		"/E/labs/psychoCube/test/spec"
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app"
 	],
 	"file_history":
 	[
@@ -545,9 +549,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"C:\\Users\\vbissengue.LAP-EBZ30\\Documents\\psychoCube"
 		]
 	},
 	"find_state":
@@ -770,19 +775,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "index.html",
-					"semi_transient": true,
+					"file": "app/index.html",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3696,
+						"buffer_size": 7162,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								406,
-								406
+								666,
+								666
 							]
 						],
 						"settings":
@@ -792,7 +797,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 210.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -836,6 +841,7 @@
 	{
 		"height": 0.0
 	},
+	"pinned_build_system": "",
 	"project": "psychoCube.sublime-project",
 	"replace":
 	{
@@ -845,6 +851,7 @@
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -853,6 +860,7 @@
 	"select_project":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -861,6 +869,7 @@
 	"select_symbol":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],

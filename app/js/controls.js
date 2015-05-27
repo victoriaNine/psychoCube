@@ -20,14 +20,14 @@ function setRotation(e) {
     var rotateX = transformValues[0];
     var rotateY = transformValues[1];
 
-    currentX = e.pageY;
+    currentX = e.pageY || e.originalEvent.touches[0].pageY;
     if(!prevX) prevX = currentX;
     var deltaX = Math.abs(prevX - currentX);
     
     if(currentX > prevX) dirX = 1;
     else if(currentX < prevX) dirX = -1;
 
-    currentY = e.pageX;
+    currentY = e.pageX || e.originalEvent.touches[0].pageX;
     if(!prevY) prevY = currentY;
     var deltaY = Math.abs(prevY - currentY);
     
