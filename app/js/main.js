@@ -91,8 +91,8 @@ function buildCube(callback) {
 
         if($isNewGame) newCube.data({ "z": z, "x": x, "y": y });
         else {
-          var position = $game.cubes[id];
-          newCube.data(position);
+          var coord = $game.cubes[id];
+          newCube.data(coord);
         }
 
         newCube.appendTo("#psychoCube");

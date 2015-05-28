@@ -3,6 +3,22 @@ var dirX, prevDirX;
 var currentY, prevY;
 var dirY, prevDirY;
 
+var rowRotation = [["1-1-1", "1-3-1", "3-3-1", "3-1-1"],
+                   ["1-1-2", "1-3-2", "3-3-2", "3-1-2"],
+                   ["1-1-3", "1-3-3", "3-3-3", "3-1-3"],
+
+                   ["1-2-1", "2-3-1", "3-2-1", "2-1-1"],
+                   ["1-2-2", "2-3-2", "3-2-2", "2-1-2"],
+                   ["1-2-3", "2-3-3", "3-2-3", "2-1-3"]];
+
+var colRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
+                   ["1-2-1", "1-2-3", "3-2-3", "3-2-1"],
+                   ["1-3-1", "1-3-3", "3-3-3", "3-3-1"],
+
+                   ["1-1-2", "2-1-3", "3-1-2", "2-1-1"],
+                   ["1-2-2", "2-2-3", "3-2-2", "2-2-1"],
+                   ["1-3-2", "2-3-3", "3-3-2", "2-3-1"]];
+
 function startRotation() { $("body").addClass("moving"); }
 function stopRotation() {
   if($("body").hasClass("moving")) {
@@ -139,31 +155,24 @@ function rotateRow(rowNb, direction) {
     var newTransform = "rotateX("+transform[0]+"deg) rotateY("+newRotateY+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
 
-    var newColumn = $(this).data("y") + 1 * direction;
-    if(newColumn > 3) newColumn = 1;
-    if(newColumn < 1) newColumn = 3;
-    $(this).data("y", newColumn);
-    console.log(this.id+" : "+$(this).data("y"));
+    updateCoord("row", this.id, direction);
   })
 }
 
 function rotateColumn(columnNb, direction) {
   var column = findCube("y", columnNb);
-  direction *= -1; // Inverted Y-axis controls
-  
+
+  console.log("========");
   $(column).each(function() {
     var transform = getCurrentTransform(this);
-    var newRotateX = transform[0] + 90 * direction;
+    var newRotateX = transform[0] + 90 * direction * -1; // Inverted Y-axis controls
     if(Math.abs(newRotateX) == 360) newRotateX = 0;
 
     var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+transform[1]+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
 
-    var newRow = $(this).data("x") + 1 * direction;
-    if(newRow > 3) newRow = 1;
-    if(newRow < 1) newRow = 3;
-    $(this).data("x", newRow);
+    updateCoord("column", this.id, direction);
   })
 }
 
@@ -175,6 +184,43 @@ function findCube(data, value) {
   });
 
   return cubeArray;
+}
+
+function getCoord(type, id) {
+  var typeArray = (type == "row") ? rowRotation : colRotation;
+  var rotationIndex;
+  var coordIndex;
+
+  var currentCoord = $("#"+id).data("z")+"-"+$("#"+id).data("x")+"-"+$("#"+id).data("y");
+  var lookup = -1;
+  for(var i = 0; i < typeArray.length; i++) {
+    var lookup = typeArray[i].indexOf(currentCoord);
+
+    if(lookup != -1) {
+      rotationIndex = i;
+      coordIndex = lookup;
+    }
+  }
+
+  return [rotationIndex, coordIndex];
+}
+
+function updateCoord(type, id, direction) {
+  var rotationState = getCoord(type, id)[1];
+  var newRotationState = rotationState + 1 * direction;
+  if(newRotationState > 3) newRotationState = 0;
+  if(newRotationState < 0) newRotationState = 3;
+
+  console.log("------")
+  console.log("-- Current state : "+rotationState);
+  console.log($("#"+id).data());
+
+  var newCoord = colRotation[getCoord(type, id)[0]][newRotationState];
+  var coordArray = newCoord.split("-");
+  $("#"+id).data({ "z": parseInt(coordArray[0]), "x": parseInt(coordArray[1]), "y": parseInt(coordArray[2]) });
+
+  console.log("-- New state : "+newRotationState);
+  console.log($("#"+id).data());
 }
 
 function getCSSstyle(selector, property, valueOnly) {
