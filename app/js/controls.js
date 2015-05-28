@@ -48,9 +48,9 @@ function setRotation(e) {
     prevX = currentX;
     prevY = currentY;
 
-    // Inversed controls
+    // Inverted Y-axis controls
     var newRotateX = rotateX + deltaX * dirX*-1;
-    var newRotateY = rotateY + deltaY * dirY*-1;
+    var newRotateY = rotateY + deltaY * dirY;
 
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+newRotateY+"deg) rotateZ("+transformValues[2]+"deg) scale3d("+transformValues[3]+")";
 
@@ -128,39 +128,42 @@ function getPosition(cube) {
 }
 
 function rotateRow(rowNb, direction) {
-  var row = $(".row"+rowNb);
-  $
+  var row = findCube("x", rowNb);
   
-  row.each(function() {
+  $(row).each(function() {
     var transform = getCurrentTransform(this);
-    var newRotateY = transform[1] + 90 * direction * -1;
+    var newRotateY = transform[1] + 90 * direction;
     if(Math.abs(newRotateY) == 360) newRotateY = 0;
 
     var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
     var newTransform = "rotateX("+transform[0]+"deg) rotateY("+newRotateY+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
 
-    var newRow = $(this).data("x") + 1;
-    if(newRow > 3) newRow = 1;
-    $(this).data("x", newRow);
+    var newColumn = $(this).data("y") + 1 * direction;
+    if(newColumn > 3) newColumn = 1;
+    if(newColumn < 1) newColumn = 3;
+    $(this).data("y", newColumn);
+    console.log(this.id+" : "+$(this).data("y"));
   })
 }
 
 function rotateColumn(columnNb, direction) {
-  var column = $(".column"+columnNb);
+  var column = findCube("y", columnNb);
+  direction *= -1; // Inverted Y-axis controls
   
-  column.each(function() {
+  $(column).each(function() {
     var transform = getCurrentTransform(this);
-    var newRotateX = transform[0] + 90 * direction * -1;
+    var newRotateX = transform[0] + 90 * direction;
     if(Math.abs(newRotateX) == 360) newRotateX = 0;
 
     var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+transform[1]+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
 
-    var newColumn = $(this).data("y") + 1;
-    if(newColumn > 3) newColumn = 1;
-    $(this).data("y", newColumn);
+    var newRow = $(this).data("x") + 1 * direction;
+    if(newRow > 3) newRow = 1;
+    if(newRow < 1) newRow = 3;
+    $(this).data("x", newRow);
   })
 }
 
