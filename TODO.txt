@@ -1,0 +1,19 @@
+- Rubik's cube rotation logic
+- Rotate shaders appropriately
+- Rotation animations
+
+- Undo & Repeat
+- Randomization
+- Randomize cube & cube solved : new game (delete current game data)
+- Cube solved : save current game data (timer, date, input player name) in high scores array
+- onBlur & onFocus : Pause & Resume
+- Screens :
+ - pause screen
+  - about screen
+  - high scores
+- Confirm when leaving page
+
+- Three.js BG
+- Psycho-Pass BGM
+- SFX ?
+- Mute switch

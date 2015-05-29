@@ -3,17 +3,25 @@ var dirX, prevDirX;
 var currentY, prevY;
 var dirY, prevDirY;
 
-var rowRotation = [["1-1-1", "1-3-1", "3-3-1", "3-1-1"],
+var colRotation = [["1-1-1", "1-3-1", "3-3-1", "3-1-1"],
                    ["1-1-2", "1-3-2", "3-3-2", "3-1-2"],
                    ["1-1-3", "1-3-3", "3-3-3", "3-1-3"],
+
+                   ["2-2-1"],
+                   ["2-2-2"],
+                   ["2-2-3"],
 
                    ["1-2-1", "2-3-1", "3-2-1", "2-1-1"],
                    ["1-2-2", "2-3-2", "3-2-2", "2-1-2"],
                    ["1-2-3", "2-3-3", "3-2-3", "2-1-3"]];
 
-var colRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
+var rowRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
                    ["1-2-1", "1-2-3", "3-2-3", "3-2-1"],
                    ["1-3-1", "1-3-3", "3-3-3", "3-3-1"],
+
+                   ["2-1-2"],
+                   ["2-2-2"],
+                   ["2-3-2"],
 
                    ["1-1-2", "2-1-3", "3-1-2", "2-1-1"],
                    ["1-2-2", "2-2-3", "3-2-2", "2-2-1"],
@@ -26,6 +34,12 @@ function stopRotation() {
     prevX = null;
     prevY = null;
   }
+}
+
+function debugMode(state) {
+  if(state == true) $("html").addClass("debug");
+  else if(state == false) $("html").removeClass("debug");
+  else $("html").toggleClass("debug");
 }
 
 function setRotation(e) {
@@ -146,6 +160,7 @@ function getPosition(cube) {
 function rotateRow(rowNb, direction) {
   var row = findCube("x", rowNb);
   
+  console.log("========");
   $(row).each(function() {
     var transform = getCurrentTransform(this);
     var newRotateY = transform[1] + 90 * direction;
@@ -206,20 +221,21 @@ function getCoord(type, id) {
 }
 
 function updateCoord(type, id, direction) {
-  var rotationState = getCoord(type, id)[1];
+  var typeArray = (type == "row") ? rowRotation : colRotation;
+  var currentCoord = getCoord(type, id);
+
+  var rotationState = currentCoord[1];
   var newRotationState = rotationState + 1 * direction;
-  if(newRotationState > 3) newRotationState = 0;
-  if(newRotationState < 0) newRotationState = 3;
+  if(newRotationState > typeArray[currentCoord[0]].length - 1) newRotationState = 0;
+  if(newRotationState < 0) newRotationState = typeArray[currentCoord[0]].length - 1;
 
   console.log("------")
-  console.log("-- Current state : "+rotationState);
   console.log($("#"+id).data());
 
-  var newCoord = colRotation[getCoord(type, id)[0]][newRotationState];
+  var newCoord = typeArray[currentCoord[0]][newRotationState];
   var coordArray = newCoord.split("-");
   $("#"+id).data({ "z": parseInt(coordArray[0]), "x": parseInt(coordArray[1]), "y": parseInt(coordArray[2]) });
 
-  console.log("-- New state : "+newRotationState);
   console.log($("#"+id).data());
 }
 

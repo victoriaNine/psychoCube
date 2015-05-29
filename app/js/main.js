@@ -1,19 +1,28 @@
 var $game;
 var $isNewGame = false;
-var $startTime;
+var $startTimes;
 var $currentTime;
+var $totalTime;
 var $updateTimer;
 var $ready = false;
 
 var defaultTransform = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
 
 $(document).ready(function() {
-  if(getLocalStorage("game"))
-    $game = getLocalStorage("game");
+  if(getLocalStorage("psychoCubeGame")) {
+    $game = getLocalStorage("psychoCubeGame");
+    $totalTime = $game.totalTime;
+  }
   else {
     $game = { totalTime: 0, cubes: {} };
+    $totalTime = 0;
     $isNewGame = true;
   }
+
+  $currentTime = 0;
+
+  $("#currentTime .value").html("-:-:-");
+  $("#totalTime .value").html(getFormatedTime($totalTime));
 
   var timeline = new TimelineMax();
   timeline.set($(".scene"), { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
@@ -31,36 +40,63 @@ $(document).ready(function() {
 function startGame() {
   addControls();
 
-  $startTime = Math.ceil(new Date().getTime() / 1000);
-  $updateTimer = setInterval(function() {
-    $currentTime = Math.ceil(new Date().getTime() / 1000);
-  }, 1000);
+  $startTotalTime = $game.totalTime;
+  $updateTimer = setInterval(updateTimer, 1000);
 
   $ready = true;
 }
 
+function updateTimer() {
+  $currentTime++;
+  $totalTime = $startTotalTime + $currentTime;
+
+  $("#currentTime .value").html(getFormatedTime($currentTime));
+  $("#totalTime .value").html(getFormatedTime($totalTime));
+}
+
+function pause() { clearInterval($updateTimer); }
+function resume() { $updateTimer = setInterval(updateTimer, 1000); }
+
 function saveGame() {
   if(!$ready) return;
-
-  clearInterval($updateTimer);
-  $game.totalTime += $currentTime - $startTime;
+  $game.totalTime = $totalTime;
 
   $(".cube").each(function(i) {
     $game.cubes[this.id] = $(this).data();
   });
 
-  setLocalStorage("game", $game);
+  setLocalStorage("psychoCubeGame", $game);
+}
+
+function getFormatedTime(seconds) {
+  var h = Math.floor(seconds / 3600);
+  var m = Math.floor(seconds / 60) % 60;
+  var s = Math.floor(seconds % 60);
+
+  if(h < 10) h = "0"+h;
+  if(m < 10) m = "0"+m;
+  if(s < 10) s = "0"+s;
+
+  var timeString = h+":"+m+":"+s;
+  return timeString;
 }
 
 function addControls() {
-  $(window).on('mousedown touchstart', startRotation).on('mouseup touchend', stopRotation).on('mousemove touchmove', setRotation).on("mousewheel", setScale);
+  $("#tridiv").on('mousedown touchstart', startRotation).on('mouseup touchend', stopRotation).on('mousemove touchmove', setRotation).on("mousewheel", setScale);
 
-  $("#reset").on("click touchstart", function() {
-  TweenMax.to($(".scene"), 1, { transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
+  $("#resetPosition").on("click touchstart", function() {
+    TweenMax.to($(".scene"), 1, { transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
         $(".scene").css("transform", defaultTransform);
       }
     });
+  });
+
+  $("#saveGame").on("click touchstart", function() {
+    saveGame();
+    $("#saveGame").html("Game saved");
+
+    setTimeout(function() { $("#saveGame").html("Save game"); }, 1000);
   });
 }
 
