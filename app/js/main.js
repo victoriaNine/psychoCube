@@ -29,10 +29,16 @@ var $currentTime;
 var $totalTime;
 var $updateTimer;
 var $ready = false;
+var $actionArray = [];
+var $actionIndex = 0;
 
 var defaultTransform = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
 
+
+//===============================
+// MAIN INITIALIZATION
 $(document).ready(function() {
+//===============================
   if(mobileCheck()) $("html").addClass("isMobile");
   if(phoneCheck()) $("html").addClass("isPhone");
   if(tabletCheck()) $("html").addClass("isTablet");
@@ -68,41 +74,25 @@ $(document).ready(function() {
     timeline.to($("#scene"), 1, { opacity:1, transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
         $("#scene").css("transform", defaultTransform);
-        startGame();
+        newGame();
       }
     });
   });
 });
 
-function startGame() {
-  addControls();
 
-  $startTotalTime = $game.totalTime;
-  $updateTimer = setInterval(updateTimer, 1000);
+//===============================
+// NEW GAME & SAVE GAME
+//===============================
+function newGame() {
+  checkFocus(function() {
+    addListeners();
 
-  $ready = true;
-}
+    $startTotalTime = $game.totalTime;
+    $updateTimer = setInterval(updateTimer, 1000);
 
-function updateTimer() {
-  $currentTime++;
-  $totalTime = $startTotalTime + $currentTime;
-
-  $("#currentTime .value").html(getFormatedTime($currentTime));
-  $("#totalTime .value").html(getFormatedTime($totalTime));
-}
-
-function pause() { clearInterval($updateTimer); $("body").addClass("paused"); }
-function resume() { $updateTimer = setInterval(updateTimer, 1000); $("body").removeClass("paused"); }
-
-function togglePause() {
-  if(!$("body").hasClass("paused")) {
-    pause();
-    $("#pause").html("Resume");
-  }
-  else {
-    resume();
-    $("#pause").html("Pause");
-  }
+    $ready = true;
+  });
 }
 
 function saveGame() {
@@ -116,23 +106,18 @@ function saveGame() {
   setLocalStorage("psychoCubeGame", $game);
 }
 
-function getFormatedTime(seconds) {
-  var h = Math.floor(seconds / 3600);
-  var m = Math.floor(seconds / 60) % 60;
-  var s = Math.floor(seconds % 60);
 
-  if(h < 10) h = "0"+h;
-  if(m < 10) m = "0"+m;
-  if(s < 10) s = "0"+s;
-
-  var timeString = h+":"+m+":"+s;
-  return timeString;
-}
-
-function addControls() {
+//===============================
+// EVENT LISTENERS
+function addListeners() {
+//===============================
   $("#tridiv").on('mousedown touchstart', startRotation).on('mouseup touchend', stopRotation).on('mousemove touchmove', setRotation).on("mousewheel", setScale);
+
   $(".cube").on(eventtype, rotationMenu);
-  $("#rotationMenu button").on(eventtype, rotate)
+  $("#rotationMenu button").on(eventtype, rotate);
+
+  $("#undo").on(eventtype, undo);
+  $("#redo").on(eventtype, redo);
 
   $("#resetPosition").on(eventtype, function() {
     TweenMax.to($("#scene"), 1, { transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
@@ -154,9 +139,59 @@ function addControls() {
   $("#glowSwitch").on(eventtype, glowMode);
   $("#resetCube").on(eventtype, resetCube);
 
-  $(window).on("blur", togglePause);
+  $(window).on("blur", pause);
 }
 
+
+//===============================
+// TIMER
+//===============================
+function updateTimer() {
+  $currentTime++;
+  $totalTime = $startTotalTime + $currentTime;
+
+  $("#currentTime .value").html(getFormatedTime($currentTime));
+  $("#totalTime .value").html(getFormatedTime($totalTime));
+}
+
+function pause() {
+  if($("body").hasClass("paused")) return;
+
+  clearInterval($updateTimer);
+  $("#pause").html("Resume");
+  $("body").addClass("paused");
+}
+
+function resume() {
+  if(!$("body").hasClass("paused")) return;
+
+  $updateTimer = setInterval(updateTimer, 1000);
+  $("#pause").html("Pause");
+  $("body").removeClass("paused");
+}
+
+function togglePause() {
+  if($("body").hasClass("paused")) resume();
+  else pause();
+}
+
+function getFormatedTime(seconds) {
+  var h = Math.floor(seconds / 3600);
+  var m = Math.floor(seconds / 60) % 60;
+  var s = Math.floor(seconds % 60);
+
+  if(h < 10) h = "0"+h;
+  if(m < 10) m = "0"+m;
+  if(s < 10) s = "0"+s;
+
+  var timeString = h+":"+m+":"+s;
+  return timeString;
+}
+
+
+//===============================
+// CUBE SETUP
+//===============================
 function buildCube(callback) {
   for(var z = 1; z <= 3; z++) {
     for(var x = 1; x <= 3; x++) {
@@ -206,9 +241,13 @@ function resetCube() {
   });
 }
 
+
+//===============================
+// ROTATION CONTROLS
+//===============================
 function rotationMenu(e) {
   var target = e.currentTarget;
-  if(cancelSelection(event) || $("body").hasClass("paused")) return;
+  if(cancelSelection(e) || $("body").hasClass("paused")) return;
 
   var posX = e.pageX;
   var posY = e.pageY;
@@ -244,17 +283,78 @@ function cancelSelection(e) {
   return check;
 }
 
+
+//===============================
+// ROTATION ACTIONS
+//===============================
 function rotate(e) {
   var target = e.currentTarget;
   var cube = $(".cube.selected");
+  var action;
 
-  if(target.id == "rowLeft" || e.which == 37) rotateRow(cube.data("x"), -1);
-  if(target.id == "rowRight" || e.which == 39) rotateRow(cube.data("x"), 1);
-  if(target.id == "colUp" || e.which == 38) rotateCol(cube.data("y"), -1);
-  if(target.id == "colDown" || e.which == 40) rotateCol(cube.data("y"), 1);
+  if(target.id == "rowLeft" || e.which == 37) {
+    rotateRow(cube.data("x"), -1);
+    action = { type: "row", coord: cube.data("x"), dir: -1};
+  }
+  if(target.id == "rowRight" || e.which == 39) {
+    rotateRow(cube.data("x"), 1);
+    action = { type: "row", coord: cube.data("x"), dir: 1};
+  }
+  if(target.id == "colUp" || e.which == 38) {
+    rotateCol(cube.data("y"), -1);
+    action = { type: "col", coord: cube.data("y"), dir: -1};
+  }
+  if(target.id == "colDown" || e.which == 40) {
+    rotateCol(cube.data("y"), 1);
+    action = { type: "col", coord: cube.data("y"), dir: 1};
+  }
+
+  $actionArray[$actionIndex++] = action;
+  if($actionIndex < $actionArray.length) {
+    var actionsToRemove = $actionArray.length - $actionIndex;
+    $actionArray.splice(-1, actionsToRemove);
+  }
 
   if(e.which) cancelSelection(e);
   $(window).off("keydown", rotate);
+}
+
+function undo() {
+  if($actionIndex < 1 || $("body").hasClass("paused")) return;
+  var lastAction = $actionArray[$actionArray.length - 1];
+
+  if(lastAction.type == "row")
+    rotateRow(lastAction.coord, lastAction.dir * -1);
+  else
+    rotateCol(lastAction.coord, lastAction.dir * -1);
+
+  $actionIndex--;
+}
+
+function redo() {
+  if($actionIndex >= $actionArray.length  || $("body").hasClass("paused")) return;
+  var nextAction = $actionArray[$actionIndex];
+
+  if(nextAction.type == "row")
+    rotateRow(nextAction.coord, nextAction.dir);
+  else
+    rotateCol(nextAction.coord, nextAction.dir);
+
+  $actionIndex++;
+}
+
+
+//===============================
+// TOOLBOX
+//===============================
+function checkFocus(callback) {
+  var waitForFocus = function() {
+    callback();
+    $(window).off("focus", waitForFocus);
+  };
+
+  if(document["hasFocus"]()) callback();
+  else $(window).on("focus", waitForFocus);
 }
 
 function debugMode(state) {
@@ -271,6 +371,7 @@ function glowMode(state) {
 
 debugMode();
 glowMode();
+
 
 //===============================
 // LOCAL STORAGE

@@ -4,12 +4,11 @@
 
 ! Controls
 ! Reset
-! Pause
-- Undo & Repeat
+! Pause (button & onBlur)
+! Undo & Redo
 - Randomization
 - Randomize cube & cube solved : new game (delete current game data)
 - Cube solved : save current game data (timer, date, input player name) in high scores array
-- onBlur : Pause
 - Screens :
  - Intro (How to play + About)
  - Pause
