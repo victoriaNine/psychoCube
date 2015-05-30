@@ -2,18 +2,22 @@
 - Rotate shaders appropriately
 - Rotation animations
 
+! Controls
+! Reset
+! Pause
 - Undo & Repeat
 - Randomization
 - Randomize cube & cube solved : new game (delete current game data)
 - Cube solved : save current game data (timer, date, input player name) in high scores array
-- onBlur & onFocus : Pause & Resume
+- onBlur : Pause
 - Screens :
- - pause screen
-  - about screen
-  - high scores
+ - Intro (How to play + About)
+ - Pause
+ - High scores
 - Confirm when leaving page
 
+- CSS rehaul
 - Three.js BG
-- Psycho-Pass BGM
+- Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
 - SFX ?
 - Mute switch

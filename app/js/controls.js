@@ -27,7 +27,7 @@ var rowRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
                    ["1-2-2", "2-2-3", "3-2-2", "2-2-1"],
                    ["1-3-2", "2-3-3", "3-3-2", "2-3-1"]];
 
-function startRotation() { $("body").addClass("moving"); }
+function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused") ) $("body").addClass("moving"); }
 function stopRotation() {
   if($("body").hasClass("moving")) {
     $("body").removeClass("moving");
@@ -36,17 +36,11 @@ function stopRotation() {
   }
 }
 
-function debugMode(state) {
-  if(state == true) $("html").addClass("debug");
-  else if(state == false) $("html").removeClass("debug");
-  else $("html").toggleClass("debug");
-}
-
 function setRotation(e) {
   if($("body").hasClass("moving")) {
-    var transform = $(".scene")[0].style.transform;
+    var transform = $("#scene")[0].style.transform;
 
-    var transformValues = getCurrentTransform($(".scene")[0]);
+    var transformValues = getCurrentTransform($("#scene")[0]);
     var rotateX = transformValues[0];
     var rotateY = transformValues[1];
 
@@ -84,14 +78,15 @@ function setRotation(e) {
 
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+newRotateY+"deg) rotateZ("+transformValues[2]+"deg) scale3d("+transformValues[3]+")";
 
-    $(".scene").css("transform",newTransform);
+    $("#scene").css("transform",newTransform);
   }
 }
 
 function setScale(e) {
   e.preventDefault();
+  if($("body").hasClass("paused")) return;
 
-  var transformValues = getCurrentTransform($(".scene")[0]);
+  var transformValues = getCurrentTransform($("#scene")[0]);
   var scale = parseFloat(transformValues[3]);
 
   var delta = e.originalEvent.wheelDelta / 1000;
@@ -103,7 +98,7 @@ function setScale(e) {
   var newScaleString = newScale+","+newScale+","+newScale;
   var newTransform = "rotateX("+transformValues[0]+"deg) rotateY("+transformValues[1]+"deg) rotateZ("+transformValues[2]+"deg) scale3d("+newScaleString+")";
 
-  $(".scene").css("transform", newTransform);
+  $("#scene").css("transform", newTransform);
 }
 
 function getCurrentTransform(element) {
@@ -174,7 +169,7 @@ function rotateRow(rowNb, direction) {
   })
 }
 
-function rotateColumn(columnNb, direction) {
+function rotateCol(columnNb, direction) {
   var column = findCube("y", columnNb);
 
   console.log("========");

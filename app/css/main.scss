@@ -49,7 +49,7 @@ html, body {
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
 
-nav {
+#ui {
   position: absolute;
   left: 3em;
   top: 3em;
@@ -57,8 +57,8 @@ nav {
   text-align: -webkit-center;
 }
 
-nav .timer { margin-bottom: 1.5em; }
-nav #totalTime { margin-bottom: 3em; }
+.timer { margin-bottom: 1.5em; }
+#totalTime { margin-bottom: 3em; }
 
 button {
   border:1px solid;
@@ -114,6 +114,8 @@ html:not(.debug) #resetCube { display: none; }
   transform-origin: 13.5em 13.5em -9em;
 }
 
+body:not(.moving) .cube:hover { cursor: pointer; }
+
 @for $z from 1 through 3 {
   @for $y from 1 through 3 {
     @for $x from 1 through 3 {
@@ -145,11 +147,11 @@ html:not(.debug) #resetCube { display: none; }
   user-select: none;
 }
 
-.scene, .shape, .face, .face-wrapper, .cr {
+#scene, .shape, .face, .face-wrapper, .cr {
   position: absolute;
   transform-style: preserve-3d;
 }
-.scene {
+#scene {
   width: 80em;
   height: 80em;
   top: 50%;
@@ -381,62 +383,92 @@ html:not(.debug) #resetCube { display: none; }
 
 .pyramid-front > .face-wrapper .face {
   // front : red
+  box-shadow: inset 0 0 0 1px opacify($red, .5);
+}
+
+html:not(.noGlow) .pyramid-front > .face-wrapper .face {
+  // front : red
   @include animation("redBorder 2s ease-out infinite");
 }
 
 .pyramid-back > .face-wrapper .face {
+  // back : orange
+  box-shadow: inset 0 0 0 1px opacify($orange, .5);
+}
+
+html:not(.noGlow) .pyramid-back > .face-wrapper .face {
   // back : orange
   @include animation("orangeBorder 2s ease-out infinite");
 }
 
 .pyramid-top > .face-wrapper .face {
   // top : white
+  box-shadow: inset 0 0 0 1px opacify($white, .5);
+}
+
+html:not(.noGlow) .pyramid-top > .face-wrapper .face {
+  // top : white
   @include animation("whiteBorder 2s ease-out infinite");
 }
 
 .pyramid-bottom > .face-wrapper .face {
+  // bottom : green
+  box-shadow: inset 0 0 0 1px opacify($green, .5);
+}
+
+html:not(.noGlow) .pyramid-bottom > .face-wrapper .face {
   // bottom : green
  @include animation("greenBorder 2s ease-out infinite");
 }
 
 .pyramid-left > .face-wrapper .face {
   // left : yellow
+  box-shadow: inset 0 0 0 1px opacify($yellow, .5);
+}
+
+html:not(.noGlow) .pyramid-left > .face-wrapper .face {
+  // left : yellow
   @include animation("yellowBorder 2s ease-out infinite");
 }
 
 .pyramid-right > .face-wrapper .face {
   // right : blue
+  box-shadow: inset 0 0 0 1px opacify($blue, .5);
+}
+
+html:not(.noGlow) .pyramid-right > .face-wrapper .face {
+  // right : blue
   @include animation("blueBorder 2s ease-out infinite");
 }
 
 @include keyframes(redBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($red, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($red, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($red, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($red, .75); }
 }
 
 @include keyframes(orangeBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($orange, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($orange, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($orange, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($orange, .75); }
 }
 
 @include keyframes(whiteBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($white, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($white, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($white, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($white, .75); }
 }
 
 @include keyframes(greenBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($green, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($green, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($green, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($green, .75); }
 }
 
 @include keyframes(yellowBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($yellow, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($yellow, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($yellow, .75); }
 }
 
 @include keyframes(blueBorder) {
-  0%, 100% { box-shadow: inset 0 0 0 1px opacify($blue, 0.5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($blue, 0.75); }
+  0%, 100% { box-shadow: inset 0 0 0 1px opacify($blue, .5); }
+  50% { box-shadow: inset 0 0 8px 1px opacify($blue, .75); }
 }
 
 $roofWidth: .75;
@@ -464,55 +496,138 @@ $roofWidth: .75;
 }
 
 .pyramid-front .roof .face {
+  background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, .5);
+}
+
+html:not(.noGlow) .pyramid-front .roof .face {
   @include animation("redRoof 2s ease-out infinite");
 }
 
 .pyramid-back .roof .face {
+  background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5);
+}
+
+html:not(.noGlow) .pyramid-back .roof .face {
   @include animation("orangeRoof 2s ease-out infinite");
 }
 
 .pyramid-top .roof .face {
+  background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5);
+}
+
+html:not(.noGlow) .pyramid-top .roof .face {
   @include animation("whiteRoof 2s ease-out infinite");
 }
 
 .pyramid-bottom .roof .face {
+  background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5);
+}
+
+html:not(.noGlow) .pyramid-bottom .roof .face {
   @include animation("greenRoof 2s ease-out infinite");
 }
 
 .pyramid-left .roof .face {
+  background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5);
+}
+
+html:not(.noGlow) .pyramid-left .roof .face {
   @include animation("yellowRoof 2s ease-out infinite");
 }
 
 .pyramid-right .roof .face {
+  background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5);
+}
+
+html:not(.noGlow) .pyramid-right .roof .face {
   @include animation("blueRoof 2s ease-out infinite");
 }
 
 @include keyframes(redRoof) {
-  0%, 100% { background: opacify($red, 0.25); box-shadow: inset 0 0 0 1px opacify($red, 0.5); }
-  50% { background: opacify($red, 0.5); box-shadow: inset 0 0 8px 1px opacify($red, 0.75); }
+  0%, 100% { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, 0.5); }
+  50% { background: opacify($red, .5); box-shadow: inset 0 0 8px 1px opacify($red, .75); }
 }
 
 @include keyframes(orangeRoof) {
-  0%, 100% { background: opacify($orange, 0.25); box-shadow: inset 0 0 0 1px opacify($orange, 0.5); }
-  50% { background: opacify($orange, 0.5); box-shadow: inset 0 0 8px 1px opacify($orange, 0.75); }
+  0%, 100% { background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5); }
+  50% { background: opacify($orange, .5); box-shadow: inset 0 0 8px 1px opacify($orange, .75); }
 }
 
 @include keyframes(whiteRoof) {
-  0%, 100% { background: opacify($white, 0.25); box-shadow: inset 0 0 0 1px opacify($white, 0.5); }
-  50% { background: opacify($white, 0.5); box-shadow: inset 0 0 8px 1px opacify($white, 0.75); }
+  0%, 100% { background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5); }
+  50% { background: opacify($white, .5); box-shadow: inset 0 0 8px 1px opacify($white, .75); }
 }
 
 @include keyframes(greenRoof) {
-  0%, 100% { background: opacify($green, 0.25); box-shadow: inset 0 0 0 1px opacify($green, 0.5); }
-  50% { background: opacify($green, 0.5); box-shadow: inset 0 0 8px 1px opacify($green, 0.75); }
+  0%, 100% { background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5); }
+  50% { background: opacify($green, .5); box-shadow: inset 0 0 8px 1px opacify($green, .75); }
 }
 
 @include keyframes(yellowRoof) {
-  0%, 100% { background: opacify($yellow, 0.25); box-shadow: inset 0 0 0 1px opacify($yellow, 0.5); }
-  50% { background: opacify($yellow, 0.5); box-shadow: inset 0 0 8px 1px opacify($yellow, 0.75); }
+  0%, 100% { background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
+  50% { background: opacify($yellow, .5); box-shadow: inset 0 0 8px 1px opacify($yellow, .75); }
 }
 
 @include keyframes(blueRoof) {
-  0%, 100% { background: opacify($blue, 0.25); box-shadow: inset 0 0 0 1px opacify($blue, 0.5); }
-  50% { background: opacify($blue, 0.5); box-shadow: inset 0 0 8px 1px opacify($blue, 0.75); }
+  0%, 100% { background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5); }
+  50% { background: opacify($blue, .5); box-shadow: inset 0 0 8px 1px opacify($blue, .75); }
 }
+
+
+/* ROTATION MENU */
+body.selecting .cube:not(.selected) {
+  opacity:.15;
+  transition: opacity .2s ease-in-out;
+
+  @include animation("transparency 2s ease-out infinite");
+}
+
+@include keyframes(transparency) {
+  0%, 100% { opacity:.15; }
+  50% { opacity:.35; }
+}
+
+#rotationMenu {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top:calc(50% - 10px);
+  left: calc(50% - 10px);
+  opacity:0;
+  pointer-events:none;
+  transition: all .2s ease-in-out;
+  z-index: 20;
+  background: opacify($white, .5);
+  border-radius: 50%;
+
+  transform:scale(1.5) translate(-50%, -50%);
+}
+
+#rotationMenu:before {
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  border:1px solid opacify($white, .5);
+  border-radius: 50%;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+}
+
+#rotationMenu.open {
+  opacity:1;
+  transform:scale(1) translate(-50%, -50%);
+  pointer-events:auto;
+}
+
+#rotationMenu button {
+  position:absolute;
+  margin:0;
+  width: 30px;
+  height: 30px;
+}
+
+#rowLeft { transform: translate(-50px, -25%); }
+#rowRight { transform: translate(40px, -25%); }
+#colUp { transform: translate(-25%, -50px); }
+#colDown { transform: translate(-25%, 40px); }
