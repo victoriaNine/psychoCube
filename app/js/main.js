@@ -57,7 +57,7 @@ $(document).ready(function() {
     $totalTime = $game.totalTime;
   }
   else {
-    $game = { totalTime: 0, cubes: {} };
+    $game = { totalTime: 0, cubes: {}, actions: [], actionIndex: 0 };
     $totalTime = 0;
     $isNewGame = true;
   }
@@ -98,6 +98,8 @@ function newGame() {
 function saveGame() {
   if(!$ready) return;
   $game.totalTime = $totalTime;
+  $game.actions = $actionArray;
+  $game.actionIndex = $actionIndex;
 
   $(".cube").each(function(i) {
     $game.cubes[this.id] = $(this).data();
@@ -239,6 +241,9 @@ function resetCube() {
 
     $(this).data({ "z": parseInt(initCoord[0]), "x": parseInt(initCoord[1]), "y": parseInt(initCoord[2]) }).attr("style","");
   });
+
+  $actionArray = [];
+  $actionIndex = 0;
 }
 
 
@@ -252,6 +257,7 @@ function rotationMenu(e) {
   var posX = e.pageX;
   var posY = e.pageY;
   $("#rotationMenu").css({ left:posX+"px", top:posY+"px" });
+  console.log(target.id+" : "+$(target).data("z")+"-"+$(target).data("x")+"-"+$(target).data("y"));
 
   if(!$("body").hasClass("selecting")) {
     setTimeout(function() { $("#rotationMenu").addClass("open"); }, 200);
@@ -294,25 +300,25 @@ function rotate(e) {
 
   if(target.id == "rowLeft" || e.which == 37) {
     rotateRow(cube.data("x"), -1);
-    action = { type: "row", coord: cube.data("x"), dir: -1};
+    action = { type: "row", coord: cube.data("x"), dir: -1 };
   }
   if(target.id == "rowRight" || e.which == 39) {
     rotateRow(cube.data("x"), 1);
-    action = { type: "row", coord: cube.data("x"), dir: 1};
+    action = { type: "row", coord: cube.data("x"), dir: 1 };
   }
   if(target.id == "colUp" || e.which == 38) {
     rotateCol(cube.data("y"), -1);
-    action = { type: "col", coord: cube.data("y"), dir: -1};
+    action = { type: "col", coord: cube.data("y"), dir: -1 };
   }
   if(target.id == "colDown" || e.which == 40) {
     rotateCol(cube.data("y"), 1);
-    action = { type: "col", coord: cube.data("y"), dir: 1};
+    action = { type: "col", coord: cube.data("y"), dir: 1 };
   }
 
   $actionArray[$actionIndex++] = action;
   if($actionIndex < $actionArray.length) {
-    var actionsToRemove = $actionArray.length - $actionIndex;
-    $actionArray.splice(-1, actionsToRemove);
+    // Remove any remaining actions following in the history
+    $actionArray.splice(-1, $actionIndex);
   }
 
   if(e.which) cancelSelection(e);
@@ -321,7 +327,7 @@ function rotate(e) {
 
 function undo() {
   if($actionIndex < 1 || $("body").hasClass("paused")) return;
-  var lastAction = $actionArray[$actionArray.length - 1];
+  var lastAction = $actionArray[$actionIndex - 1];
 
   if(lastAction.type == "row")
     rotateRow(lastAction.coord, lastAction.dir * -1);
@@ -332,7 +338,7 @@ function undo() {
 }
 
 function redo() {
-  if($actionIndex >= $actionArray.length  || $("body").hasClass("paused")) return;
+  if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
   var nextAction = $actionArray[$actionIndex];
 
   if(nextAction.type == "row")

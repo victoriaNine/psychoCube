@@ -27,7 +27,7 @@ var rowRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
                    ["1-2-2", "2-2-3", "3-2-2", "2-2-1"],
                    ["1-3-2", "2-3-3", "3-3-2", "2-3-1"]];
 
-function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused") ) $("body").addClass("moving"); }
+function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
 function stopRotation() {
   if($("body").hasClass("moving")) {
     $("body").removeClass("moving");
@@ -92,8 +92,8 @@ function setScale(e) {
   var delta = e.originalEvent.wheelDelta / 1000;
   var newScale = scale + delta;
 
-  if(newScale < .1) newScale = .1;
-  if(newScale > 1) newScale = 1;
+  if(newScale < .5) newScale = .5;
+  if(newScale > 1.5) newScale = 1.5;
 
   var newScaleString = newScale+","+newScale+","+newScale;
   var newTransform = "rotateX("+transformValues[0]+"deg) rotateY("+transformValues[1]+"deg) rotateZ("+transformValues[2]+"deg) scale3d("+newScaleString+")";
@@ -154,8 +154,9 @@ function getPosition(cube) {
 
 function rotateRow(rowNb, direction) {
   var row = findCube("x", rowNb);
+  console.log("row : "+rowNb+", "+direction);
   
-  console.log("========");
+  //console.log("========");
   $(row).each(function() {
     var transform = getCurrentTransform(this);
     var newRotateY = transform[1] + 90 * direction;
@@ -171,8 +172,9 @@ function rotateRow(rowNb, direction) {
 
 function rotateCol(columnNb, direction) {
   var column = findCube("y", columnNb);
+  console.log("col : "+columnNb+", "+direction);
 
-  console.log("========");
+  //console.log("========");
   $(column).each(function() {
     var transform = getCurrentTransform(this);
     var newRotateX = transform[0] + 90 * direction * -1; // Inverted Y-axis controls
@@ -186,14 +188,23 @@ function rotateCol(columnNb, direction) {
   })
 }
 
-function findCube(data, value) {
-  var cubeArray = [];
+function updateCoord(type, id, direction) {
+  var typeArray = (type == "row") ? rowRotation : colRotation;
+  var currentCoord = getCoord(type, id);
 
-  $(".cube").each(function() {
-    if($(this).data(data) == value) cubeArray.push(this);
-  });
+  var rotationState = currentCoord[1];
+  var newRotationState = rotationState + 1 * direction;
+  if(newRotationState > typeArray[currentCoord[0]].length - 1) newRotationState = 0;
+  if(newRotationState < 0) newRotationState = typeArray[currentCoord[0]].length - 1;
 
-  return cubeArray;
+  //console.log("------")
+  //console.log($("#"+id).data());
+
+  var newCoord = typeArray[currentCoord[0]][newRotationState];
+  var coordArray = newCoord.split("-");
+  $("#"+id).data({ "z": parseInt(coordArray[0]), "x": parseInt(coordArray[1]), "y": parseInt(coordArray[2]) });
+
+  //console.log($("#"+id).data());
 }
 
 function getCoord(type, id) {
@@ -215,23 +226,14 @@ function getCoord(type, id) {
   return [rotationIndex, coordIndex];
 }
 
-function updateCoord(type, id, direction) {
-  var typeArray = (type == "row") ? rowRotation : colRotation;
-  var currentCoord = getCoord(type, id);
+function findCube(data, value) {
+  var cubeArray = [];
 
-  var rotationState = currentCoord[1];
-  var newRotationState = rotationState + 1 * direction;
-  if(newRotationState > typeArray[currentCoord[0]].length - 1) newRotationState = 0;
-  if(newRotationState < 0) newRotationState = typeArray[currentCoord[0]].length - 1;
+  $(".cube").each(function() {
+    if($(this).data(data) == value) cubeArray.push(this);
+  });
 
-  console.log("------")
-  console.log($("#"+id).data());
-
-  var newCoord = typeArray[currentCoord[0]][newRotationState];
-  var coordArray = newCoord.split("-");
-  $("#"+id).data({ "z": parseInt(coordArray[0]), "x": parseInt(coordArray[1]), "y": parseInt(coordArray[2]) });
-
-  console.log($("#"+id).data());
+  return cubeArray;
 }
 
 function getCSSstyle(selector, property, valueOnly) {
