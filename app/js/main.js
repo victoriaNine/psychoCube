@@ -24,13 +24,19 @@ var support = {animations : Modernizr.cssanimations},
 
 var $game;
 var $isNewGame = false;
-var $startTimes;
-var $currentTime;
-var $totalTime;
-var $updateTimer;
-var $ready = false;
+var $isReady = false;
+
+var $playerName = "";
+var $finishDate = null;
+var $totalTime = 0;
+
 var $actionArray = [];
 var $actionIndex = 0;
+var $totalActions = 0;
+
+var $currentTime = 0;
+var $startTotalTime;
+var $updateTimer;
 
 var defaultTransform = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
 
@@ -54,15 +60,19 @@ $(document).ready(function() {
 
   if(getLocalStorage("psychoCubeGame")) {
     $game = getLocalStorage("psychoCubeGame");
+
+    $playerName = $game.playerName;
+    $finishDate = $game.finishDate;
     $totalTime = $game.totalTime;
+
+    $actionIndex = $game.actionIndex;
+    $actionArray = $game.actions;
+    $totalActions = $game.totalActions;
   }
   else {
-    $game = { totalTime: 0, cubes: {}, actions: [], actionIndex: 0 };
-    $totalTime = 0;
+    $game = { playerName: "", finishDate: null, totalTime: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
-
-  $currentTime = 0;
 
   $("#currentTime .value").html("-:-:-");
   $("#totalTime .value").html(getFormatedTime($totalTime));
@@ -94,15 +104,19 @@ function newGame() {
     $startTotalTime = $game.totalTime;
     $updateTimer = setInterval(updateTimer, 1000);
 
-    $ready = true;
+    $isReady = true;
   });
 }
 
 function saveGame() {
-  if(!$ready) return;
+  if(!$isReady) return;
+  $game.playerName = $playerName;
+  $game.finishDate = $finishDate;
   $game.totalTime = $totalTime;
-  $game.actions = $actionArray;
+
+  $game.totalActions = $totalActions;
   $game.actionIndex = $actionIndex;
+  $game.actions = $actionArray;
 
   $(".cube").each(function(i) {
     $game.cubes[this.id] = $(this).data();
@@ -300,19 +314,27 @@ function rotate(e) {
   var cube = $(".cube.selected");
   var action;
 
-  if(target.id == "rowLeft" || e.which == 37) {
+  if(target.id == "toFront" || e.which == 37) {
+    rotateDepth(cube.data("z"), -1);
+    action = { type: "depth", coord: cube.data("z"), dir: -1 };
+  }
+  if(target.id == "toBack" || e.which == 39) {
+    rotateDepth(cube.data("z"), 1);
+    action = { type: "depth", coord: cube.data("z"), dir: 1 };
+  }
+  if(target.id == "toLeft" || e.which == 37) {
     rotateRow(cube.data("x"), -1);
     action = { type: "row", coord: cube.data("x"), dir: -1 };
   }
-  if(target.id == "rowRight" || e.which == 39) {
+  if(target.id == "toRight" || e.which == 39) {
     rotateRow(cube.data("x"), 1);
     action = { type: "row", coord: cube.data("x"), dir: 1 };
   }
-  if(target.id == "colUp" || e.which == 38) {
+  if(target.id == "toUp" || e.which == 38) {
     rotateCol(cube.data("y"), -1);
     action = { type: "col", coord: cube.data("y"), dir: -1 };
   }
-  if(target.id == "colDown" || e.which == 40) {
+  if(target.id == "toDown" || e.which == 40) {
     rotateCol(cube.data("y"), 1);
     action = { type: "col", coord: cube.data("y"), dir: 1 };
   }
@@ -323,6 +345,8 @@ function rotate(e) {
     $actionArray.splice(-1, $actionIndex);
   }
 
+  $totalActions++;
+
   if(e.which) cancelSelection(e);
   $(window).off("keydown", rotate);
 }
@@ -331,24 +355,30 @@ function undo() {
   if($actionIndex < 1 || $("body").hasClass("paused")) return;
   var lastAction = $actionArray[$actionIndex - 1];
 
-  if(lastAction.type == "row")
+  if(lastAction.type == "depth")
+    rotateDepth(lastAction.coord, lastAction.dir * -1);
+  else if(lastAction.type == "row")
     rotateRow(lastAction.coord, lastAction.dir * -1);
   else
     rotateCol(lastAction.coord, lastAction.dir * -1);
 
   $actionIndex--;
+  $totalActions++;
 }
 
 function redo() {
   if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
   var nextAction = $actionArray[$actionIndex];
 
-  if(nextAction.type == "row")
+  if(nextAction.type == "depth")
+    rotateDepth(nextAction.coord, nextAction.dir);
+  else if(nextAction.type == "row")
     rotateRow(nextAction.coord, nextAction.dir);
   else
     rotateCol(nextAction.coord, nextAction.dir);
 
   $actionIndex++;
+  $totalActions++;
 }
 
 

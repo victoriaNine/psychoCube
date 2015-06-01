@@ -1074,14 +1074,20 @@ body.selecting .cube:not(.selected) {
   width: 30px;
   height: 30px; }
 
-#rowLeft {
-  transform: translate(-50px, -25%); }
+#toFront {
+  transform: translate(-50px, -60%); }
 
-#rowRight {
-  transform: translate(40px, -25%); }
+#toBack {
+  transform: translate(40px, -60%); }
 
-#colUp {
+#toLeft {
+  transform: translate(-50px, 60%); }
+
+#toRight {
+  transform: translate(40px, 60%); }
+
+#toUp {
   transform: translate(-25%, -50px); }
 
-#colDown {
+#toDown {
   transform: translate(-25%, 40px); }

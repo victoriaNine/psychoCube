@@ -197,9 +197,9 @@ function rotateCol(columnNb, direction) {
 }
 
 function rotateDepth(depthNb, direction) {
-  var column = findCube("z", depthNb);
+  var depth = findCube("z", depthNb);
 
-  $(column).each(function() {
+  $(depth).each(function() {
     updateCoord("depth", this.id, direction);
 
     var transform = getCurrentTransform(this);
