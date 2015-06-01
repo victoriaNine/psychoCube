@@ -163,92 +163,92 @@ html:not(.debug) #resetCube {
   top: 0;
   left: 0;
   transform-style: preserve-3d;
-  transform-origin: 13.5em 13.5em -9em;
+  transform-origin: 13.5em 13.5em 0em;
   transition: transform .2s ease-in-out; }
 
 body:not(.moving) .cube:hover {
   cursor: pointer; }
 
 #cube1-1-1 {
-  transform: translate3d(0em, 0em, 0em); }
+  transform: translate3d(0em, 0em, 9em); }
 
 #cube1-1-2 {
-  transform: translate3d(9em, 0em, 0em); }
+  transform: translate3d(9em, 0em, 9em); }
 
 #cube1-1-3 {
-  transform: translate3d(18em, 0em, 0em); }
+  transform: translate3d(18em, 0em, 9em); }
 
 #cube1-2-1 {
-  transform: translate3d(0em, 9em, 0em); }
+  transform: translate3d(0em, 9em, 9em); }
 
 #cube1-2-2 {
-  transform: translate3d(9em, 9em, 0em); }
+  transform: translate3d(9em, 9em, 9em); }
 
 #cube1-2-3 {
-  transform: translate3d(18em, 9em, 0em); }
+  transform: translate3d(18em, 9em, 9em); }
 
 #cube1-3-1 {
-  transform: translate3d(0em, 18em, 0em); }
+  transform: translate3d(0em, 18em, 9em); }
 
 #cube1-3-2 {
-  transform: translate3d(9em, 18em, 0em); }
+  transform: translate3d(9em, 18em, 9em); }
 
 #cube1-3-3 {
-  transform: translate3d(18em, 18em, 0em); }
+  transform: translate3d(18em, 18em, 9em); }
 
 #cube2-1-1 {
-  transform: translate3d(0em, 0em, -9em); }
+  transform: translate3d(0em, 0em, 0em); }
 
 #cube2-1-2 {
-  transform: translate3d(9em, 0em, -9em); }
+  transform: translate3d(9em, 0em, 0em); }
 
 #cube2-1-3 {
-  transform: translate3d(18em, 0em, -9em); }
+  transform: translate3d(18em, 0em, 0em); }
 
 #cube2-2-1 {
-  transform: translate3d(0em, 9em, -9em); }
+  transform: translate3d(0em, 9em, 0em); }
 
 #cube2-2-2 {
-  transform: translate3d(9em, 9em, -9em); }
+  transform: translate3d(9em, 9em, 0em); }
 
 #cube2-2-3 {
-  transform: translate3d(18em, 9em, -9em); }
+  transform: translate3d(18em, 9em, 0em); }
 
 #cube2-3-1 {
-  transform: translate3d(0em, 18em, -9em); }
+  transform: translate3d(0em, 18em, 0em); }
 
 #cube2-3-2 {
-  transform: translate3d(9em, 18em, -9em); }
+  transform: translate3d(9em, 18em, 0em); }
 
 #cube2-3-3 {
-  transform: translate3d(18em, 18em, -9em); }
+  transform: translate3d(18em, 18em, 0em); }
 
 #cube3-1-1 {
-  transform: translate3d(0em, 0em, -18em); }
+  transform: translate3d(0em, 0em, -9em); }
 
 #cube3-1-2 {
-  transform: translate3d(9em, 0em, -18em); }
+  transform: translate3d(9em, 0em, -9em); }
 
 #cube3-1-3 {
-  transform: translate3d(18em, 0em, -18em); }
+  transform: translate3d(18em, 0em, -9em); }
 
 #cube3-2-1 {
-  transform: translate3d(0em, 9em, -18em); }
+  transform: translate3d(0em, 9em, -9em); }
 
 #cube3-2-2 {
-  transform: translate3d(9em, 9em, -18em); }
+  transform: translate3d(9em, 9em, -9em); }
 
 #cube3-2-3 {
-  transform: translate3d(18em, 9em, -18em); }
+  transform: translate3d(18em, 9em, -9em); }
 
 #cube3-3-1 {
-  transform: translate3d(0em, 18em, -18em); }
+  transform: translate3d(0em, 18em, -9em); }
 
 #cube3-3-2 {
-  transform: translate3d(9em, 18em, -18em); }
+  transform: translate3d(9em, 18em, -9em); }
 
 #cube3-3-3 {
-  transform: translate3d(18em, 18em, -18em); }
+  transform: translate3d(18em, 18em, -9em); }
 
 /* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */
 #tridiv {

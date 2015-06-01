@@ -96,7 +96,7 @@ $(document).ready(function() {
 //===============================
 function newGame() {
   $(".cube").css("display","none");
-  $("#cube1-1-1, #cube1-1-2, #cube1-1-3, #cube1-2-1, #cube1-3-1, #cube2-2-2").css("display","block");
+  $("#cube1-1-1, #cube2-2-2").css("display","block");
 
   checkFocus(function() {
     addListeners();
@@ -118,9 +118,7 @@ function saveGame() {
   $game.actionIndex = $actionIndex;
   $game.actions = $actionArray;
 
-  $(".cube").each(function(i) {
-    $game.cubes[this.id] = $(this).data();
-  });
+  $(".cube").each(function() { $game.cubes[this.id] = $(this).data(); });
 
   setLocalStorage("psychoCubeGame", $game);
 }
@@ -216,7 +214,8 @@ function buildCube(callback) {
     for(var x = 1; x <= 3; x++) {
       for(var y = 1; y <= 3; y++) {
         var id = "cube"+z+"-"+x+"-"+y;
-        var newCube = $("<div id=\""+id+"\">").addClass("cube depth"+z+" row"+x+" column"+y);
+        var newCube = $("<div id=\""+id+"\">").addClass("cube");
+        //newCube.addClass("depth"+z+" row"+x+" column"+y);
         $("#protoCube").children().clone().appendTo(newCube);
 
         var protoPyramid = $("<div>").addClass("shape pyramid");
@@ -256,7 +255,8 @@ function resetCube() {
     var id = this.id.replace("cube","");
     var initCoord = id.split("-");
 
-    $(this).data({ "z": parseInt(initCoord[0]), "x": parseInt(initCoord[1]), "y": parseInt(initCoord[2]) }).attr("style","");
+    $(this).data({ "z": parseInt(initCoord[0]), "x": parseInt(initCoord[1]), "y": parseInt(initCoord[2]) });
+    $(this).removeClass("depthMove rowMove columnMove").attr("style","");
   });
 
   $actionArray = [];
@@ -307,36 +307,37 @@ function cancelSelection(e) {
 
 
 //===============================
-// ROTATION ACTIONS
+// ROTATION ACTIONS & HISTORY
 //===============================
 function rotate(e) {
   var target = e.currentTarget;
   var cube = $(".cube.selected");
   var action;
+  var rotation;
 
   if(target.id == "toFront" || e.which == 37) {
-    rotateDepth(cube.data("z"), -1);
+    rotation = function() { rotateDepth(cube.data("z"), -1); }
     action = { type: "depth", coord: cube.data("z"), dir: -1 };
   }
   if(target.id == "toBack" || e.which == 39) {
-    rotateDepth(cube.data("z"), 1);
+    rotation = function() { rotateDepth(cube.data("z"), 1); }
     action = { type: "depth", coord: cube.data("z"), dir: 1 };
   }
   if(target.id == "toLeft" || e.which == 37) {
-    rotateRow(cube.data("x"), -1);
+    rotation = function() { rotateRow(cube.data("x"), -1); }
     action = { type: "row", coord: cube.data("x"), dir: -1 };
   }
   if(target.id == "toRight" || e.which == 39) {
-    rotateRow(cube.data("x"), 1);
+    rotation = function() { rotateRow(cube.data("x"), 1); }
     action = { type: "row", coord: cube.data("x"), dir: 1 };
   }
   if(target.id == "toUp" || e.which == 38) {
-    rotateCol(cube.data("y"), -1);
-    action = { type: "col", coord: cube.data("y"), dir: -1 };
+    rotation = function() { rotateCol(cube.data("y"), -1); }
+    action = { type: "column", coord: cube.data("y"), dir: -1 };
   }
   if(target.id == "toDown" || e.which == 40) {
-    rotateCol(cube.data("y"), 1);
-    action = { type: "col", coord: cube.data("y"), dir: 1 };
+    rotation = function() { rotateCol(cube.data("y"), 1); }
+    action = { type: "column", coord: cube.data("y"), dir: 1 };
   }
 
   $actionArray[$actionIndex++] = action;
@@ -345,6 +346,7 @@ function rotate(e) {
     $actionArray.splice(-1, $actionIndex);
   }
 
+  rotation();
   $totalActions++;
 
   if(e.which) cancelSelection(e);
@@ -353,7 +355,7 @@ function rotate(e) {
 
 function undo() {
   if($actionIndex < 1 || $("body").hasClass("paused")) return;
-  var lastAction = $actionArray[$actionIndex - 1];
+  var lastAction = $actionArray[--$actionIndex];
 
   if(lastAction.type == "depth")
     rotateDepth(lastAction.coord, lastAction.dir * -1);
@@ -362,13 +364,12 @@ function undo() {
   else
     rotateCol(lastAction.coord, lastAction.dir * -1);
 
-  $actionIndex--;
   $totalActions++;
 }
 
 function redo() {
   if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
-  var nextAction = $actionArray[$actionIndex];
+  var nextAction = $actionArray[$actionIndex++];
 
   if(nextAction.type == "depth")
     rotateDepth(nextAction.coord, nextAction.dir);
@@ -377,7 +378,6 @@ function redo() {
   else
     rotateCol(nextAction.coord, nextAction.dir);
 
-  $actionIndex++;
   $totalActions++;
 }
 

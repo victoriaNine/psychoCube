@@ -111,7 +111,7 @@ html:not(.debug) #resetCube { display: none; }
   top: 0;
   left: 0;
   transform-style: preserve-3d;
-  transform-origin: 13.5em 13.5em -9em;
+  transform-origin: 13.5em 13.5em 0em;
 
   transition: transform .2s ease-in-out;
 }
@@ -123,7 +123,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
     @for $x from 1 through 3 {
       $translateX : $x * 9 - 9;
       $translateY : $y * 9 - 9;
-      $translateZ : $z * -9 + 9;
+      $translateZ : $z * -9 + 18;
 
       #cube#{$z}-#{$y}-#{$x} { 
         transform: translate3d(#{$translateX}em, #{$translateY}em, #{$translateZ}em);

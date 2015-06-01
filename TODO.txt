@@ -6,6 +6,7 @@
 ! Reset
 ! Pause (button & onBlur)
 ! Undo & Redo
+! Save & Load
 - Randomization
 - Randomize cube & cube solved : new game (delete current game data)
 - Cube solved : save current game data (timer, date, input player name) in high scores array
