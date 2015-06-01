@@ -112,6 +112,8 @@ html:not(.debug) #resetCube { display: none; }
   left: 0;
   transform-style: preserve-3d;
   transform-origin: 13.5em 13.5em -9em;
+
+  transition: transform .2s ease-in-out;
 }
 
 body:not(.moving) .cube:hover { cursor: pointer; }

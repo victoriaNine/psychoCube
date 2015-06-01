@@ -27,6 +27,18 @@ var rowRotation = [["1-1-1", "1-1-3", "3-1-3", "3-1-1"],
                    ["1-2-2", "2-2-3", "3-2-2", "2-2-1"],
                    ["1-3-2", "2-3-3", "3-3-2", "2-3-1"]];
 
+var depthRotation = [["1-1-1", "1-1-3", "1-3-3", "1-3-1"],
+                     ["2-1-1", "2-1-3", "2-3-3", "2-3-1"],
+                     ["3-1-1", "3-1-3", "3-3-3", "3-3-1"],
+
+                     ["1-2-2"],
+                     ["2-2-2"],
+                     ["3-3-2"],
+
+                     ["1-1-2", "1-2-3", "1-3-2", "1-2-1"],
+                     ["2-1-2", "2-2-3", "2-3-2", "2-2-1"],
+                     ["3-1-2", "3-2-3", "3-3-2", "3-2-1"]];
+
 function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
 function stopRotation() {
   if($("body").hasClass("moving")) {
@@ -154,10 +166,10 @@ function getPosition(cube) {
 
 function rotateRow(rowNb, direction) {
   var row = findCube("x", rowNb);
-  console.log("row : "+rowNb+", "+direction);
   
-  //console.log("========");
   $(row).each(function() {
+    updateCoord("row", this.id, direction);
+
     var transform = getCurrentTransform(this);
     var newRotateY = transform[1] + 90 * direction;
     if(Math.abs(newRotateY) == 360) newRotateY = 0;
@@ -165,17 +177,15 @@ function rotateRow(rowNb, direction) {
     var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
     var newTransform = "rotateX("+transform[0]+"deg) rotateY("+newRotateY+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
-
-    updateCoord("row", this.id, direction);
   })
 }
 
 function rotateCol(columnNb, direction) {
   var column = findCube("y", columnNb);
-  console.log("col : "+columnNb+", "+direction);
 
-  //console.log("========");
   $(column).each(function() {
+    updateCoord("column", this.id, direction);
+
     var transform = getCurrentTransform(this);
     var newRotateX = transform[0] + 90 * direction * -1; // Inverted Y-axis controls
     if(Math.abs(newRotateX) == 360) newRotateX = 0;
@@ -183,13 +193,29 @@ function rotateCol(columnNb, direction) {
     var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+transform[1]+"deg) rotateZ("+transform[2]+"deg) translate3d("+currentPosition+")";
     $(this).css("transform", newTransform);
+  })
+}
 
-    updateCoord("column", this.id, direction);
+function rotateDepth(depthNb, direction) {
+  var column = findCube("z", depthNb);
+
+  $(column).each(function() {
+    updateCoord("depth", this.id, direction);
+
+    var transform = getCurrentTransform(this);
+    var newRotateZ = transform[2] + 90 * direction;
+    if(Math.abs(newRotateZ) == 360) newRotateZ = 0;
+
+    var currentPosition = getPosition(this)[0]+"em, "+getPosition(this)[1]+"em, "+getPosition(this)[2]+"em";
+    var newTransform = "rotateX("+transform[0]+"deg) rotateY("+transform[1]+"deg) rotateZ("+newRotateZ+"deg) translate3d("+currentPosition+")";
+    $(this).css("transform", newTransform);
   })
 }
 
 function updateCoord(type, id, direction) {
-  var typeArray = (type == "row") ? rowRotation : colRotation;
+  var typeArray = (type == "depth") ? depthRotation :
+                  (type == "row") ? rowRotation : colRotation;
+
   var currentCoord = getCoord(type, id);
 
   var rotationState = currentCoord[1];
@@ -197,18 +223,15 @@ function updateCoord(type, id, direction) {
   if(newRotationState > typeArray[currentCoord[0]].length - 1) newRotationState = 0;
   if(newRotationState < 0) newRotationState = typeArray[currentCoord[0]].length - 1;
 
-  //console.log("------")
-  //console.log($("#"+id).data());
-
   var newCoord = typeArray[currentCoord[0]][newRotationState];
   var coordArray = newCoord.split("-");
   $("#"+id).data({ "z": parseInt(coordArray[0]), "x": parseInt(coordArray[1]), "y": parseInt(coordArray[2]) });
-
-  //console.log($("#"+id).data());
 }
 
 function getCoord(type, id) {
-  var typeArray = (type == "row") ? rowRotation : colRotation;
+  var typeArray = (type == "depth") ? depthRotation :
+                  (type == "row") ? rowRotation : colRotation;
+
   var rotationIndex;
   var coordIndex;
 

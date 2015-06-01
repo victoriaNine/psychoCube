@@ -85,6 +85,9 @@ $(document).ready(function() {
 // NEW GAME & SAVE GAME
 //===============================
 function newGame() {
+  $(".cube").css("display","none");
+  $("#cube1-1-1, #cube1-1-2, #cube1-1-3, #cube1-2-1, #cube1-3-1, #cube2-2-2").css("display","block");
+
   checkFocus(function() {
     addListeners();
 
@@ -257,7 +260,6 @@ function rotationMenu(e) {
   var posX = e.pageX;
   var posY = e.pageY;
   $("#rotationMenu").css({ left:posX+"px", top:posY+"px" });
-  console.log(target.id+" : "+$(target).data("z")+"-"+$(target).data("x")+"-"+$(target).data("y"));
 
   if(!$("body").hasClass("selecting")) {
     setTimeout(function() { $("#rotationMenu").addClass("open"); }, 200);
