@@ -1,6 +1,6 @@
-- Rubik's cube rotation logic
+~ Rubik's cube rotation logic
 - Rotate shaders appropriately
-- Rotation animations
+~ Rotation animations
 
 ! Controls
 ! Reset
