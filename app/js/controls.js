@@ -9,7 +9,7 @@ var depthRotation = [["1-1-1", "1-1-3", "1-3-3", "1-3-1"],
 
                      ["1-2-2"],
                      ["2-2-2"],
-                     ["3-3-2"],
+                     ["3-2-2"],
 
                      ["1-1-2", "1-2-3", "1-3-2", "1-2-1"],
                      ["2-1-2", "2-2-3", "2-3-2", "2-2-1"],
@@ -176,12 +176,12 @@ function rotateDepth(depthNb, direction) {
     var coordDelta = (newCoord[1] - initCoord[1]) * -1;
 
     var transform = getCurrentTransform(this);
-    var newRotateZ = 0;//transform[2];
-    var newRotateX = 0;//transform[0];
-    var newRotateY = 0;//transform[1];
+    var newRotateZ = transform[2];
+    var newRotateX = transform[0];
+    var newRotateY = transform[1];
 
-    newRotateZ = 90 * direction * coordDelta;
-    //newRotateZ += 90 * direction;
+    //newRotateZ = 90 * direction * coordDelta;
+    newRotateZ += 90 * direction;
     
     setRotate(this, newRotateZ, newRotateX, newRotateY);
   })
@@ -199,12 +199,12 @@ function rotateRow(rowNb, direction) {
     var coordDelta = (newCoord[1] - initCoord[1]) * -1;
 
     var transform = getCurrentTransform(this);
-    var newRotateZ = 0;//transform[2];
-    var newRotateX = 0;//transform[0];
-    var newRotateY = 0;//transform[1];
+    var newRotateZ = transform[2];
+    var newRotateX = transform[0];
+    var newRotateY = transform[1];
 
-    newRotateY = 90 * direction * coordDelta;
-    //newRotateY += 90 * direction;
+    //newRotateY = 90 * direction * coordDelta;
+    newRotateY += 90 * direction;
     
     setRotate(this, newRotateZ, newRotateX, newRotateY);
   })
@@ -221,12 +221,12 @@ function rotateCol(columnNb, direction) {
     var coordDelta = (newCoord[1] - initCoord[1]) * -1;
 
     var transform = getCurrentTransform(this);
-    var newRotateZ = 0;//transform[2];
-    var newRotateX = 0;//transform[0];
-    var newRotateY = 0;//transform[1];
+    var newRotateZ = transform[2];
+    var newRotateX = transform[0];
+    var newRotateY = transform[1];
 
-    newRotateX = 90 * direction * coordDelta;
-    //newRotateX += 90 * direction * -1; // Inverted Y-axis controls
+    //newRotateX = 90 * direction * coordDelta;
+    newRotateX += 90 * direction * -1; // Inverted Y-axis controls
 
     setRotate(this, newRotateZ, newRotateX, newRotateY);
   })
