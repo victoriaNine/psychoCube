@@ -169,6 +169,10 @@ function rotateDepth(depthNb, direction) {
   var depth = findCube("z", depthNb);
 
   $(depth).each(function() {
+    /*if(depthNb == 1) $(this).css("transform-origin", "13.5em 13.5em -9em"); // 1-2-2
+    if(depthNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
+    if(depthNb == 3) $(this).css("transform-origin", "13.5em 13.5em 9em"); // 3-2-2*/
+
     var initCoord = getCoord("depth", this.id, true);
     updateCoord("depth", this.id, direction);
     var newCoord = getCoord("depth", this.id);
@@ -192,6 +196,10 @@ function rotateRow(rowNb, direction) {
   
   console.log("======");
   $(row).each(function() {
+    /*if(rowNb == 1) $(this).css("transform-origin", "13.5em 9em 0em"); // 2-1-2
+    if(rowNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
+    if(rowNb == 3) $(this).css("transform-origin", "13.5em 18em 0em"); // 2-3-2*/
+
     var initCoord = getCoord("row", this.id, true);
     updateCoord("row", this.id, direction);
     var newCoord = getCoord("row", this.id);
@@ -207,13 +215,17 @@ function rotateRow(rowNb, direction) {
     newRotateY += 90 * direction;
     
     setRotate(this, newRotateZ, newRotateX, newRotateY);
-  })
+  });
 }
 
 function rotateCol(columnNb, direction) {
   var column = findCube("y", columnNb);
 
   $(column).each(function() {
+    /*if(columnNb == 1) $(this).css("transform-origin", "9em 13.5em 0em"); // 2-2-1
+    if(columnNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
+    if(columnNb == 3) $(this).css("transform-origin", "18em 13.5em 0em"); // 2-2-3*/
+
     var initCoord = getCoord("column", this.id, true);
     updateCoord("column", this.id, direction);
     var newCoord = getCoord("column", this.id);
@@ -237,10 +249,6 @@ function setRotate(element, z, x, y) {
   if(Math.abs(x) % 360 == 0) x = 0;
   if(Math.abs(y) % 360 == 0) y = 0;
 
-  /*if(z == -90) z = 270;
-  if(x == -90) x = 270;
-  if(y == -90) y = 270;*/
-
   var currentPosition = getPosition(element)[0]+"em, "+getPosition(element)[1]+"em, "+getPosition(element)[2]+"em";
   var newTransform = "rotateX("+x+"deg) rotateY("+y+"deg) rotateZ("+z+"deg) translate3d("+currentPosition+")";
   $(element).css("transform", newTransform);
@@ -248,14 +256,10 @@ function setRotate(element, z, x, y) {
   var rotationName = $actionArray[$actionIndex-1] ? $actionArray[$actionIndex-1].type+"Move" : "";
   $(element).removeClass("depthMove rowMove columnMove").addClass(rotationName);
 
-  /*setTimeout(function() {
-    if(Math.abs(z) == 360) z = 0;
-    if(Math.abs(x) == 360) x = 0;
-    if(Math.abs(y) == 360) y = 0;
-
-    var newTransform = "rotateX("+x+"deg) rotateY("+y+"deg) rotateZ("+z+"deg) translate3d("+currentPosition+")";
-    $(element).css("transform", newTransform);
-  }, 200);*/
+  setTimeout(function() {
+    //$(element).removeClass(element.classList[1]).addClass("cube"+$(element).data("z")+"-"+$(element).data("x")+"-"+$(element).data("y"));
+    //$(element).css("transform","");
+  }, 200);
 }
 
 function updateCoord(type, id, direction) {

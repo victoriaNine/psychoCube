@@ -96,7 +96,7 @@ $(document).ready(function() {
 //===============================
 function newGame() {
   $(".cube").css("display","none");
-  $("#cube1-1-1, #cube2-2-2").css("display","block");
+  $("#cube1-1-1, #cube2-1-2, #cube2-2-2").css("display","block");
 
   checkFocus(function() {
     addListeners();
@@ -235,12 +235,14 @@ function buildCube(callback) {
         if(y == 1) leftPyramid.appendTo(newCube);
         if(y == 3) rightPyramid.appendTo(newCube);
 
-        if($isNewGame) newCube.data({ "z": z, "x": x, "y": y });
+        if($isNewGame)
+          newCube.data({ "z": z, "x": x, "y": y });
         else {
           var coord = $game.cubes[id];
           newCube.data(coord);
         }
 
+        //newCube.addClass("cube"+newCube.data("z")+"-"+newCube.data("x")+"-"+newCube.data("y"));
         newCube.appendTo("#psychoCube");
       }
     }
