@@ -399,15 +399,24 @@
 			"file": "app/css/main.scss",
 			"settings":
 			{
-				"buffer_size": 15252,
+				"buffer_size": 15253,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "#cube-container{\n    position:absolute;\n    cursor: -webkit-grab;\n}\n\n#cube-viewport{\n    -webkit-perspective: 800px;\n    -moz-perspective: 800px;\n    -o-perspective: 800px;\n    \n    -webkit-perspective-origin: 50% 200px;\n    -moz-perspective-origin: 50% 200px;\n    -o-perspective-origin: 800px;\n}\n\n#cube{\n    position: relative;\n    height: 400px;\n    width: 400px;\n    -webkit-transform-style: preserve-3d;\n    -moz-transform-style: preserve-3d;\n}\n\n#cube-controls{\n    -webkit-tap-highlight-color: rgba(0,0,0,0);\n}\n   \n#cube .cubie{\n    position:absolute;\n    margin: 1px;\n    border: 3px solid black;\n    border-radius: 15px;\n    width:  100px;\n    height: 100px;\n    background-size:100px;\n    opacity: 1;\n    z-index: -1;\n    text-align: center;\n    font-size:30px;    \n}\n\n#cube .cubie > div{\n    line-height: 100px;\n    border-radius: 8px;\n}\n#cube .cubie > div span{\n    visibility: hidden;\n}\n\n/* CUBIE COLORS*/\n#cube .cubie > div.yellow {\nbackground-image: linear-gradient(top, rgb(255,232,54) 30%, rgb(214,214,34) 65%, rgb(184,184,24) 83%);\nbackground-image: -o-linear-gradient(top, rgb(255,232,54) 30%, rgb(214,214,34) 65%, rgb(184,184,24) 83%);\nbackground-image: -moz-linear-gradient(top, rgb(255,232,54) 30%, rgb(214,214,34) 65%, rgb(184,184,24) 83%);\nbackground-image: -webkit-linear-gradient(top, rgb(255,232,54) 30%, rgb(214,214,34) 65%, rgb(184,184,24) 83%);\nbackground-image: -ms-linear-gradient(top, rgb(255,232,54) 30%, rgb(214,214,34) 65%, rgb(184,184,24) 83%);\n\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.3, rgb(255,232,54)),\n    color-stop(0.65, rgb(214,214,34)),\n    color-stop(0.83, rgb(184,184,24))\n);\n\n}\n\n#cube .cubie > div.red {\nbackground-image: linear-gradient(top, rgb(255,56,56) 30%, rgb(212,36,36) 65%, rgb(161,27,27) 83%);\nbackground-image: -o-linear-gradient(top, rgb(255,56,56) 30%, rgb(212,36,36) 65%, rgb(161,27,27) 83%);\nbackground-image: -moz-linear-gradient(top, rgb(255,56,56) 30%, rgb(212,36,36) 65%, rgb(161,27,27) 83%);\nbackground-image: -webkit-linear-gradient(top, rgb(255,56,56) 30%, rgb(212,36,36) 65%, rgb(161,27,27) 83%);\nbackground-image: -ms-linear-gradient(top, rgb(255,56,56) 30%, rgb(212,36,36) 65%, rgb(161,27,27) 83%);\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.3, rgb(255,56,56)),\n    color-stop(0.65, rgb(212,36,36)),\n    color-stop(0.83, rgb(161,27,27))\n);\n}\n#cube .cubie > div.orange {\nbackground-image: linear-gradient(top, rgb(255,159,56) 30%, rgb(212,141,36) 65%, rgb(161,111,26) 83%);\nbackground-image: -o-linear-gradient(top, rgb(255,159,56) 30%, rgb(212,141,36) 65%, rgb(161,111,26) 83%);\nbackground-image: -moz-linear-gradient(top, rgb(255,159,56) 30%, rgb(212,141,36) 65%, rgb(161,111,26) 83%);\nbackground-image: -webkit-linear-gradient(top, rgb(255,159,56) 30%, rgb(212,141,36) 65%, rgb(161,111,26) 83%);\nbackground-image: -ms-linear-gradient(top, rgb(255,159,56) 30%, rgb(212,141,36) 65%, rgb(161,111,26) 83%);\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.3, rgb(255,159,56)),\n    color-stop(0.65, rgb(212,141,36)),\n    color-stop(0.83, rgb(161,111,26))\n);\n}\n#cube .cubie > div.green {\nbackground-image: linear-gradient(top, rgb(16,122,9) 11%, rgb(71,204,41) 56%, rgb(87,255,61) 78%);\nbackground-image: -o-linear-gradient(top, rgb(16,122,9) 11%, rgb(71,204,41) 56%, rgb(87,255,61) 78%);\nbackground-image: -moz-linear-gradient(top, rgb(16,122,9) 11%, rgb(71,204,41) 56%, rgb(87,255,61) 78%);\nbackground-image: -webkit-linear-gradient(top, rgb(16,122,9) 11%, rgb(71,204,41) 56%, rgb(87,255,61) 78%);\nbackground-image: -ms-linear-gradient(top, rgb(16,122,9) 11%, rgb(71,204,41) 56%, rgb(87,255,61) 78%);\n\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.11, rgb(16,122,9)),\n    color-stop(0.56, rgb(71,204,41)),\n    color-stop(0.78, rgb(87,255,61))\n);\n\n}\n#cube .cubie > div.blue {\nbackground-image: linear-gradient(top, rgb(86,56,255) 30%, rgb(62,36,212) 65%, rgb(42,26,163) 83%);\nbackground-image: -o-linear-gradient(top, rgb(86,56,255) 30%, rgb(62,36,212) 65%, rgb(42,26,163) 83%);\nbackground-image: -moz-linear-gradient(top, rgb(86,56,255) 30%, rgb(62,36,212) 65%, rgb(42,26,163) 83%);\nbackground-image: -webkit-linear-gradient(top, rgb(86,56,255) 30%, rgb(62,36,212) 65%, rgb(42,26,163) 83%);\nbackground-image: -ms-linear-gradient(top, rgb(86,56,255) 30%, rgb(62,36,212) 65%, rgb(42,26,163) 83%);\n\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.3, rgb(86,56,255)),\n    color-stop(0.65, rgb(62,36,212)),\n    color-stop(0.83, rgb(42,26,163))\n);\n}\n#cube .cubie > div.white {\n    background-image: linear-gradient(top, rgb(143,143,143) 11%, rgb(255,255,255) 56%, rgb(255,255,255) 78%);\nbackground-image: -o-linear-gradient(top, rgb(143,143,143) 11%, rgb(255,255,255) 56%, rgb(255,255,255) 78%);\nbackground-image: -moz-linear-gradient(top, rgb(143,143,143) 11%, rgb(255,255,255) 56%, rgb(255,255,255) 78%);\nbackground-image: -webkit-linear-gradient(top, rgb(143,143,143) 11%, rgb(255,255,255) 56%, rgb(255,255,255) 78%);\nbackground-image: -ms-linear-gradient(top, rgb(143,143,143) 11%, rgb(255,255,255) 56%, rgb(255,255,255) 78%);\n\nbackground-image: -webkit-gradient(\n    linear,\n    left top,\n    left bottom,\n    color-stop(0.11, rgb(143,143,143)),\n    color-stop(0.56, rgb(255,255,255)),\n    color-stop(0.78, rgb(255,255,255))\n);\n}\n/* TEXT ROTATIONS */\n.textLeft{-webkit-transform: rotate(-90deg)}\n.textDown{-webkit-transform: rotate(-180deg)}\n.textRight{-webkit-transform: rotate(90deg)}\n\n\n/* PLANES & ROTATIONS */\n\n#plane{\n    -webkit-transform-style: preserve-3d;\n    -moz-transform-style: preserve-3d;\n    transform-style: preserve-3d;\n}\n.moving {\n    -webkit-transition: all .2s linear;\n    -moz-transition: all .2s linear;\n}\n\n/*PLANE M */\n.M-left {\n    -webkit-transform-origin: 0px 200px;\n    -webkit-transform:rotateX(90deg);\n    -moz-transform-origin: 0px 200px;\n    -moz-transform:rotateX(90deg);\n}\n.M-right {\n    -webkit-transform-origin: 0px 200px;\n    -webkit-transform:rotateX(-90deg);\n    -moz-transform-origin: 0px 200px;\n    -moz-transform:rotateX(-90deg);\n}\n\n/*PLANE E */\n.E-right {\n    -webkit-transform:rotateY(90deg);\n    -moz-transform:rotateY(90deg)\n    }\n.E-left {\n    -webkit-transform:rotateY(-90deg);\n    -moz-transform:rotateY(-90deg)\n}\n\n/*PLANE S */\n.S-left {\n    -webkit-transform-origin: 200px 200px;\n    -webkit-transform:rotateZ(-90deg);\n    -moz-transform-origin: 200px 200px;\n    -moz-transform:rotateZ(-90deg);\n}\n.S-right {\n    -webkit-transform-origin: 200px 200px;\n    -webkit-transform:rotateZ(90deg);\n    -moz-transform-origin: 200px 200px;\n    -moz-transform:rotateZ(90deg);\n}\n\n/* CUBIES POSITIONS*/\n\n/*UP FACE CUBIES*/\n.utl {\n    -webkit-transform:rotateX(90deg) translate3d(50px,-100px,0);\n    -moz-transform:rotateX(90deg) translate3d(50px,-100px,0);\n}\n.ucl {\n    -webkit-transform:rotateX(90deg) translate3d(50px,0,0);\n    -moz-transform:rotateX(90deg) translate3d(50px,0,0);\n}\n.ubl {\n    -webkit-transform:rotateX(90deg) translate3d(50px,100px,0px);\n    -moz-transform:rotateX(90deg) translate3d(50px,100px,0px);\n}\n.utc {\n    -webkit-transform:rotateX(90deg) translate3d(150px,-100px,0);\n    -moz-transform:rotateX(90deg) translate3d(150px,-100px,0);\n}\n.ucc {\n    -webkit-transform:rotateX(90deg) translate3d(150px,0,0);\n    -moz-transform:rotateX(90deg) translate3d(150px,0,0);\n}\n.ubc {\n    -webkit-transform:rotateX(90deg) translate3d(150px,100px,0);\n    -moz-transform:rotateX(90deg) translate3d(150px,100px,0);\n}\n.utr {\n    -webkit-transform:rotateX(90deg) translate3d(250px,-100px,0);\n    -moz-transform:rotateX(90deg) translate3d(250px,-100px,0);\n}\n.ucr {\n    -webkit-transform:rotateX(90deg) translate3d(250px,0,0);\n    -moz-transform:rotateX(90deg) translate3d(250px,0,0);\n}\n.ubr {\n    -webkit-transform:rotateX(90deg) translate3d(250px,100px,0);\n    -moz-transform:rotateX(90deg) translate3d(250px,100px,0);\n}\n\n/*FRONT FACE CUBIES*/\n.ftl {\n    -webkit-transform:translate3d(50px,50px,150px);\n    -moz-transform:translate3d(50px,50px,150px);\n}\n.fcl {\n    -webkit-transform:translate3d(50px,150px,150px);\n    -moz-transform:translate3d(50px,150px,150px);\n\n}\n.fbl {\n    -webkit-transform:translate3d(50px,250px,150px);\n    -moz-transform:translate3d(50px,250px,150px);\n}\n.ftc {\n    -webkit-transform:translate3d(150px,50px,150px);\n    -moz-transform:translate3d(150px,50px,150px);\n}\n.fcc {\n    -webkit-transform:translate3d(150px,150px,150px);\n    -moz-transform:translate3d(150px,150px,150px);\n}\n.fbc {\n    -webkit-transform:translate3d(150px,250px,150px);\n    -moz-transform:translate3d(150px,250px,150px);\n}\n.ftr {\n    -webkit-transform:translate3d(250px,50px,150px);\n    -moz-transform:translate3d(250px,50px,150px);\n}\n.fcr {\n    -webkit-transform:translate3d(250px,150px,150px);\n    -moz-transform:translate3d(250px,150px,150px);\n}\n.fbr {\n    -webkit-transform:translate3d(250px,250px,150px);\n    -moz-transform:translate3d(250px,250px,150px);\n}\n\n/*DOWN FACE CUBIES*/\n.dtl {\n    -webkit-transform:rotateX(-90deg) translate3d(50px,-100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(50px,-100px,300px);\n}\n.dcl {\n    -webkit-transform:rotateX(-90deg) translate3d(50px,0,300px);\n    -moz-transform:rotateX(-90deg) translate3d(50px,0,300px);\n}\n.dbl {\n    -webkit-transform:rotateX(-90deg) translate3d(50px,100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(50px,100px,300px);\n}\n.dtc {\n    -webkit-transform:rotateX(-90deg) translate3d(150px,-100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(150px,-100px,300px);\n}\n.dcc {\n    -webkit-transform:rotateX(-90deg) translate3d(150px,0px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(150px,0px,300px);\n}\n.dbc {\n    -webkit-transform:rotateX(-90deg) translate3d(150px,100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(150px,100px,300px);\n}\n.dtr {\n    -webkit-transform:rotateX(-90deg) translate3d(250px,-100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(250px,-100px,300px);\n}\n.dcr {\n    -webkit-transform:rotateX(-90deg) translate3d(250px,0px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(250px,0px,300px);\n}\n.dbr {\n    -webkit-transform:rotateX(-90deg) translate3d(250px,100px,300px);\n    -moz-transform:rotateX(-90deg) translate3d(250px,100px,300px);\n}\n\n/*BACK FACE CUBIES*/\n.btl {\n    -webkit-transform:rotateX(-180deg) translate3d(50px,-250px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(50px,-250px,150px);\n}\n.bcl {\n    -webkit-transform:rotateX(-180deg) translate3d(50px,-150px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(50px,-150px,150px);\n}\n.bbl {\n    -webkit-transform:rotateX(-180deg) translate3d(50px,-50px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(50px,-50px,150px);\n}\n.btc {\n    -webkit-transform:rotateX(-180deg) translate3d(150px,-250px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(150px,-250px,150px);\n}\n.bcc {\n    -webkit-transform:rotateX(-180deg) translate3d(150px,-150px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(150px,-150px,150px);\n}\n.bbc {\n    -webkit-transform:rotateX(-180deg) translate3d(150px,-50px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(150px,-50px,150px);\n}\n.btr {\n    -webkit-transform:rotateX(-180deg) translate3d(250px,-250px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(250px,-250px,150px);\n}\n.bcr {\n    -webkit-transform:rotateX(-180deg) translate3d(250px,-150px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(250px,-150px,150px)\n\n}\n.bbr {\n    -webkit-transform:rotateX(-180deg) translate3d(250px,-50px,150px);\n    -moz-transform:rotateX(-180deg) translate3d(250px,-50px,150px);\n}\n\n/*LEFT FACE CUBIES*/\n.ltl {\n    -webkit-transform:rotateY(-90deg) translate3d(-100px,50px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(-100px,50px,0px);\n}\n.lcl {\n    -webkit-transform:rotateY(-90deg) translate3d(-100px,150px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(-100px,150px,0px);\n}\n.lbl {\n    -webkit-transform:rotateY(-90deg) translate3d(-100px,250px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(-100px,250px,0px);\n}\n.ltc {\n    -webkit-transform:rotateY(-90deg) translate3d(0px,50px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(0px,50px,0px);\n}\n.lcc {\n    -webkit-transform:rotateY(-90deg) translate3d(0px,150px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(0px,150px,0px);\n}\n.lbc {\n    -webkit-transform:rotateY(-90deg) translate3d(0px,250px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(0px,250px,0px);\n}\n.ltr {\n    -webkit-transform:rotateY(-90deg) translate3d(100px,50px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(100px,50px,0px);\n}\n.lcr {\n    -webkit-transform:rotateY(-90deg) translate3d(100px,150px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(100px,150px,0px);\n}\n.lbr {\n    -webkit-transform:rotateY(-90deg) translate3d(100px,250px,0px);\n    -moz-transform:rotateY(-90deg) translate3d(100px,250px,0px);\n}\n\n/*RIGHT FACE CUBIES*/\n.rtl {\n    -webkit-transform:rotateY(90deg) translate3d(-100px,50px,300px);\n    -moz-transform:rotateY(90deg) translate3d(-100px,50px,300px);\n}\n.rcl {\n    -webkit-transform:rotateY(90deg) translate3d(-100px,150px,300px);\n    -moz-transform:rotateY(90deg) translate3d(-100px,150px,300px);\n}\n.rbl {\n    -webkit-transform:rotateY(90deg) translate3d(-100px,250px,300px);\n    -moz-transform:rotateY(90deg) translate3d(-100px,250px,300px);\n}\n.rtc {\n    -webkit-transform:rotateY(90deg) translate3d(0px,50px,300px);\n    -moz-transform:rotateY(90deg) translate3d(0px,50px,300px);;\n}\n.rcc {\n    -webkit-transform:rotateY(90deg) translate3d(0px,150px,300px);\n    -moz-transform:rotateY(90deg) translate3d(0px,150px,300px);\n}\n.rbc {\n    -webkit-transform:rotateY(90deg) translate3d(0px,250px,300px);\n    -moz-transform:rotateY(90deg) translate3d(0px,250px,300px);\n}\n.rtr {\n    -webkit-transform:rotateY(90deg) translate3d(100px,50px,300px);\n    -moz-transform:rotateY(90deg) translate3d(100px,50px,300px);\n}\n.rcr {\n    -webkit-transform:rotateY(90deg) translate3d(100px,150px,300px);\n    -moz-transform:rotateY(90deg) translate3d(100px,150px,300px);\n}\n.rbr {\n    -webkit-transform:rotateY(90deg) translate3d(100px,250px,300px);\n    -moz-transform:rotateY(90deg) translate3d(100px,250px,300px);\n}",
+			"settings":
+			{
+				"buffer_size": 14299,
+				"line_ending": "Windows",
+				"name": "#cube-container{"
 			}
 		},
 		{
 			"file": "app/js/main.js",
 			"settings":
 			{
-				"buffer_size": 17036,
+				"buffer_size": 17156,
 				"line_ending": "Windows"
 			}
 		},
@@ -415,7 +424,7 @@
 			"file": "app/js/controls.js",
 			"settings":
 			{
-				"buffer_size": 10619,
+				"buffer_size": 11213,
 				"line_ending": "Windows"
 			}
 		},
@@ -433,22 +442,6 @@
 			"settings":
 			{
 				"buffer_size": 5006,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/wamp/www/devTests/rover/mtab/css/style.scss",
-			"settings":
-			{
-				"buffer_size": 1159,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/wamp/www/devTests/rover/mtab/js/main.js",
-			"settings":
-			{
-				"buffer_size": 1415,
 				"line_ending": "Windows"
 			}
 		}
@@ -501,6 +494,12 @@
 	],
 	"file_history":
 	[
+		"/C/wamp/www/devTests/rover/mtab/js/main.js",
+		"/C/wamp/www/devTests/rover/mtab/css/style.scss",
+		"/C/wamp/www/devTests/rover/mfooter/js/main.js",
+		"/C/wamp/www/devTests/rover/mfooter/index_spAndroid.html",
+		"/C/wamp/www/devTests/rover/mfooter/index_iPad.html",
+		"/C/wamp/www/devTests/rover/mfooter/css/style.scss",
 		"/C/wamp/www/devTests/rover/mtab/index_iPad.html",
 		"/C/wamp/www/devTests/rover/mtab/index_spAndroid.html",
 		"/C/wamp/www/devTests/sncf2/mTab/js/main.js",
@@ -622,13 +621,7 @@
 		"/C/Users/Leivvi/Downloads/ClickEffects/css/demo.css",
 		"/C/Users/Leivvi/Downloads/ClickEffects/js/modernizr.custom.js",
 		"/C/Users/Leivvi/Downloads/ClickEffects/js/classie.js",
-		"/E/labs/intertap/app/scripts/CSSRulePlugin.js",
-		"/E/labs/intertap/app/styles/main.css.map",
-		"/D/Program Files/Koala/app/locales/repositories.json",
-		"/D/Program Files/Koala/package.json",
-		"/E/labs/intertap/node_modules/grunt-sass/package.json",
-		"/E/labs/intertap/bower.json",
-		"/E/labs/intertap/css/style.css"
+		"/E/labs/intertap/app/scripts/CSSRulePlugin.js"
 	],
 	"find":
 	{
@@ -647,6 +640,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"iPad",
+			"timeline",
 			"media",
 			"replace",
 			"col",
@@ -772,9 +767,7 @@
 			"this.fileURL",
 			"audioEngine",
 			"BGM",
-			"audioScreen",
-			"90",
-			"nav"
+			"audioScreen"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -782,6 +775,8 @@
 		"regex": true,
 		"replace_history":
 		[
+			"spAndroid",
+			"intro",
 			"img",
 			"js",
 			"css",
@@ -857,7 +852,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -887,7 +882,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -896,15 +891,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15252,
+						"buffer_size": 15253,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7705,
-								7705
+								2293,
+								2293
 							]
 						],
 						"settings":
@@ -914,74 +909,104 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8323.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/js/main.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17036,
+						"buffer_size": 14299,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2905,
-								2905
+								6309,
+								6309
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 901.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/js/controls.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10619,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								972,
-								972
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
+							"auto_name": "#cube-container{",
+							"syntax": "Packages/Syntax Highlighting for Sass/Syntaxes/SCSS.tmLanguage",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17156,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11588,
+								11588
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5149.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
+					"file": "app/js/controls.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11213,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7202,
+								7202
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "TODO.txt",
 					"semi_transient": false,
 					"settings":
@@ -1006,11 +1031,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"semi_transient": false,
 					"settings":
 					{
@@ -1035,65 +1060,7 @@
 						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/C/wamp/www/devTests/rover/mtab/css/style.scss",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1159,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11,
-								11
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Syntax Highlighting for Sass/Syntaxes/SCSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/C/wamp/www/devTests/rover/mtab/js/main.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1415,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1045,
-								1045
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1138,7 +1105,7 @@
 	"project": "psychoCube.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1176,7 +1143,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 275.0,
+	"side_bar_width": 269.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
