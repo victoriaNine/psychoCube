@@ -275,7 +275,7 @@ body:not(.moving) .cube:hover {
   top: 50%;
   left: 50%;
   margin: -40em 0 0 -40em;
-  transform-origin: 50% 50% -33.75em; }
+  transform-origin: 50% 50% -27em; }
 
 .shape {
   top: 50%;

@@ -95,9 +95,6 @@ $(document).ready(function() {
 // NEW GAME & SAVE GAME
 //===============================
 function newGame() {
-  $(".cube").css("display","none");
-  $("#cube1-1-1, #cube2-1-2, #cube2-2-2").css("display","block");
-
   checkFocus(function() {
     addListeners();
 
@@ -136,7 +133,7 @@ function addListeners() {
   $("#undo").on(eventtype, undo);
   $("#redo").on(eventtype, redo);
 
-  $("#resetPosition").on(eventtype, function() {
+  $("#resetCamera").on(eventtype, function() {
     TweenMax.to($("#scene"), 1, { transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
         $("#scene").css("transform", defaultTransform);
@@ -215,7 +212,6 @@ function buildCube(callback) {
       for(var y = 1; y <= 3; y++) {
         var id = "cube"+z+"-"+x+"-"+y;
         var newCube = $("<div id=\""+id+"\">").addClass("cube cube"+z+"-"+x+"-"+y);
-        //newCube.addClass("depth"+z+" row"+x+" column"+y);
         $("#protoCube").children().clone().appendTo(newCube);
 
         var protoPyramid = $("<div>").addClass("shape pyramid");
@@ -227,6 +223,16 @@ function buildCube(callback) {
         var bottomPyramid = protoPyramid.clone().addClass("pyramid-bottom color-green");
         var leftPyramid = protoPyramid.clone().addClass("pyramid-left color-yellow");
         var rightPyramid = protoPyramid.clone().addClass("pyramid-right color-blue");
+
+        var cubeFaces = facesMap[z+"-"+x+"-"+y];
+        if(cubeFaces) {
+          if(cubeFaces.front)   frontPyramid.addClass("face"+cubeFaces.front);
+          if(cubeFaces.back)    backPyramid.addClass("face"+cubeFaces.back);
+          if(cubeFaces.top)     topPyramid.addClass("face"+cubeFaces.top);
+          if(cubeFaces.bottom)  bottomPyramid.addClass("face"+cubeFaces.bottom);
+          if(cubeFaces.left)    leftPyramid.addClass("face"+cubeFaces.left);
+          if(cubeFaces.right)   rightPyramid.addClass("face"+cubeFaces.right);
+        }
 
         if(z == 1) frontPyramid.appendTo(newCube);
         if(z == 3) backPyramid.appendTo(newCube);
@@ -242,7 +248,6 @@ function buildCube(callback) {
           newCube.data(coord);
         }
 
-        //newCube.addClass("cube"+newCube.data("z")+"-"+newCube.data("x")+"-"+newCube.data("y"));
         newCube.appendTo("#psychoCube");
       }
     }
@@ -315,32 +320,24 @@ function rotate(e) {
   var target = e.currentTarget;
   var cube = $(".cube.selected");
   var action;
-  var rotation;
 
-  if(target.id == "toFront" || e.which == 37) {
-    rotation = function() { rotateDepth(cube.data("z"), -1); }
-    action = { type: "depth", coord: cube.data("z"), dir: -1 };
-  }
-  if(target.id == "toBack" || e.which == 39) {
-    rotation = function() { rotateDepth(cube.data("z"), 1); }
-    action = { type: "depth", coord: cube.data("z"), dir: 1 };
-  }
-  if(target.id == "toLeft" || e.which == 37) {
-    rotation = function() { rotateRow(cube.data("x"), -1); }
-    action = { type: "row", coord: cube.data("x"), dir: -1 };
-  }
-  if(target.id == "toRight" || e.which == 39) {
-    rotation = function() { rotateRow(cube.data("x"), 1); }
-    action = { type: "row", coord: cube.data("x"), dir: 1 };
-  }
-  if(target.id == "toUp" || e.which == 38) {
-    rotation = function() { rotateCol(cube.data("y"), -1); }
-    action = { type: "column", coord: cube.data("y"), dir: -1 };
-  }
-  if(target.id == "toDown" || e.which == 40) {
-    rotation = function() { rotateCol(cube.data("y"), 1); }
-    action = { type: "column", coord: cube.data("y"), dir: 1 };
-  }
+  if(target.id == "toFront" || e.which == 37)
+    action = { axis: "z", coord: cube.data("z"), direction: -1 };
+
+  if(target.id == "toBack" || e.which == 39)
+    action = { axis: "z", coord: cube.data("z"), direction: 1 };
+
+  if(target.id == "toLeft" || e.which == 37)
+    action = { axis: "x", coord: cube.data("x"), direction: -1 };
+
+  if(target.id == "toRight" || e.which == 39) 
+    action = { axis: "x", coord: cube.data("x"), direction: 1 };
+
+  if(target.id == "toUp" || e.which == 38)
+    action = { axis: "y", coord: cube.data("y"), direction: -1 };
+
+  if(target.id == "toDown" || e.which == 40) 
+    action = { axis: "y", coord: cube.data("y"), direction: 1 };
 
   $actionArray[$actionIndex++] = action;
   if($actionIndex < $actionArray.length) {
@@ -348,7 +345,7 @@ function rotate(e) {
     $actionArray.splice(-1, $actionIndex);
   }
 
-  rotation();
+  rotateCube(action.axis, action.coord, action.direction);
   $totalActions++;
 
   if(e.which) cancelSelection(e);
@@ -359,13 +356,7 @@ function undo() {
   if($actionIndex < 1 || $("body").hasClass("paused")) return;
   var lastAction = $actionArray[--$actionIndex];
 
-  if(lastAction.type == "depth")
-    rotateDepth(lastAction.coord, lastAction.dir * -1);
-  else if(lastAction.type == "row")
-    rotateRow(lastAction.coord, lastAction.dir * -1);
-  else
-    rotateCol(lastAction.coord, lastAction.dir * -1);
-
+  rotateCube(lastAction.axis, lastAction.coord, lastAction.direction * -1);
   $totalActions++;
 }
 
@@ -373,13 +364,7 @@ function redo() {
   if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
   var nextAction = $actionArray[$actionIndex++];
 
-  if(nextAction.type == "depth")
-    rotateDepth(nextAction.coord, nextAction.dir);
-  else if(nextAction.type == "row")
-    rotateRow(nextAction.coord, nextAction.dir);
-  else
-    rotateCol(nextAction.coord, nextAction.dir);
-
+  rotateCube(nextAction.axis, nextAction.coord, nextAction.direction);
   $totalActions++;
 }
 

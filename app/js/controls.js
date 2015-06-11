@@ -55,7 +55,11 @@ var depthFaceRotation = [["3-3-1", "6-1-1", "4-1-3", "5-3-3"],    // faces invol
                          ["1-1-1", "1-1-3", "1-3-3", "1-3-1"],    // front face corners
                          ["1-1-2", "1-2-3", "1-3-2", "1-2-1"],    // front face edges
                          ["2-3-3", "2-3-1", "2-1-1", "2-1-3"],    // back face corners
-                         ["2-3-2", "2-2-1", "2-1-2", "2-2-3"]];   // back face edges
+                         ["2-3-2", "2-2-1", "2-1-2", "2-2-3"],    // back face edges
+
+                         // Center faces
+                         ["1-2-2"],
+                         ["2-2-2"]];
 
 var rowFaceRotation = [["1-1-1", "6-1-1", "2-3-3", "5-1-1"],      // faces involved : front, right, back, left
                        ["1-1-2", "6-1-2", "2-3-2", "5-1-2"],
@@ -73,7 +77,11 @@ var rowFaceRotation = [["1-1-1", "6-1-1", "2-3-3", "5-1-1"],      // faces invol
                        ["3-3-1", "3-3-3", "3-1-3", "3-1-1"],      // top face corners
                        ["3-3-2", "3-2-3", "3-1-2", "3-2-1"],      // top face edges
                        ["4-1-1", "4-3-1", "4-3-3", "4-1-3"],      // bottom face corners
-                       ["4-1-2", "4-2-3", "4-3-2", "4-2-1"]];     // botom face edges
+                       ["4-1-2", "4-2-3", "4-3-2", "4-2-1"],      // botom face edges
+
+                       // Center faces
+                       ["3-2-2"],
+                       ["4-2-2"]];
 
 var colFaceRotation = [["1-1-1", "4-1-1", "2-1-1", "3-1-1"],      // faces involved : front, bottom, back, top
                        ["1-1-2", "4-1-2", "2-1-2", "3-1-2"],
@@ -91,43 +99,47 @@ var colFaceRotation = [["1-1-1", "4-1-1", "2-1-1", "3-1-1"],      // faces invol
                        ["5-1-3", "5-3-3", "5-3-1", "5-1-1"],      // left face corners
                        ["5-2-3", "5-3-2", "5-2-1", "5-1-2"],      // left face edges
                        ["6-1-1", "6-3-1", "6-3-3", "6-1-3"],      // right face corners
-                       ["6-2-1", "6-3-2", "6-2-3", "6-1-2"]];     // right face edges
+                       ["6-2-1", "6-3-2", "6-2-3", "6-1-2"],      // right face edges
 
-var faceDependancies = { "1-1-1" : ["1-1-1", "3-3-1", "5-1-3"],
-                         "1-1-2" : ["1-1-2", "3-3-2"],          
-                         "1-1-3" : ["1-1-3", "3-3-3", "6-1-1"],
+                       // Center faces
+                       ["5-2-2"],
+                       ["6-2-2"]];
 
-                         "1-2-1" : ["1-2-1", "5-2-3"],
-                         "1-2-2" : ["1-2-2"],
-                         "1-2-3" : ["1-2-3", "6-2-1"],
+var facesMap = { "1-1-1" : { front: "1-1-1", top: "3-3-1", left: "5-1-3" },
+                 "1-1-2" : { front: "1-1-2", top: "3-3-2" },          
+                 "1-1-3" : { front: "1-1-3", top: "3-3-3", right: "6-1-1" },
 
-                         "1-3-1" : ["1-3-1", "4-1-1", "5-3-3"],      
-                         "1-3-2" : ["1-3-2", "4-1-2"],
-                         "1-3-3" : ["1-3-3", "4-1-3", "6-3-1"],
+                 "1-2-1" : { front: "1-2-1", left: "5-2-3" },
+                 "1-2-2" : { front: "1-2-2" },
+                 "1-2-3" : { front: "1-2-3", right: "6-2-1" },
 
-                         "2-1-1" : ["5-1-2", "3-2-1"],
-                         "2-1-2" : ["3-2-2"],
-                         "2-1-3" : ["6-1-2", "3-2-3"],
+                 "1-3-1" : { front: "1-3-1", bottom: "4-1-1", left: "5-3-3" },      
+                 "1-3-2" : { front: "1-3-2", bottom: "4-1-2" },
+                 "1-3-3" : { front: "1-3-3", bottom: "4-1-3", right: "6-3-1" },
 
-                         "2-2-1" : ["5-2-2"],
-                         // 2-2-2 has no visible faces
-                         "2-2-3" : ["6-2-2"],
+                 "2-1-1" : { top: "3-2-1", left: "5-1-2" },
+                 "2-1-2" : { top: "3-2-2" },
+                 "2-1-3" : { top: "3-2-3", right: "6-1-2" },
 
-                         "2-3-1" : ["5-3-2", "4-2-1"],
-                         "2-3-2" : ["4-2-2"],
-                         "2-3-3" : ["6-3-2", "4-2-3"],
+                 "2-2-1" : { left: "5-2-2" },
+                 // 2-2-2 has no visible faces
+                 "2-2-3" : { right: "6-2-2" },
 
-                         "3-1-1" : ["2-3-3", "3-1-3", "6-1-3"],              // ?
-                         "3-1-2" : ["2-3-2", "3-1-2"],                       // ?
-                         "3-1-3" : ["2-3-1", "3-1-1", "5-1-1"],              // ?
+                 "2-3-1" : { bottom: "4-2-1", left: "5-3-2" },
+                 "2-3-2" : { bottom: "4-2-2" },
+                 "2-3-3" : { bottom: "4-2-3", right: "6-3-2" },
 
-                         "3-2-1" : ["2-2-3", "6-2-3"],                       // ?
-                         "3-2-2" : ["2-2-2"],                                // ?
-                         "3-2-3" : ["2-2-1", "5-2-1"],                       // ?
+                 "3-1-1" : { back: "2-3-1", top: "3-1-1", left: "5-1-1" },
+                 "3-1-2" : { back: "2-3-2", top: "3-1-2" },
+                 "3-1-3" : { back: "2-3-3", top: "3-1-3", right: "6-1-3" },
 
-                         "3-3-1" : ["2-1-3", "4-3-3", "6-3-3"],              // ?
-                         "3-3-2" : ["2-1-2", "4-3-2"],                       // ?
-                         "3-3-3" : ["2-1-1", "4-3-1", "5-3-1"]};             // ?
+                 "3-2-1" : { back: "2-2-1", left: "5-2-1" },
+                 "3-2-2" : { back: "2-2-2" },
+                 "3-2-3" : { back: "2-2-3", right: "6-2-3" },
+
+                 "3-3-1" : { back: "2-1-1", bottom: "4-3-1", left: "5-3-1" },
+                 "3-3-2" : { back: "2-1-2", bottom: "4-3-2" },
+                 "3-3-3" : { back: "2-1-3", bottom: "4-3-3", right: "6-3-3" } };
 
 function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
 function stopRotation() {
@@ -141,19 +153,20 @@ function stopRotation() {
 function setRotation(e) {
   if($("body").hasClass("moving")) {
     var transform = $("#scene")[0].style.transform;
-
     var transformValues = getCurrentTransform($("#scene")[0]);
     var rotateX = transformValues[0];
     var rotateY = transformValues[1];
 
-    currentX = e.pageY || e.originalEvent.touches[0].pageY;
+    if(mobileCheck()) e = e.originalEvent.touches[0];
+
+    currentX = e.pageY;
     if(!prevX) prevX = currentX;
     var deltaX = Math.abs(prevX - currentX);
     
     if(currentX > prevX) dirX = 1;
     else if(currentX < prevX) dirX = -1;
 
-    currentY = e.pageX || e.originalEvent.touches[0].pageX;
+    currentY = e.pageX;
     if(!prevY) prevY = currentY;
     var deltaY = Math.abs(prevY - currentY);
     
@@ -254,103 +267,25 @@ function getPosition(cube) {
   return array;
 }
 
-function rotateDepth(depthNb, direction) {
-  var depth = findCube("z", depthNb);
+function rotateCube(axis, coord, direction) {
+  var range = findCube(axis, coord);
 
-  $(depth).each(function() {
-    /*if(depthNb == 1) $(this).css("transform-origin", "13.5em 13.5em -9em"); // 1-2-2
-    if(depthNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
-    if(depthNb == 3) $(this).css("transform-origin", "13.5em 13.5em 9em"); // 3-2-2*/
+  $(range).each(function() {
+    var axisName = (axis == "x") ? "row" : (axis == "y") ? "column" : "depth";
+    updateCoord(axisName, this.id, direction);
 
-    var initCoord = getCoord("depth", this.id, true);
-    updateCoord("depth", this.id, direction);
-    var newCoord = getCoord("depth", this.id);
+    var currentClass = this.className.match(/cube([0-9])\-([0-9])\-([0-9])/)[0];
+    var newClass = "cube"+$(this).data("z")+"-"+$(this).data("x")+"-"+$(this).data("y");
+    $(this).removeClass(currentClass).addClass(newClass);
 
-    var coordDelta = (newCoord[1] - initCoord[1]) * -1;
-
-    var transform = getCurrentTransform(this);
-    var newRotateZ = transform[2];
-    var newRotateX = transform[0];
-    var newRotateY = transform[1];
-
-    //newRotateZ = 90 * direction * coordDelta;
-    newRotateZ += 90 * direction;
-    
-    setRotate(this, newRotateZ, newRotateX, newRotateY);
+    $(this).find(".pyramid").each(function() {
+      updateFace(axisName, this, direction);
+    });
   })
 }
 
-function rotateRow(rowNb, direction) {
-  var row = findCube("x", rowNb);
-  
-  console.log("======");
-  $(row).each(function() {
-    if(rowNb == 1) $(this).css("transform-origin", "13.5em 9em 0em"); // 2-1-2
-    if(rowNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
-    if(rowNb == 3) $(this).css("transform-origin", "13.5em 18em 0em"); // 2-3-2
 
-    var initCoord = getCoord("row", this.id, true);
-    updateCoord("row", this.id, direction);
-    var newCoord = getCoord("row", this.id);
-
-    var coordDelta = (newCoord[1] - initCoord[1]) * -1;
-
-    var transform = getCurrentTransform(this);
-    var newRotateZ = transform[2];
-    var newRotateX = transform[0];
-    var newRotateY = transform[1];
-
-    //newRotateY = 90 * direction * coordDelta;
-    newRotateY += 90 * direction;
-    
-    setRotate(this, newRotateZ, newRotateX, newRotateY);
-  });
-}
-
-function rotateCol(columnNb, direction) {
-  var column = findCube("y", columnNb);
-
-  $(column).each(function() {
-    /*if(columnNb == 1) $(this).css("transform-origin", "9em 13.5em 0em"); // 2-2-1
-    if(columnNb == 2) $(this).css("transform-origin", "13.5em 13.5em 0em"); // 2-2-2
-    if(columnNb == 3) $(this).css("transform-origin", "18em 13.5em 0em"); // 2-2-3*/
-
-    var initCoord = getCoord("column", this.id, true);
-    updateCoord("column", this.id, direction);
-    var newCoord = getCoord("column", this.id);
-
-    var coordDelta = (newCoord[1] - initCoord[1]) * -1;
-
-    var transform = getCurrentTransform(this);
-    var newRotateZ = transform[2];
-    var newRotateX = transform[0];
-    var newRotateY = transform[1];
-
-    //newRotateX = 90 * direction * coordDelta;
-    newRotateX += 90 * direction * -1; // Inverted Y-axis controls
-
-    setRotate(this, newRotateZ, newRotateX, newRotateY);
-  })
-}
-
-function setRotate(element, z, x, y) {
-  if(Math.abs(z) % 360 == 0) z = 0;
-  if(Math.abs(x) % 360 == 0) x = 0;
-  if(Math.abs(y) % 360 == 0) y = 0;
-
-  var currentPosition = getPosition(element)[0]+"em, "+getPosition(element)[1]+"em, "+getPosition(element)[2]+"em";
-  var newTransform = "rotateX("+x+"deg) rotateY("+y+"deg) rotateZ("+z+"deg) translate3d("+currentPosition+")";
-  $(element).css("transform", newTransform);
-
-  var rotationName = $actionArray[$actionIndex-1] ? $actionArray[$actionIndex-1].type+"Move" : "";
-  $(element).removeClass("depthMove rowMove columnMove").addClass(rotationName);
-
-  setTimeout(function() {
-    //$(element).removeClass(element.classList[1]).addClass("cube"+$(element).data("z")+"-"+$(element).data("x")+"-"+$(element).data("y"));
-    //$(element).css("transform","");
-  }, 200);
-}
-
+// CUBES
 function updateCoord(type, id, direction) {
   var typeArray = (type == "depth") ? depthRotation :
                   (type == "row") ? rowRotation : colRotation;
@@ -388,6 +323,66 @@ function getCoord(type, id, initialPosition) {
   }
 
   return [rotationIndex, coordIndex];
+}
+
+// FACES
+function updateFace(type, face, direction) {
+  var typeArray = (type == "depth") ? depthFaceRotation :
+                  (type == "row") ? rowFaceRotation : colFaceRotation;
+
+  var currentCoord = getFace(type, face);
+
+  var rotationState = currentCoord[1];
+  var newRotationState = rotationState + 1 * direction;
+
+  if(newRotationState > typeArray[currentCoord[0]].length - 1) newRotationState = 0;
+  if(newRotationState < 0) newRotationState = typeArray[currentCoord[0]].length - 1;
+  var newCoord = typeArray[currentCoord[0]][newRotationState];
+
+  var currentFace = face.className.match(/face([0-9])\-([0-9])\-([0-9])/)[0];
+  var newFace = "face"+newCoord;
+  $(face).removeClass(currentFace).addClass(newFace);
+
+  var classes = face.className.split(" ");
+  var currentOrientation = classes.filter(function(className) { if(className.indexOf("pyramid-") >= 0) return true; })[0];
+
+  var newOrientation = (function() {
+    var orientation;
+
+    if(newCoord.charAt(0) == 1) orientation = "front";
+    if(newCoord.charAt(0) == 2) orientation = "back";
+    if(newCoord.charAt(0) == 3) orientation = "top";
+    if(newCoord.charAt(0) == 4) orientation = "bottom";
+    if(newCoord.charAt(0) == 5) orientation = "left";
+    if(newCoord.charAt(0) == 6) orientation = "right";
+
+    return "pyramid-"+orientation;
+  })();
+
+  $(face).removeClass(currentOrientation).addClass(newOrientation);
+}
+
+function getFace(type, face) {
+  var typeArray = (type == "depth") ? depthFaceRotation :
+                  (type == "row") ? rowFaceRotation : colFaceRotation;
+
+  var rotationIndex;
+  var faceIndex;
+
+  var currentFace = face.className.match(/face([0-9])\-([0-9])\-([0-9])/)[0];
+  currentFace = currentFace.replace("face","");
+
+  var lookup = -1;
+  for(var i = 0; i < typeArray.length; i++) {
+    var lookup = typeArray[i].indexOf(currentFace);
+
+    if(lookup != -1) {
+      rotationIndex = i;
+      faceIndex = lookup;
+    }
+  }
+
+  return [rotationIndex, faceIndex];
 }
 
 function findCube(data, value) {
