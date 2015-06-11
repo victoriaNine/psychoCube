@@ -169,85 +169,85 @@ html:not(.debug) #resetCube {
 body:not(.moving) .cube:hover {
   cursor: pointer; }
 
-#cube1-1-1 {
+.cube1-1-1 {
   transform: translate3d(0em, 0em, 9em); }
 
-#cube1-1-2 {
+.cube1-1-2 {
   transform: translate3d(9em, 0em, 9em); }
 
-#cube1-1-3 {
+.cube1-1-3 {
   transform: translate3d(18em, 0em, 9em); }
 
-#cube1-2-1 {
+.cube1-2-1 {
   transform: translate3d(0em, 9em, 9em); }
 
-#cube1-2-2 {
+.cube1-2-2 {
   transform: translate3d(9em, 9em, 9em); }
 
-#cube1-2-3 {
+.cube1-2-3 {
   transform: translate3d(18em, 9em, 9em); }
 
-#cube1-3-1 {
+.cube1-3-1 {
   transform: translate3d(0em, 18em, 9em); }
 
-#cube1-3-2 {
+.cube1-3-2 {
   transform: translate3d(9em, 18em, 9em); }
 
-#cube1-3-3 {
+.cube1-3-3 {
   transform: translate3d(18em, 18em, 9em); }
 
-#cube2-1-1 {
+.cube2-1-1 {
   transform: translate3d(0em, 0em, 0em); }
 
-#cube2-1-2 {
+.cube2-1-2 {
   transform: translate3d(9em, 0em, 0em); }
 
-#cube2-1-3 {
+.cube2-1-3 {
   transform: translate3d(18em, 0em, 0em); }
 
-#cube2-2-1 {
+.cube2-2-1 {
   transform: translate3d(0em, 9em, 0em); }
 
-#cube2-2-2 {
+.cube2-2-2 {
   transform: translate3d(9em, 9em, 0em); }
 
-#cube2-2-3 {
+.cube2-2-3 {
   transform: translate3d(18em, 9em, 0em); }
 
-#cube2-3-1 {
+.cube2-3-1 {
   transform: translate3d(0em, 18em, 0em); }
 
-#cube2-3-2 {
+.cube2-3-2 {
   transform: translate3d(9em, 18em, 0em); }
 
-#cube2-3-3 {
+.cube2-3-3 {
   transform: translate3d(18em, 18em, 0em); }
 
-#cube3-1-1 {
+.cube3-1-1 {
   transform: translate3d(0em, 0em, -9em); }
 
-#cube3-1-2 {
+.cube3-1-2 {
   transform: translate3d(9em, 0em, -9em); }
 
-#cube3-1-3 {
+.cube3-1-3 {
   transform: translate3d(18em, 0em, -9em); }
 
-#cube3-2-1 {
+.cube3-2-1 {
   transform: translate3d(0em, 9em, -9em); }
 
-#cube3-2-2 {
+.cube3-2-2 {
   transform: translate3d(9em, 9em, -9em); }
 
-#cube3-2-3 {
+.cube3-2-3 {
   transform: translate3d(18em, 9em, -9em); }
 
-#cube3-3-1 {
+.cube3-3-1 {
   transform: translate3d(0em, 18em, -9em); }
 
-#cube3-3-2 {
+.cube3-3-2 {
   transform: translate3d(9em, 18em, -9em); }
 
-#cube3-3-3 {
+.cube3-3-3 {
   transform: translate3d(18em, 18em, -9em); }
 
 /* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */
@@ -450,7 +450,8 @@ body:not(.moving) .cube:hover {
   opacity: 1;
   width: 9em;
   height: 3em;
-  margin: -1.5em 0 0 -4.5em; }
+  margin: -1.5em 0 0 -4.5em;
+  transition: all .2s ease-out; }
 
 .pyramid > .face-wrapper {
   width: 9em;
@@ -496,60 +497,60 @@ body:not(.moving) .cube:hover {
 .pyramid-right {
   transform: translate3D(6em, 0em, 0em) rotateX(90deg) rotateY(0deg) rotateZ(90deg); }
 
-.pyramid-front > .face-wrapper .face {
+.color-red > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(100, 0, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-front > .face-wrapper .face {
+html:not(.noGlow) .color-red > .face-wrapper .face {
   -webkit-animation: redBorder 2s ease-out infinite;
   -moz-animation: redBorder 2s ease-out infinite;
   -ms-animation: redBorder 2s ease-out infinite;
   -o-animation: redBorder 2s ease-out infinite;
   animation: redBorder 2s ease-out infinite; }
 
-.pyramid-back > .face-wrapper .face {
+.color-orange > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(100, 50, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-back > .face-wrapper .face {
+html:not(.noGlow) .color-orange > .face-wrapper .face {
   -webkit-animation: orangeBorder 2s ease-out infinite;
   -moz-animation: orangeBorder 2s ease-out infinite;
   -ms-animation: orangeBorder 2s ease-out infinite;
   -o-animation: orangeBorder 2s ease-out infinite;
   animation: orangeBorder 2s ease-out infinite; }
 
-.pyramid-top > .face-wrapper .face {
+.color-white > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(100, 100, 100, 0.5); }
 
-html:not(.noGlow) .pyramid-top > .face-wrapper .face {
+html:not(.noGlow) .color-white > .face-wrapper .face {
   -webkit-animation: whiteBorder 2s ease-out infinite;
   -moz-animation: whiteBorder 2s ease-out infinite;
   -ms-animation: whiteBorder 2s ease-out infinite;
   -o-animation: whiteBorder 2s ease-out infinite;
   animation: whiteBorder 2s ease-out infinite; }
 
-.pyramid-bottom > .face-wrapper .face {
+.color-green > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(0, 100, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-bottom > .face-wrapper .face {
+html:not(.noGlow) .color-green > .face-wrapper .face {
   -webkit-animation: greenBorder 2s ease-out infinite;
   -moz-animation: greenBorder 2s ease-out infinite;
   -ms-animation: greenBorder 2s ease-out infinite;
   -o-animation: greenBorder 2s ease-out infinite;
   animation: greenBorder 2s ease-out infinite; }
 
-.pyramid-left > .face-wrapper .face {
+.color-yellow > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(100, 100, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-left > .face-wrapper .face {
+html:not(.noGlow) .color-yellow > .face-wrapper .face {
   -webkit-animation: yellowBorder 2s ease-out infinite;
   -moz-animation: yellowBorder 2s ease-out infinite;
   -ms-animation: yellowBorder 2s ease-out infinite;
   -o-animation: yellowBorder 2s ease-out infinite;
   animation: yellowBorder 2s ease-out infinite; }
 
-.pyramid-right > .face-wrapper .face {
+.color-blue > .face-wrapper .face {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 100, 0.5); }
 
-html:not(.noGlow) .pyramid-right > .face-wrapper .face {
+html:not(.noGlow) .color-blue > .face-wrapper .face {
   -webkit-animation: blueBorder 2s ease-out infinite;
   -moz-animation: blueBorder 2s ease-out infinite;
   -ms-animation: blueBorder 2s ease-out infinite;
@@ -728,66 +729,66 @@ html:not(.noGlow) .pyramid-right > .face-wrapper .face {
   width: 0.75em;
   height: 0.75em; }
 
-.pyramid-front .roof .face {
+.color-red .roof .face {
   background: rgba(100, 0, 0, 0.25);
   box-shadow: inset 0 0 0 1px rgba(100, 0, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-front .roof .face {
+html:not(.noGlow) .color-red .roof .face {
   -webkit-animation: redRoof 2s ease-out infinite;
   -moz-animation: redRoof 2s ease-out infinite;
   -ms-animation: redRoof 2s ease-out infinite;
   -o-animation: redRoof 2s ease-out infinite;
   animation: redRoof 2s ease-out infinite; }
 
-.pyramid-back .roof .face {
+.color-orange .roof .face {
   background: rgba(100, 50, 0, 0.25);
   box-shadow: inset 0 0 0 1px rgba(100, 50, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-back .roof .face {
+html:not(.noGlow) .color-orange .roof .face {
   -webkit-animation: orangeRoof 2s ease-out infinite;
   -moz-animation: orangeRoof 2s ease-out infinite;
   -ms-animation: orangeRoof 2s ease-out infinite;
   -o-animation: orangeRoof 2s ease-out infinite;
   animation: orangeRoof 2s ease-out infinite; }
 
-.pyramid-top .roof .face {
+.color-white .roof .face {
   background: rgba(100, 100, 100, 0.25);
   box-shadow: inset 0 0 0 1px rgba(100, 100, 100, 0.5); }
 
-html:not(.noGlow) .pyramid-top .roof .face {
+html:not(.noGlow) .color-white .roof .face {
   -webkit-animation: whiteRoof 2s ease-out infinite;
   -moz-animation: whiteRoof 2s ease-out infinite;
   -ms-animation: whiteRoof 2s ease-out infinite;
   -o-animation: whiteRoof 2s ease-out infinite;
   animation: whiteRoof 2s ease-out infinite; }
 
-.pyramid-bottom .roof .face {
+.color-green .roof .face {
   background: rgba(0, 100, 0, 0.25);
   box-shadow: inset 0 0 0 1px rgba(0, 100, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-bottom .roof .face {
+html:not(.noGlow) .color-green .roof .face {
   -webkit-animation: greenRoof 2s ease-out infinite;
   -moz-animation: greenRoof 2s ease-out infinite;
   -ms-animation: greenRoof 2s ease-out infinite;
   -o-animation: greenRoof 2s ease-out infinite;
   animation: greenRoof 2s ease-out infinite; }
 
-.pyramid-left .roof .face {
+.color-yellow .roof .face {
   background: rgba(100, 100, 0, 0.25);
   box-shadow: inset 0 0 0 1px rgba(100, 100, 0, 0.5); }
 
-html:not(.noGlow) .pyramid-left .roof .face {
+html:not(.noGlow) .color-yellow .roof .face {
   -webkit-animation: yellowRoof 2s ease-out infinite;
   -moz-animation: yellowRoof 2s ease-out infinite;
   -ms-animation: yellowRoof 2s ease-out infinite;
   -o-animation: yellowRoof 2s ease-out infinite;
   animation: yellowRoof 2s ease-out infinite; }
 
-.pyramid-right .roof .face {
+.color-blue .roof .face {
   background: rgba(0, 0, 100, 0.25);
   box-shadow: inset 0 0 0 1px rgba(0, 0, 100, 0.5); }
 
-html:not(.noGlow) .pyramid-right .roof .face {
+html:not(.noGlow) .color-blue .roof .face {
   -webkit-animation: blueRoof 2s ease-out infinite;
   -moz-animation: blueRoof 2s ease-out infinite;
   -ms-animation: blueRoof 2s ease-out infinite;

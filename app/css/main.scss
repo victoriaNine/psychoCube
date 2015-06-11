@@ -126,7 +126,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
       $translateY : $y * 9 - 9;
       $translateZ : $z * -9 + 18;
 
-      #cube#{$z}-#{$y}-#{$x} { 
+      .cube#{$z}-#{$y}-#{$x} { 
         transform: translate3d(#{$translateX}em, #{$translateY}em, #{$translateZ}em);
       }
     }
@@ -337,6 +337,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   width:9em;
   height:3em;
   margin:-1.5em 0 0 -4.5em;
+  transition:all .2s ease-out;
 }
 .pyramid > .face-wrapper {
   width:9em;
@@ -384,62 +385,62 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   transform:translate3D(6em, 0em, 0em) rotateX(90deg) rotateY(0deg) rotateZ(90deg);
 }
 
-.pyramid-front > .face-wrapper .face {
+.color-red > .face-wrapper .face {
   // front : red
   box-shadow: inset 0 0 0 1px opacify($red, .5);
 }
 
-html:not(.noGlow) .pyramid-front > .face-wrapper .face {
+html:not(.noGlow) .color-red > .face-wrapper .face {
   // front : red
   @include animation("redBorder 2s ease-out infinite");
 }
 
-.pyramid-back > .face-wrapper .face {
+.color-orange > .face-wrapper .face {
   // back : orange
   box-shadow: inset 0 0 0 1px opacify($orange, .5);
 }
 
-html:not(.noGlow) .pyramid-back > .face-wrapper .face {
+html:not(.noGlow) .color-orange > .face-wrapper .face {
   // back : orange
   @include animation("orangeBorder 2s ease-out infinite");
 }
 
-.pyramid-top > .face-wrapper .face {
+.color-white > .face-wrapper .face {
   // top : white
   box-shadow: inset 0 0 0 1px opacify($white, .5);
 }
 
-html:not(.noGlow) .pyramid-top > .face-wrapper .face {
+html:not(.noGlow) .color-white > .face-wrapper .face {
   // top : white
   @include animation("whiteBorder 2s ease-out infinite");
 }
 
-.pyramid-bottom > .face-wrapper .face {
+.color-green > .face-wrapper .face {
   // bottom : green
   box-shadow: inset 0 0 0 1px opacify($green, .5);
 }
 
-html:not(.noGlow) .pyramid-bottom > .face-wrapper .face {
+html:not(.noGlow) .color-green > .face-wrapper .face {
   // bottom : green
  @include animation("greenBorder 2s ease-out infinite");
 }
 
-.pyramid-left > .face-wrapper .face {
+.color-yellow > .face-wrapper .face {
   // left : yellow
   box-shadow: inset 0 0 0 1px opacify($yellow, .5);
 }
 
-html:not(.noGlow) .pyramid-left > .face-wrapper .face {
+html:not(.noGlow) .color-yellow > .face-wrapper .face {
   // left : yellow
   @include animation("yellowBorder 2s ease-out infinite");
 }
 
-.pyramid-right > .face-wrapper .face {
+.color-blue > .face-wrapper .face {
   // right : blue
   box-shadow: inset 0 0 0 1px opacify($blue, .5);
 }
 
-html:not(.noGlow) .pyramid-right > .face-wrapper .face {
+html:not(.noGlow) .color-blue > .face-wrapper .face {
   // right : blue
   @include animation("blueBorder 2s ease-out infinite");
 }
@@ -498,51 +499,51 @@ $roofWidth: .75;
   height:#{$roofWidth}em;
 }
 
-.pyramid-front .roof .face {
+.color-red .roof .face {
   background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, .5);
 }
 
-html:not(.noGlow) .pyramid-front .roof .face {
+html:not(.noGlow) .color-red .roof .face {
   @include animation("redRoof 2s ease-out infinite");
 }
 
-.pyramid-back .roof .face {
+.color-orange .roof .face {
   background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5);
 }
 
-html:not(.noGlow) .pyramid-back .roof .face {
+html:not(.noGlow) .color-orange .roof .face {
   @include animation("orangeRoof 2s ease-out infinite");
 }
 
-.pyramid-top .roof .face {
+.color-white .roof .face {
   background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5);
 }
 
-html:not(.noGlow) .pyramid-top .roof .face {
+html:not(.noGlow) .color-white .roof .face {
   @include animation("whiteRoof 2s ease-out infinite");
 }
 
-.pyramid-bottom .roof .face {
+.color-green .roof .face {
   background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5);
 }
 
-html:not(.noGlow) .pyramid-bottom .roof .face {
+html:not(.noGlow) .color-green .roof .face {
   @include animation("greenRoof 2s ease-out infinite");
 }
 
-.pyramid-left .roof .face {
+.color-yellow .roof .face {
   background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5);
 }
 
-html:not(.noGlow) .pyramid-left .roof .face {
+html:not(.noGlow) .color-yellow .roof .face {
   @include animation("yellowRoof 2s ease-out infinite");
 }
 
-.pyramid-right .roof .face {
+.color-blue .roof .face {
   background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5);
 }
 
-html:not(.noGlow) .pyramid-right .roof .face {
+html:not(.noGlow) .color-blue .roof .face {
   @include animation("blueRoof 2s ease-out infinite");
 }
 

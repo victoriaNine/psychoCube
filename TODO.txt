@@ -1,5 +1,9 @@
-~ Rubik's cube rotation logic
-- Rotate shaders appropriately
+~ Rubik's cube rotation logic : translate cubes + rotate faces according to new face id (ex : 6-x-x = pyramid-right)
+
+$("#cube1-1-1").find(".color-yellow").removeClass("pyramid-left").addClass("pyramid-top");
+$("#cube1-1-1").find(".color-white").removeClass("pyramid-top").addClass("pyramid-right");
+$("#cube1-1-1").css("transform","translate3d(18em, 0em, 9em)");
+
 ~ Rotation animations
 
 ! Controls

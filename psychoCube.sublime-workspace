@@ -416,6 +416,14 @@
 			}
 		},
 		{
+			"file": "app/css/main.scss",
+			"settings":
+			{
+				"buffer_size": 15253,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "app/js/main.js",
 			"settings":
 			{
@@ -427,7 +435,7 @@
 			"file": "app/js/controls.js",
 			"settings":
 			{
-				"buffer_size": 13949,
+				"buffer_size": 14779,
 				"line_ending": "Windows"
 			}
 		},
@@ -497,6 +505,14 @@
 	],
 	"file_history":
 	[
+		"/C/wamp/www/devTests/nrjMobile/mtab/css/style.scss",
+		"/C/wamp/www/devTests/nrjMobile/mfooter/css/style.scss",
+		"/C/wamp/www/devTests/nrjMobile/mfooter/js/main.js",
+		"/C/wamp/www/devTests/nrjMobile/mfooter/index_spAndroid.html",
+		"/C/wamp/www/devTests/nrjMobile/mfooter/index_iPad.html",
+		"/C/wamp/www/devTests/nrjMobile/mtab/index_iPad.html",
+		"/C/wamp/www/devTests/nrjMobile/mtab/js/main.js",
+		"/C/wamp/www/devTests/nrjMobile/mtab/index_spAndroid.html",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.scss",
 		"/C/wamp/www/devTests/opel/mFlow/index_iPad.html",
 		"/C/wamp/www/meteorRain/js/main.js",
@@ -616,15 +632,7 @@
 		"/E/labs/intertap/app/scripts/audio.js",
 		"/E/labs/intertap/app/styles/main.js",
 		"/E/labs/intertap/bower_components/jquery-ui/jquery-ui.js",
-		"/C/Users/Leivvi/Downloads/smartsprites-0.2.10/README.rdoc",
-		"/D/wamp/www/orion9/scripts/spriteAnim/spriteAnim.js",
-		"/E/labs/intertap/app/styles/main.css",
-		"/E/labs/intertap/app/scripts/main.js",
-		"/E/labs/intertap/app/index.html",
-		"/E/labs/intertap/app/scripts/FileSaver.js",
-		"/E/labs/intertap/app/scripts/canvas-toBlob.js",
-		"/E/labs/intertap/app/scripts/jquery.mCustomScrollbar.js",
-		"/E/labs/intertap/Gruntfile.js"
+		"/C/Users/Leivvi/Downloads/smartsprites-0.2.10/README.rdoc"
 	],
 	"find":
 	{
@@ -856,7 +864,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -872,8 +880,8 @@
 						"selection":
 						[
 							[
-								1305,
-								1305
+								156,
+								156
 							]
 						],
 						"settings":
@@ -883,10 +891,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 105.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -902,8 +910,8 @@
 						"selection":
 						[
 							[
-								1313,
-								1313
+								809,
+								258
 							]
 						],
 						"settings":
@@ -913,62 +921,32 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 630.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/js/main.js",
+					"file": "app/css/main.scss",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17156,
+						"buffer_size": 15253,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1235,
-								1235
+								697,
+								697
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/js/controls.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13949,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1411,
-								1411
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"syntax": "Packages/Syntax Highlighting for Sass/Syntaxes/SCSS.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
@@ -980,7 +958,67 @@
 					"type": "text"
 				},
 				{
+					"buffer": 3,
+					"file": "app/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17156,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1123,
+								1123
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
 					"buffer": 4,
+					"file": "app/js/controls.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14779,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								399,
+								399
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1755.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "TODO.txt",
 					"semi_transient": false,
 					"settings":
@@ -992,8 +1030,8 @@
 						"selection":
 						[
 							[
-								1,
-								1
+								29,
+								29
 							]
 						],
 						"settings":
@@ -1005,11 +1043,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"semi_transient": false,
 					"settings":
 					{
@@ -1034,7 +1072,7 @@
 						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -1117,7 +1155,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 263.0,
+	"side_bar_width": 269.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -214,19 +214,19 @@ function buildCube(callback) {
     for(var x = 1; x <= 3; x++) {
       for(var y = 1; y <= 3; y++) {
         var id = "cube"+z+"-"+x+"-"+y;
-        var newCube = $("<div id=\""+id+"\">").addClass("cube");
+        var newCube = $("<div id=\""+id+"\">").addClass("cube cube"+z+"-"+x+"-"+y);
         //newCube.addClass("depth"+z+" row"+x+" column"+y);
         $("#protoCube").children().clone().appendTo(newCube);
 
         var protoPyramid = $("<div>").addClass("shape pyramid");
         $("#protoPyramid").children().clone().appendTo(protoPyramid);
 
-        var frontPyramid = protoPyramid.clone().addClass("pyramid-front");
-        var backPyramid = protoPyramid.clone().addClass("pyramid-back");
-        var topPyramid = protoPyramid.clone().addClass("pyramid-top");
-        var bottomPyramid = protoPyramid.clone().addClass("pyramid-bottom");
-        var leftPyramid = protoPyramid.clone().addClass("pyramid-left");
-        var rightPyramid = protoPyramid.clone().addClass("pyramid-right");
+        var frontPyramid = protoPyramid.clone().addClass("pyramid-front color-red");
+        var backPyramid = protoPyramid.clone().addClass("pyramid-back color-orange");
+        var topPyramid = protoPyramid.clone().addClass("pyramid-top color-white");
+        var bottomPyramid = protoPyramid.clone().addClass("pyramid-bottom color-green");
+        var leftPyramid = protoPyramid.clone().addClass("pyramid-left color-yellow");
+        var rightPyramid = protoPyramid.clone().addClass("pyramid-right color-blue");
 
         if(z == 1) frontPyramid.appendTo(newCube);
         if(z == 3) backPyramid.appendTo(newCube);
