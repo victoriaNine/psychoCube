@@ -12,6 +12,15 @@ html, body {
   font-family: "Arial", sans-serif;
   letter-spacing: 2px; }
 
+body:before {
+  content: "";
+  position: absolute;
+  background: #050505 url("../img/bgTest.png") no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  opacity: .5; }
+
 body.moving {
   cursor: move;
   cursor: -webkit-grabbing; }
@@ -31,7 +40,7 @@ body.moving {
 
 button {
   border: 1px solid;
-  background: #111;
+  background: #0C0C0C;
   color: #666;
   text-transform: uppercase;
   padding: 8px;
@@ -373,7 +382,7 @@ body:not(.moving) .cube:hover {
   height: 9em; }
 
 .block .face {
-  background-color: #111111;
+  background-color: #0C0C0C;
   box-shadow: inset 0px 0px 1em 0.25em rgba(255, 255, 255, 0.1); }
 
 .block .ft {
@@ -460,7 +469,7 @@ body:not(.moving) .cube:hover {
 .pyramid > .face-wrapper .face {
   width: 9em;
   height: 9em;
-  background-color: #111111; }
+  background-color: #0C0C0C; }
 
 .pyramid > .ft {
   transform: scaleZ(1.20185) scaleY(1.20185) rotateX(56.30993deg); }
