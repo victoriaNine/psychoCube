@@ -46,7 +46,8 @@ html, body {
   background:#050505;
   color: #666;
   text-transform: uppercase;
-  font-family: "Arial", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
   letter-spacing: 2px;
 }
 
@@ -62,47 +63,43 @@ body:before {
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
 
+button {
+  border:none;
+  background:none;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  cursor:pointer;
+  text-transform: inherit;
+  display: block;
+  color:inherit;
+}
+
 #ui {
   position: absolute;
-  left: 3em;
-  top: 3em;
+  left: 0;
+  top: 0;
+  padding-top:3em;
+  box-sizing: border-box;
+  width:18em;
+  height: 100%;
   z-index: 10;
   text-align: -webkit-center;
+  background:rgba(255,255,255,.1);
+}
+
+#ui button {
+  width:100%;
+  height:3em;
+  line-height:3em;
+  background:rgba(0,0,0,.1);
+  margin-bottom: 1px;
 }
 
 .timer { margin-bottom: 1.5em; }
 #totalTime { margin-bottom: 3em; }
 
-button {
-  border:1px solid;
-  background: $darkGrey;
-  color: #666;
-  text-transform: uppercase;
-  padding: 8px;
-  box-sizing: border-box;
-  outline: none;
-  cursor:pointer;
-  position:relative;
-  display:block;
-  margin-bottom: 1.5em;
-  font-family: inherit;
-  letter-spacing: inherit;
-
-  @include animation("borderColor 15s linear infinite");
-}
-
-button:hover { background: #191919; }
-
 html:not(.debug) #resetCube { display: none; }
-
-@include keyframes(borderColor) {
-  0%, 100% { border-color: opacify($red, .5); }
-  14.6% { border-color: opacify($orange, .5); }
-  33.2% { border-color: opacify($white, .5); }
-  49.8% { border-color: opacify($yellow, .5); }
-  66.4% { border-color: opacify($green, .5); }
-  83% { border-color: opacify($blue, .5); }
-}
 
 #psychoCube {
   position: absolute;
@@ -171,9 +168,8 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 #scene {
   width: 80em;
   height: 80em;
-  top: 50%;
-  left: 50%;
-  margin: -40em 0 0 -40em;
+  left: calc(50% - (80em - 18em) / 2);
+  top: calc(50% - 80em / 2);
   transform-origin: 50% 50% -27em;
 }
 .shape {
@@ -639,11 +635,19 @@ body.selecting .cube:not(.selected) {
 }
 
 #rotationMenu button {
+  border:1px solid;
+  background: $darkGrey;
+  padding: 8px;
+  margin-bottom: 1.5em;
+  letter-spacing: inherit;
+
   position:absolute;
   margin:0;
   width: 30px;
   height: 30px;
 }
+
+#rotationMenu button:hover { background: #191919; }
 
 #toFront { transform: translate(-50px, 60%); }
 #toBack { transform: translate(40px, 60%); }
