@@ -6,7 +6,7 @@ $("#cube1-1-1").css("transform","translate3d(18em, 0em, 9em)");
 
 ! Rotation animations
 
-? Controls
+! Controls
 ! Reset
 ! Pause (button & onBlur)
 ! Undo & Redo
