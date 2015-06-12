@@ -643,9 +643,9 @@ body.selecting .cube:not(.selected) {
   height: 30px;
 }
 
-#toFront { transform: translate(-50px, -60%); }
-#toBack { transform: translate(40px, -60%); }
-#toLeft { transform: translate(-50px, 60%); }
-#toRight { transform: translate(40px, 60%); }
+#toFront { transform: translate(-50px, 60%); }
+#toBack { transform: translate(40px, 60%); }
+#toLeft { transform: translate(-50px, -60%); }
+#toRight { transform: translate(40px, -60%); }
 #toUp { transform: translate(-25%, -50px); }
 #toDown { transform: translate(-25%, 40px); }

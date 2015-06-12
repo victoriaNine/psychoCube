@@ -1,9 +1,4 @@
 ! Rubik's cube rotation logic : translate cubes + rotate faces according to new face id (ex : 6-x-x = pyramid-right)
-
-$("#cube1-1-1").find(".color-yellow").removeClass("pyramid-left").addClass("pyramid-top");
-$("#cube1-1-1").find(".color-white").removeClass("pyramid-top").addClass("pyramid-right");
-$("#cube1-1-1").css("transform","translate3d(18em, 0em, 9em)");
-
 ! Rotation animations
 
 ! Controls
@@ -11,17 +6,26 @@ $("#cube1-1-1").css("transform","translate3d(18em, 0em, 9em)");
 ! Pause (button & onBlur)
 ! Undo & Redo
 ! Save & Load
-- Randomization
-- Randomize cube & cube solved : new game (delete current game data)
-- Cube solved : save current game data (timer, date, input player name) in high scores array
-- Screens :
+- Cube randomization : new game (delete current game data)
+- Cube solved check
+- Cube solved : save current game data (timer, date, input player name) in high scores array, new game (delete current game data)
+- Confirm when leaving page : save game ?
+- Clean JS
+- Comment
+
+- UI Design & CSS :
  - Intro (How to play + About)
  - Pause
  - High scores
-- Confirm when leaving page
+ - Main screen
+- Clean CSS
+- Clean JS
 
-- CSS rehaul
-- Three.js BG (http://www.ro.me/tech/, district13.co.in)
 - Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
 - SFX ?
 - Mute switch
+
+- Three.js BG (http://www.ro.me/tech/, district13.co.in)
+
+- Clean CSS
+- Clean JS

@@ -38,8 +38,6 @@ var $currentTime = 0;
 var $startTotalTime;
 var $updateTimer;
 
-var defaultTransform = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
-
 
 //===============================
 // MAIN INITIALIZATION
@@ -81,9 +79,9 @@ $(document).ready(function() {
   timeline.set($("#scene"), { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
 
   buildCube(function() {
-    timeline.to($("#scene"), 1, { opacity:1, transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
+    timeline.to($("#scene"), 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
-        $("#scene").css("transform", defaultTransform);
+        $("#scene").css("transform", defaultAngle);
         newGame();
       }
     });
@@ -134,9 +132,9 @@ function addListeners() {
   $("#redo").on(eventtype, redo);
 
   $("#resetCamera").on(eventtype, function() {
-    TweenMax.to($("#scene"), 1, { transform:defaultTransform, ease:Power4.easeOut, clearProps:"all",
+    TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
-        $("#scene").css("transform", defaultTransform);
+        $("#scene").css("transform", defaultAngle);
       }
     });
   });

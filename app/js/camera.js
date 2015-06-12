@@ -3,6 +3,8 @@ var dirX, prevDirX;
 var currentY, prevY;
 var dirY, prevDirY;
 
+var defaultAngle = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
+
 function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
 function stopRotation() {
   if($("body").hasClass("moving")) {
