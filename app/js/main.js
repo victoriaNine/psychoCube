@@ -123,14 +123,12 @@ function saveGame() {
 // EVENT LISTENERS
 function addListeners() {
 //===============================
-  $("#tridiv").on('mousedown touchstart', startRotation).on('mouseup touchend', stopRotation).on('mousemove touchmove', setRotation).on("mousewheel", setScale);
-
+  /* Cube controls ------------*/
   $(".cube").on(eventtype, rotationMenu);
   $("#rotationMenu button").on(eventtype, rotate);
 
-  $("#undo").on(eventtype, undo);
-  $("#redo").on(eventtype, redo);
-
+  /* Camera controls ------------*/
+  $("#tridiv").on('mousedown touchstart', startCameraRotation).on('mouseup touchend', stopCameraRotation).on('mousemove touchmove', setCameraRotation).on("mousewheel", setCameraZoom);
   $("#resetCamera").on(eventtype, function() {
     TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
@@ -139,7 +137,10 @@ function addListeners() {
     });
   });
 
+  /* Side menu buttons ------------*/
   $("#pause").on(eventtype, togglePause);
+  $("#undo").on(eventtype, undo);
+  $("#redo").on(eventtype, redo);
 
   $("#saveGame").on(eventtype, function() {
     saveGame();
@@ -151,6 +152,7 @@ function addListeners() {
   $("#glowSwitch").on(eventtype, glowMode);
   $("#resetCube").on(eventtype, resetCube);
 
+  /* Pause the game when the window is inactive ------------*/
   $(window).on("blur", pause);
 }
 
@@ -164,6 +166,19 @@ function updateTimer() {
 
   $("#currentTime .value").html(getFormatedTime($currentTime));
   $("#totalTime .value").html(getFormatedTime($totalTime));
+}
+
+function getFormatedTime(seconds) {
+  var h = Math.floor(seconds / 3600);
+  var m = Math.floor(seconds / 60) % 60;
+  var s = Math.floor(seconds % 60);
+
+  if(h < 10) h = "0"+h;
+  if(m < 10) m = "0"+m;
+  if(s < 10) s = "0"+s;
+
+  var timeString = h+":"+m+":"+s;
+  return timeString;
 }
 
 function pause() {
@@ -185,19 +200,6 @@ function resume() {
 function togglePause() {
   if($("body").hasClass("paused")) resume();
   else pause();
-}
-
-function getFormatedTime(seconds) {
-  var h = Math.floor(seconds / 3600);
-  var m = Math.floor(seconds / 60) % 60;
-  var s = Math.floor(seconds % 60);
-
-  if(h < 10) h = "0"+h;
-  if(m < 10) m = "0"+m;
-  if(s < 10) s = "0"+s;
-
-  var timeString = h+":"+m+":"+s;
-  return timeString;
 }
 
 
@@ -367,14 +369,23 @@ function resetCube() {
     $(this).data({ "z": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
     $(this).attr("class","cube "+this.id);
 
+    console.log(id+" ===========")
     var cubeStickers = stickersMap[id];
     $(this).find(".pyramid").each(function() {
       var sticker = this;
 
       var currentOrientation = getOrientation($(sticker).data("face"));
       var currentSticker = "sticker"+$(sticker).data("face")+"-"+$(sticker).data("y")+"-"+$(sticker).data("x");
-
+      
       var initValues = getInitialOrientation(sticker, cubeStickers);
+      var initOrientation = initValues[0].replace("pyramid-","");
+      var initCoord = initValues[1].replace("sticker","").split("-");
+
+      $(sticker).data({ "face": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
+
+      var parentCube = $(sticker).parent();
+      parentCube.data("stickerData")[initOrientation] = $(sticker).data();
+
       $(sticker).removeClass(currentOrientation).addClass(initValues[0]);
       $(sticker).removeClass(currentSticker).addClass(initValues[1]);
     });
@@ -391,6 +402,8 @@ function resetCube() {
 function rotationMenu(e) {
   var target = e.currentTarget;
   if(cancelSelection(e) || $("body").hasClass("paused")) return;
+
+  if(mobileCheck()) e = e.originalEvent.touches[0];
 
   var posX = e.pageX;
   var posY = e.pageY;

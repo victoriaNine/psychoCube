@@ -2,7 +2,7 @@
 ! Rotation animations
 
 ! Controls
-~ Fix reset
+! Fix reset
 ! Pause (button & onBlur)
 ! Undo & Redo
 ! Save & Load

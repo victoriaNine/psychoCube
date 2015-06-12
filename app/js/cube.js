@@ -188,10 +188,10 @@ var stickersMap = { "1-1-1" : { front: "1-1-1", top: "3-3-1", left: "5-1-3" },
 
 
 //===============================
-// ROTATE FUNCTION
+// CUBE ROTATION
 function rotateCube(axis, coord, direction) {
 //===============================
-  var range = findCube(axis, coord);
+  var range = findCubes(axis, coord);
 
   $(range).each(function() {
     var axisName = (axis == "x") ? "column" : (axis == "y") ? "row" : "depth";
@@ -251,11 +251,11 @@ function getCoord(type, id, initialPosition) {
   return [rotationIndex, coordIndex];
 }
 
-function findCube(data, value) {
+function findCubes(axis, value) {
   var cubeArray = [];
 
   $(".cube").each(function() {
-    if($(this).data(data) == value) cubeArray.push(this);
+    if($(this).data(axis) == value) cubeArray.push(this);
   });
 
   return cubeArray;
@@ -302,8 +302,7 @@ function getSticker(type, sticker) {
   var rotationIndex;
   var stickerIndex;
 
-  var currentSticker = sticker.className.match(/sticker([0-9])\-([0-9])\-([0-9])/)[0];
-  currentSticker = currentSticker.replace("sticker","");
+  var currentSticker = $(sticker).data("face")+"-"+$(sticker).data("y")+"-"+$(sticker).data("x");
 
   var lookup = -1;
   for(var i = 0; i < typeArray.length; i++) {

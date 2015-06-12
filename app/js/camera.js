@@ -5,8 +5,8 @@ var dirY, prevDirY;
 
 var defaultAngle = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
 
-function startRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
-function stopRotation() {
+function startCameraRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
+function stopCameraRotation() {
   if($("body").hasClass("moving")) {
     $("body").removeClass("moving");
     prevX = null;
@@ -14,7 +14,7 @@ function stopRotation() {
   }
 }
 
-function setRotation(e) {
+function setCameraRotation(e) {
   if($("body").hasClass("moving")) {
     var transform = $("#scene")[0].style.transform;
     var transformValues = getCurrentTransform($("#scene")[0]);
@@ -61,7 +61,7 @@ function setRotation(e) {
   }
 }
 
-function setScale(e) {
+function setCameraZoom(e) {
   e.preventDefault();
   if($("body").hasClass("paused")) return;
 
