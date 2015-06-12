@@ -6,9 +6,10 @@
 ! Pause (button & onBlur)
 ! Undo & Redo
 ! Save & Load
-- Cube randomization : new game (delete current game data)
+- Cube randomization : new game (override current game data)
+- Check reset
 - Cube solved check
-- Cube solved : save current game data (timer, date, input player name) in high scores array, new game (delete current game data)
+- Cube solved : save current game data (timer, date, input player name) in high scores array, new game (delete completed game data)
 - Confirm when leaving page : save game ?
 - Clean JS
 - Comment
@@ -25,7 +26,7 @@
 - SFX ?
 - Mute switch
 
-- Three.js BG (http://www.ro.me/tech/, district13.co.in)
+- Three.js BG (http://www.ro.me/tech, district13.co.in)
 
 - Clean CSS
 - Clean JS

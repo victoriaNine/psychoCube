@@ -5,10 +5,15 @@ var dirY, prevDirY;
 
 var defaultAngle = "rotateX(-10deg) rotateY(25deg) rotateZ(10deg) scale3d(1,1,1)";
 
-function startCameraRotation() { if(!$("body").hasClass("selecting") && !$("body").hasClass("paused")) $("body").addClass("moving"); }
+function startCameraRotation() {
+  if(!$("body").hasClass("selecting") && !$("body").hasClass("paused"))
+    $("body").addClass("moving");
+}
+
 function stopCameraRotation() {
   if($("body").hasClass("moving")) {
     $("body").removeClass("moving");
+    
     prevX = null;
     prevY = null;
   }

@@ -28,13 +28,13 @@ var $isReady = false;
 
 var $playerName = "";
 var $finishDate = null;
-var $totalTime = 0;
+var $totalTime;
 
 var $actionArray = [];
 var $actionIndex = 0;
 var $totalActions = 0;
 
-var $currentTime = 0;
+var $currentTime;
 var $startTotalTime;
 var $updateTimer;
 
@@ -68,7 +68,6 @@ $(document).ready(function() {
 
     $playerName = $game.playerName;
     $finishDate = $game.finishDate;
-    $totalTime = $game.totalTime;
 
     $actionIndex = $game.actionIndex;
     $actionArray = $game.actions;
@@ -81,12 +80,18 @@ $(document).ready(function() {
 
 function initGame(isNewGame) {
   $isReady = false;
-  if($updateTimer) clearInterval($updateTimer);
+  if($updateTimer) {
+    clearInterval($updateTimer);
+    $updateTimer = null;
+  }
 
   if(isNewGame) {
     $game = { playerName: "", finishDate: null, totalTime: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
+
+  $totalTime = $game.totalTime;
+  $currentTime = 0;
 
   $("#currentTime .value").html("-:-:-");
   $("#totalTime .value").html(getFormatedTime($totalTime));
@@ -108,22 +113,22 @@ function initGame(isNewGame) {
 // NEW GAME & SAVE GAME
 //===============================
 function newGame() {
-  checkFocus(function() {
-    if($isNewGame) {
-      var randomCube = randomizeCube();
-      var randomActions = randomCube.randomActions;
-      var randomDelay = randomCube.delay;
-    }
+  if($isNewGame) {
+    var randomCube = randomizeCube();
+    var randomActions = randomCube.randomActions;
+    var randomDelay = randomCube.delay;
+  }
 
-    var delay = $isNewGame ? (randomActions * randomDelay) : 0;
-    setTimeout(function() {
+  var delay = $isNewGame ? (randomActions * randomDelay) : 0;
+  setTimeout(function() {
+    checkFocus(function() {
       addListeners();
 
       $startTotalTime = $game.totalTime;
       $updateTimer = setInterval(updateTimer, 1000);
       $isReady = true;
-    }, delay);
-  });
+    });
+  }, delay);
 }
 
 function saveGame() {
@@ -195,7 +200,7 @@ function updateTimer() {
 function getFormatedTime(seconds) {
   var h = Math.floor(seconds / 3600);
   var m = Math.floor(seconds / 60) % 60;
-  var s = Math.floor(seconds % 60);
+  var s = seconds % 60;
 
   if(h < 10) h = "0"+h;
   if(m < 10) m = "0"+m;
@@ -206,7 +211,7 @@ function getFormatedTime(seconds) {
 }
 
 function pause() {
-  if($("body").hasClass("paused")) return;
+  if($("body").hasClass("paused") || !$isReady) return;
 
   clearInterval($updateTimer);
   $("#pause").html("Resume");
@@ -214,7 +219,7 @@ function pause() {
 }
 
 function resume() {
-  if(!$("body").hasClass("paused")) return;
+  if(!$("body").hasClass("paused") || !$isReady) return;
 
   $updateTimer = setInterval(updateTimer, 1000);
   $("#pause").html("Pause");
@@ -228,7 +233,7 @@ function togglePause() {
 
 
 //===============================
-// ROTATION CONTROLS
+// ROTATION MENU
 //===============================
 function rotationMenu(e) {
   var target = e.currentTarget;
