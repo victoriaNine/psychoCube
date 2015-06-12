@@ -38,6 +38,9 @@ var $currentTime = 0;
 var $startTotalTime;
 var $updateTimer;
 
+var $protoCube;
+var $protoPyramid;
+
 
 //===============================
 // MAIN INITIALIZATION
@@ -56,6 +59,10 @@ $(document).ready(function() {
       }
   };
 
+  $protoCube = $("#protoCube").clone();
+  $protoPyramid = $("#protoPyramid").clone();
+  $("#scene").find("#protoCube, #protoPyramid").remove();
+
   if(getLocalStorage("psychoCubeGame")) {
     $game = getLocalStorage("psychoCubeGame");
 
@@ -66,8 +73,17 @@ $(document).ready(function() {
     $actionIndex = $game.actionIndex;
     $actionArray = $game.actions;
     $totalActions = $game.totalActions;
+
+    initGame();
   }
-  else {
+  else initGame(true);
+});
+
+function initGame(isNewGame) {
+  $isReady = false;
+  if($updateTimer) clearInterval($updateTimer);
+
+  if(isNewGame) {
     $game = { playerName: "", finishDate: null, totalTime: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
@@ -80,13 +96,12 @@ $(document).ready(function() {
 
   buildCube(function() {
     timeline.to($("#scene"), 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
-      onComplete:function() {
-        $("#scene").css("transform", defaultAngle);
-        newGame();
-      }
+      onComplete: function() { $("#scene").css("transform", defaultAngle); }
     });
+
+    newGame();
   });
-});
+}
 
 
 //===============================
@@ -94,12 +109,20 @@ $(document).ready(function() {
 //===============================
 function newGame() {
   checkFocus(function() {
-    addListeners();
+    if($isNewGame) {
+      var randomCube = randomizeCube();
+      var randomActions = randomCube.randomActions;
+      var randomDelay = randomCube.delay;
+    }
 
-    $startTotalTime = $game.totalTime;
-    $updateTimer = setInterval(updateTimer, 1000);
+    var delay = $isNewGame ? (randomActions * randomDelay) : 0;
+    setTimeout(function() {
+      addListeners();
 
-    $isReady = true;
+      $startTotalTime = $game.totalTime;
+      $updateTimer = setInterval(updateTimer, 1000);
+      $isReady = true;
+    }, delay);
   });
 }
 
@@ -141,6 +164,7 @@ function addListeners() {
   $("#pause").on(eventtype, togglePause);
   $("#undo").on(eventtype, undo);
   $("#redo").on(eventtype, redo);
+  $("#randomizeCube").on(eventtype, function() { initGame(true); });
 
   $("#saveGame").on(eventtype, function() {
     saveGame();
@@ -200,199 +224,6 @@ function resume() {
 function togglePause() {
   if($("body").hasClass("paused")) resume();
   else pause();
-}
-
-
-//===============================
-// CUBE SETUP
-//===============================
-function buildCube(callback) {
-  for(var z = 1; z <= 3; z++) {
-    for(var y = 1; y <= 3; y++) {
-      for(var x = 1; x <= 3; x++) {
-        var id = "cube"+z+"-"+y+"-"+x;
-        var newCube = $("<div id=\""+id+"\">").addClass("cube");
-        $("#protoCube").children().clone().appendTo(newCube);
-
-        var protoPyramid = $("<div>").addClass("shape pyramid");
-        $("#protoPyramid").children().clone().appendTo(protoPyramid);
-
-        var frontPyramid = protoPyramid.clone().addClass("color-red");
-        var backPyramid = protoPyramid.clone().addClass("color-orange");
-        var topPyramid = protoPyramid.clone().addClass("color-white");
-        var bottomPyramid = protoPyramid.clone().addClass("color-green");
-        var leftPyramid = protoPyramid.clone().addClass("color-yellow");
-        var rightPyramid = protoPyramid.clone().addClass("color-blue");
-
-        if($isNewGame) {
-          // Set initial cube and stickers values
-          var cubeStickers = stickersMap[z+"-"+y+"-"+x];
-          var coordArray;
-          var stickerData = {};
-
-          if(cubeStickers) {
-            if(cubeStickers.front) {
-              frontPyramid.addClass("pyramid-front sticker"+cubeStickers.front);
-
-              coordArray = cubeStickers.front.split("-");
-              frontPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.front = frontPyramid.data();
-            }
-            if(cubeStickers.back) {
-              backPyramid.addClass("pyramid-back sticker"+cubeStickers.back);
-
-              coordArray = cubeStickers.back.split("-");
-              backPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.back = backPyramid.data();
-            }
-            if(cubeStickers.top) {
-              topPyramid.addClass("pyramid-top sticker"+cubeStickers.top);
-
-              coordArray = cubeStickers.top.split("-");
-              topPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.top = topPyramid.data();
-            }
-            if(cubeStickers.bottom) {
-              bottomPyramid.addClass("pyramid-bottom sticker"+cubeStickers.bottom);
-
-              coordArray = cubeStickers.bottom.split("-");
-              bottomPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.bottom = bottomPyramid.data();
-            }
-            if(cubeStickers.left) {
-              leftPyramid.addClass("pyramid-left sticker"+cubeStickers.left);
-
-              coordArray = cubeStickers.left.split("-");
-              leftPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.left = leftPyramid.data();
-            }
-            if(cubeStickers.right) {
-              rightPyramid.addClass("pyramid-right sticker"+cubeStickers.right);
-
-              coordArray = cubeStickers.right.split("-");
-              rightPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
-
-              stickerData.right = rightPyramid.data();
-            }
-          }
-
-          newCube.addClass("cube"+z+"-"+y+"-"+x);
-          newCube.data({ "z": z, "y": y, "x": x, "stickerData":stickerData });
-        }
-        else {
-          // Load the values from the saved game data
-          var coord = $game.cubes[id];
-          newCube.data(coord);
-
-          newCube.addClass("cube"+newCube.data("z")+"-"+newCube.data("y")+"-"+newCube.data("x"));
-          var stickerData = newCube.data("stickerData");
-
-          if(stickerData) {
-            var data, stickerId;
-
-            if(stickerData.front) {
-              data = stickerData.front;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              frontPyramid.data(data);
-              frontPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-
-            if(stickerData.back) {
-              data = stickerData.back;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              backPyramid.data(data);
-              backPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-
-            if(stickerData.top) {
-              data = stickerData.top;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              topPyramid.data(data);
-              topPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-
-            if(stickerData.bottom) {
-              data = stickerData.bottom;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              bottomPyramid.data(data);
-              bottomPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-
-            if(stickerData.left) {
-              data = stickerData.left;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              leftPyramid.data(data);
-              leftPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-
-            if(stickerData.right) {
-              data = stickerData.right;
-              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
-
-              rightPyramid.data(data);
-              rightPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
-            }
-          }
-        }
-
-        if(z == 1) frontPyramid.appendTo(newCube);
-        if(z == 3) backPyramid.appendTo(newCube);
-        if(y == 1) topPyramid.appendTo(newCube);
-        if(y == 3) bottomPyramid.appendTo(newCube);
-        if(x == 1) leftPyramid.appendTo(newCube);
-        if(x == 3) rightPyramid.appendTo(newCube);
-
-        newCube.appendTo("#psychoCube");
-      }
-    }
-  }
-
-  $("#scene").find("#protoCube, #protoPyramid").remove();
-  callback();
-}
-
-function resetCube() {
-  $(".cube").each(function() {
-    var id = this.id.replace("cube","");
-    var initCoord = id.split("-");
-
-    $(this).data({ "z": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
-    $(this).attr("class","cube "+this.id);
-
-    console.log(id+" ===========")
-    var cubeStickers = stickersMap[id];
-    $(this).find(".pyramid").each(function() {
-      var sticker = this;
-
-      var currentOrientation = getOrientation($(sticker).data("face"));
-      var currentSticker = "sticker"+$(sticker).data("face")+"-"+$(sticker).data("y")+"-"+$(sticker).data("x");
-      
-      var initValues = getInitialOrientation(sticker, cubeStickers);
-      var initOrientation = initValues[0].replace("pyramid-","");
-      var initCoord = initValues[1].replace("sticker","").split("-");
-
-      $(sticker).data({ "face": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
-
-      var parentCube = $(sticker).parent();
-      parentCube.data("stickerData")[initOrientation] = $(sticker).data();
-
-      $(sticker).removeClass(currentOrientation).addClass(initValues[0]);
-      $(sticker).removeClass(currentSticker).addClass(initValues[1]);
-    });
-  });
-
-  $actionArray = [];
-  $actionIndex = 0;
 }
 
 

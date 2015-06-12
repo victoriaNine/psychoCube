@@ -117,6 +117,8 @@ html:not(.debug) #resetCube { display: none; }
   50% { transform: translate3d(27em,29em, -27em); }
 }
 
+#protoCube, #protoPyramid { display:none; }
+
 .cube {
   position: absolute;
   width: 9em;
