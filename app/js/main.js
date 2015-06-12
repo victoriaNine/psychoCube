@@ -211,27 +211,138 @@ function buildCube(callback) {
     for(var y = 1; y <= 3; y++) {
       for(var x = 1; x <= 3; x++) {
         var id = "cube"+z+"-"+y+"-"+x;
-        var newCube = $("<div id=\""+id+"\">").addClass("cube cube"+z+"-"+y+"-"+x);
+        var newCube = $("<div id=\""+id+"\">").addClass("cube");
         $("#protoCube").children().clone().appendTo(newCube);
 
         var protoPyramid = $("<div>").addClass("shape pyramid");
         $("#protoPyramid").children().clone().appendTo(protoPyramid);
 
-        var frontPyramid = protoPyramid.clone().addClass("pyramid-front color-red");
-        var backPyramid = protoPyramid.clone().addClass("pyramid-back color-orange");
-        var topPyramid = protoPyramid.clone().addClass("pyramid-top color-white");
-        var bottomPyramid = protoPyramid.clone().addClass("pyramid-bottom color-green");
-        var leftPyramid = protoPyramid.clone().addClass("pyramid-left color-yellow");
-        var rightPyramid = protoPyramid.clone().addClass("pyramid-right color-blue");
+        var frontPyramid = protoPyramid.clone().addClass("color-red");
+        var backPyramid = protoPyramid.clone().addClass("color-orange");
+        var topPyramid = protoPyramid.clone().addClass("color-white");
+        var bottomPyramid = protoPyramid.clone().addClass("color-green");
+        var leftPyramid = protoPyramid.clone().addClass("color-yellow");
+        var rightPyramid = protoPyramid.clone().addClass("color-blue");
 
-        var cubeStickers = stickersMap[z+"-"+y+"-"+x];
-        if(cubeStickers) {
-          if(cubeStickers.front)   frontPyramid.addClass("sticker"+cubeStickers.front);
-          if(cubeStickers.back)    backPyramid.addClass("sticker"+cubeStickers.back);
-          if(cubeStickers.top)     topPyramid.addClass("sticker"+cubeStickers.top);
-          if(cubeStickers.bottom)  bottomPyramid.addClass("sticker"+cubeStickers.bottom);
-          if(cubeStickers.left)    leftPyramid.addClass("sticker"+cubeStickers.left);
-          if(cubeStickers.right)   rightPyramid.addClass("sticker"+cubeStickers.right);
+        if($isNewGame) {
+          // Set initial cube and stickers values
+          var cubeStickers = stickersMap[z+"-"+y+"-"+x];
+          var coordArray;
+          var stickerData = {};
+
+          if(cubeStickers) {
+            if(cubeStickers.front) {
+              frontPyramid.addClass("pyramid-front sticker"+cubeStickers.front);
+
+              coordArray = cubeStickers.front.split("-");
+              frontPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.front = frontPyramid.data();
+            }
+            if(cubeStickers.back) {
+              backPyramid.addClass("pyramid-back sticker"+cubeStickers.back);
+
+              coordArray = cubeStickers.back.split("-");
+              backPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.back = backPyramid.data();
+            }
+            if(cubeStickers.top) {
+              topPyramid.addClass("pyramid-top sticker"+cubeStickers.top);
+
+              coordArray = cubeStickers.top.split("-");
+              topPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.top = topPyramid.data();
+            }
+            if(cubeStickers.bottom) {
+              bottomPyramid.addClass("pyramid-bottom sticker"+cubeStickers.bottom);
+
+              coordArray = cubeStickers.bottom.split("-");
+              bottomPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.bottom = bottomPyramid.data();
+            }
+            if(cubeStickers.left) {
+              leftPyramid.addClass("pyramid-left sticker"+cubeStickers.left);
+
+              coordArray = cubeStickers.left.split("-");
+              leftPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.left = leftPyramid.data();
+            }
+            if(cubeStickers.right) {
+              rightPyramid.addClass("pyramid-right sticker"+cubeStickers.right);
+
+              coordArray = cubeStickers.right.split("-");
+              rightPyramid.data({ "face": parseInt(coordArray[0]), "y": parseInt(coordArray[1]), "x": parseInt(coordArray[2]) });
+
+              stickerData.right = rightPyramid.data();
+            }
+          }
+
+          newCube.addClass("cube"+z+"-"+y+"-"+x);
+          newCube.data({ "z": z, "y": y, "x": x, "stickerData":stickerData });
+        }
+        else {
+          // Load the values from the saved game data
+          var coord = $game.cubes[id];
+          newCube.data(coord);
+
+          newCube.addClass("cube"+newCube.data("z")+"-"+newCube.data("y")+"-"+newCube.data("x"));
+          var stickerData = newCube.data("stickerData");
+
+          if(stickerData) {
+            var data, stickerId;
+
+            if(stickerData.front) {
+              data = stickerData.front;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              frontPyramid.data(data);
+              frontPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+
+            if(stickerData.back) {
+              data = stickerData.back;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              backPyramid.data(data);
+              backPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+
+            if(stickerData.top) {
+              data = stickerData.top;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              topPyramid.data(data);
+              topPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+
+            if(stickerData.bottom) {
+              data = stickerData.bottom;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              bottomPyramid.data(data);
+              bottomPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+
+            if(stickerData.left) {
+              data = stickerData.left;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              leftPyramid.data(data);
+              leftPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+
+            if(stickerData.right) {
+              data = stickerData.right;
+              stickerId = data["face"]+"-"+data["y"]+"-"+data["x"];
+
+              rightPyramid.data(data);
+              rightPyramid.addClass(getOrientation(stickerId)+" sticker"+stickerId);
+            }
+          }
         }
 
         if(z == 1) frontPyramid.appendTo(newCube);
@@ -240,13 +351,6 @@ function buildCube(callback) {
         if(y == 3) bottomPyramid.appendTo(newCube);
         if(x == 1) leftPyramid.appendTo(newCube);
         if(x == 3) rightPyramid.appendTo(newCube);
-
-        if($isNewGame)
-          newCube.data({ "z": z, "y": y, "x": x });
-        else {
-          var coord = $game.cubes[id];
-          newCube.data(coord);
-        }
 
         newCube.appendTo("#psychoCube");
       }
@@ -269,44 +373,12 @@ function resetCube() {
     $(this).find(".pyramid").each(function() {
       var sticker = this;
 
-      var classes = sticker.className.split(" ");
-      var currentOrientation = classes.filter(function(className) { if(className.indexOf("pyramid-") >= 0) return true; })[0];
-      var currentCoord = sticker.className.match(/sticker([0-9])\-([0-9])\-([0-9])/)[0];
+      var currentOrientation = getOrientation($(sticker).data("face"));
+      var currentSticker = "sticker"+$(sticker).data("face")+"-"+$(sticker).data("y")+"-"+$(sticker).data("x");
 
-      var initValues = (function() {
-        var orientation;
-        var coord;
-
-        if(sticker.classList.contains("color-red")) {
-          orientation = "front";
-          coord = cubeStickers.front;
-        }
-        if(sticker.classList.contains("color-orange")) {
-          orientation = "back";
-          coord = cubeStickers.back;
-        }
-        if(sticker.classList.contains("color-white")) {
-          orientation = "top";
-          coord = cubeStickers.top;
-        }
-        if(sticker.classList.contains("color-green")) {
-          orientation = "bottom";
-          coord = cubeStickers.bottom;
-        }
-        if(sticker.classList.contains("color-yellow")) {
-          orientation = "left";
-          coord = cubeStickers.left;
-        }
-        if(sticker.classList.contains("color-blue")) {
-          orientation = "right";
-          coord = cubeStickers.right;
-        }
-
-        return ["pyramid-"+orientation, "sticker"+coord];
-      })();
-
+      var initValues = getInitialOrientation(sticker, cubeStickers);
       $(sticker).removeClass(currentOrientation).addClass(initValues[0]);
-      $(sticker).removeClass(currentCoord).addClass(initValues[1]);
+      $(sticker).removeClass(currentSticker).addClass(initValues[1]);
     });
   });
 
@@ -437,6 +509,33 @@ function glowMode(state) {
   else if(state == false) $("html").removeClass("noGlow");
   else $("html").toggleClass("noGlow");
 }
+
+function getCSSstyle(selector, property, valueOnly) {
+  var styleSheets = document.styleSheets;
+  var classes = [];
+
+  for(var i = 0; i < styleSheets.length; i++) {
+    if(!styleSheets[i].ownerNode.attributes.href.value.match("http|//")) {
+      var rules = styleSheets[i].rules || styleSheets[i].cssRules;
+      if(rules) classes.push(rules);
+    }
+  }
+
+  for(var i = 0; i < classes.length; i++) {
+    for(var j = 0; j < classes[i].length; j++) {
+        if(classes[i][j].selectorText && classes[i][j].selectorText.indexOf(selector) != -1) {
+            if(property) {
+              if(valueOnly) return parseFloat(classes[i][j].style[property]);
+              else return classes[i][j].style[property];
+            }
+            else {
+              if(classes[i][j].cssText) return classes[i][j].cssText
+              else return classes[i][j].style.cssText;
+            }
+        }
+    }
+  }
+};
 
 debugMode();
 glowMode();
