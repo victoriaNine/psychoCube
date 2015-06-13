@@ -52,7 +52,7 @@ $(document).ready(function() {
   if(phoneCheck()) $("html").addClass("isPhone");
   if(tabletCheck()) $("html").addClass("isTablet");
 
-  if(navigator.appName == 'Microsoft Internet Explorer') {
+  if(navigator.appName == "Microsoft Internet Explorer") {
       var agent = navigator.userAgent;
 
       if(agent.match(/MSIE ([0-9]{1,}[\.0-9]{0,})/) != null) {
@@ -65,8 +65,8 @@ $(document).ready(function() {
   $protoPyramid = $("#protoPyramid").clone();
   $("#scene").find("#protoCube, #protoPyramid").remove();
 
-  if(getLocalStorage("psychoCubeGame")) {
-    $game = getLocalStorage("psychoCubeGame");
+  if(getLocalStorage("psychoCube_Game")) {
+    $game = getLocalStorage("psychoCube_Game");
 
     $playerName = $game.playerName;
     $finishDate = $game.finishDate;
@@ -79,12 +79,15 @@ $(document).ready(function() {
     initGame();
   }
   else initGame(true);
+
+  debugMode();
+  glowMode();
 });
 
 function initGame(isNewGame, reinit) {
   $isReady = false;
 
-  // If the game is being reinitialized (ie. the player pressed "randomize cube")
+  // If the game is being reinitialized (ie. the player pressed "new cube")
   if(reinit) {
     // Reset the timer
     clearInterval($updateTimer);
@@ -160,13 +163,53 @@ function saveGame() {
 
   $(".cube").each(function() { $game.cubes[this.id] = $(this).data(); });
 
-  setLocalStorage("psychoCubeGame", $game);
+  setLocalStorage("psychoCube_Game", $game);
 }
 
 function gameComplete() {
   clearInterval($updateTimer);
   $finishDate = new Date();
-  saveGame();
+
+  $("#screen_gameComplete").addClass("active");
+
+  $("#input_playerName").keydown(function(e) {
+    if(e.which == 13) $("#input_confirm").click();
+  });
+
+  $("#input_confirm").click(function() {
+    $playerName = $("#input_playerName").val();
+    saveGame();
+    saveScore();
+  });
+  
+}
+
+function saveScore() {
+  var newScore = { playerName: $game.playerName,
+                   finishDate: $game.finishDate,
+                   totalTime: $game.totalTime,
+                   saveCount: $game.saveCount,
+                   totalActions: $game.totalActions };
+
+  var highScores = getLocalStorage("psychoCube_HighScores") || [[], [], [], [], [], [], [], [], [], []];
+  var newRecord = false;
+
+  for(var i = 0; i < highScores.length; i++) {
+    if(highScores[i].totalTime == undefined || newScore.totalTime < highScores[i].totalTime) {
+      for(var j = highScores.length - 2; j >= i; j--) {
+        highScores[j+1] = highScores[j];
+      }
+
+      highScores[i] = newScore;
+      setLocalStorage("psychoCube_HighScores", highScores);
+      if(i == 0) newRecord = true;
+      break;
+    }
+  }
+
+  removeLocalStorage("psychoCube_Game");
+  $("#screen_gameComplete").removeClass("active");
+  //showResults();
 }
 
 
@@ -182,7 +225,7 @@ function addListeners() {
   $("#rotationMenu button").on(eventtype, rotate);
 
   /* Camera controls ------------*/
-  $("#tridiv").on('mousedown touchstart', startCameraRotation).on('mouseup touchend', stopCameraRotation).on('mousemove touchmove', setCameraRotation).on("mousewheel", setCameraZoom);
+  $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
   $("#resetCamera").on(eventtype, function() {
     TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
@@ -205,18 +248,19 @@ function addListeners() {
     setTimeout(function() { $("#saveGame").html("Save game"); }, 1000);
   });
 
-  $("#randomizeCube").on(eventtype, function() { if($isReady) initGame(true, true); });
+  $("#newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
   $("#glowSwitch").on(eventtype, glowMode);
   $("#resetCube").on(eventtype, resetCube);
 
   /* Pause the game when the window is inactive ------------*/
   $(window).on("blur", pause);
 
-  $(window).on('beforeunload', function(e) {
+  /* Ask the player to confirm before closing the window ------------*/
+  $(window).on("beforeunload", function(e) {
     var askConfirmation = false;
 
     // If there is a game save
-    if(getLocalStorage("psychoCubeGame")) {
+    if(getLocalStorage("psychoCube_Game")) {
       // Check if any progress has been made since it was loaded
       // If that's the case, prompt the user
       if($totalActions != $game.totalActions) askConfirmation = true;
@@ -439,15 +483,13 @@ function getCSSstyle(selector, property, valueOnly) {
   }
 };
 
-debugMode();
-glowMode();
-
 
 //===============================
 // LOCAL STORAGE
 //===============================
 function setLocalStorage(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
 function getLocalStorage(key)        { return JSON.parse(localStorage.getItem(key)); }
+function removeLocalStorage(key)     { localStorage.removeItem(key); }
 
 
 //===============================

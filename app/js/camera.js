@@ -56,8 +56,8 @@ function setCameraRotation(e) {
     prevX = currentX;
     prevY = currentY;
 
-    // Inverted Y-axis controls
-    var newRotateX = rotateX + deltaX * dirX*-1;
+    // Inverted up/down controls
+    var newRotateX = rotateX + deltaX * dirX * -1;
     var newRotateY = rotateY + deltaY * dirY;
 
     var newTransform = "rotateX("+newRotateX+"deg) rotateY("+newRotateY+"deg) rotateZ("+transformValues[2]+"deg) scale3d("+transformValues[3]+")";
@@ -73,7 +73,7 @@ function setCameraZoom(e) {
   var transformValues = getCurrentTransform($("#scene")[0]);
   var scale = parseFloat(transformValues[3]);
 
-  var delta = e.originalEvent.wheelDelta / 1000;
+  var delta = -1 * e.originalEvent.wheelDelta / 1000; // Inverted controls
   var newScale = scale + delta;
 
   if(newScale < .5) newScale = .5;
