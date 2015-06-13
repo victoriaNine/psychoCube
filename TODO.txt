@@ -7,15 +7,16 @@
 ! Undo & Redo
 ! Save & Load
 ! Cube randomization : new game (override current game data)
-- Cube solved check
-- Cube solved : save current game data (timer, date, input player name) in high scores array, new game (delete completed game data)
-- Confirm when leaving page : save game ?
+! Cube solved check
+- Cube solved : save current game data (timer, date, player name, save count) in high scores array, new game (delete completed game data)
+! Confirm when leaving page
 - Clean JS
 - Comment
 
 - UI Design & CSS :
  - Intro (How to play + About)
  - Pause
+ - Game completed
  - High scores
  - Main screen
 - Clean CSS

@@ -212,6 +212,29 @@ function addListeners() {
   /* Pause the game when the window is inactive ------------*/
   $(window).on("blur", pause);
 
+  $(window).on('beforeunload', function(e) {
+    var askConfirmation = false;
+
+    // If there is a game save
+    if(getLocalStorage("psychoCubeGame")) {
+      // Check if any progress has been made since it was loaded
+      // If that's the case, prompt the user
+      if($totalActions != $game.totalActions) askConfirmation = true;
+    }
+    // If the player has never saved before
+    else {
+      // Check if any action has been made
+      // If that's the case, prompt the user
+      if($totalActions > 0) askConfirmation = true;
+    }
+
+    if(!askConfirmation) return;
+
+    var confirmationMessage = "Your progress hasn't been saved. Do you really wish to leave?";
+    (e || window.event).returnValue = confirmationMessage;     // Gecko and Trident
+    return confirmationMessage;                                // Gecko and WebKit
+  });
+
   $listenersAdded = true;
 }
 
