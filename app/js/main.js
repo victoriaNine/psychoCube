@@ -221,8 +221,55 @@ function addListeners() {
   $(".cube").on(eventtype, rotationMenu);
   if($listenersAdded) return;
 
-  /* Rotation menu controls ------------*/
+  /* Rotation menu mouse controls ------------*/
   $("#rotationMenu button").on(eventtype, rotate);
+
+  /* Rotation menu keyboard controls ------------*/
+  $(window).on("keyup", function(e) {
+    var action;
+
+    if(e.which == 70 && e.shiftKey)                                 // SHIFT + F : front counterclockwise
+      action = { axis: "z", coord: 1, direction: -1 };
+    else if(e.which == 70)                                          // F : front clockwise
+      action = { axis: "z", coord: 1, direction: 1 };
+    if(e.which == 83 && e.shiftKey)                                 // SHIFT + S : standing counterclockwise
+      action = { axis: "z", coord: 2, direction: -1 };
+    else if(e.which == 83)                                          // S : standing clockwise
+      action = { axis: "z", coord: 2, direction: 1 };
+    if(e.which == 66 && e.shiftKey)                                 // SHIFT + B : back counterclockwise (inverted for notation coherence)
+      action = { axis: "z", coord: 3, direction: 1 };
+    else if(e.which == 66)                                          // B : back clockwise (inverted for notation coherence)
+      action = { axis: "z", coord: 3, direction: -1 };
+
+    if(e.which == 85 && e.shiftKey)                                 // SHIFT + U : up counterclockwise (inverted for notation coherence)
+      action = { axis: "y", coord: 1, direction: 1 };
+    else if(e.which == 85)                                          // U : up clockwise (inverted for notation coherence)
+      action = { axis: "y", coord: 1, direction: -1 };
+    if(e.which == 69 && e.shiftKey)                                 // SHIFT + E : equator counterclockwise
+      action = { axis: "y", coord: 2, direction: -1 };
+    else if(e.which == 69)                                          // E : equator clockwise
+      action = { axis: "y", coord: 2, direction: 1 };
+    if(e.which == 68 && e.shiftKey)                                 // SHIFT + D : down counterclockwise
+      action = { axis: "y", coord: 3, direction: -1 };
+    else if(e.which == 68)                                          // D : down clockwise
+      action = { axis: "y", coord: 3, direction: 1 };
+
+    if(e.which == 76 && e.shiftKey)                                 // SHIFT + L : left counterclockwise
+      action = { axis: "x", coord: 1, direction: -1 };
+    else if(e.which == 76)                                          // L : left clockwise
+      action = { axis: "x", coord: 1, direction: 1 };
+    if(e.which == 77 && e.shiftKey)                                 // SHIFT + M : middle counterclockwise
+      action = { axis: "x", coord: 2, direction: -1 };
+    else if(e.which == 77)                                          // M : middle clockwise
+      action = { axis: "x", coord: 2, direction: 1 };
+    if(e.which == 82 && e.shiftKey)                                 // SHIFT + R : right counterclockwise (inverted for notation coherence)
+      action = { axis: "x", coord: 3, direction: -1 };
+    else if(e.which == 82)                                          // R : right clockwise (inverted for notation coherence)
+      action = { axis: "x", coord: 3, direction: 1 };
+
+    console.log(e.which, e.shiftKey, action);
+    if(action) rotate(null, action);
+  });
 
   /* Camera controls ------------*/
   $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
@@ -345,8 +392,6 @@ function rotationMenu(e) {
   if(!$("body").hasClass("selecting")) {
     setTimeout(function() { $("#rotationMenu").addClass("open"); }, 200);
     $("body").addClass("selecting").on(eventtype, cancelSelection);
-
-    $(window).on("keydown", rotate);
   }
   else
     $(".cube.selected").removeClass("selected");
@@ -376,28 +421,31 @@ function cancelSelection(e) {
 //===============================
 // ROTATION ACTIONS & HISTORY
 //===============================
-function rotate(e) {
-  var target = e.currentTarget;
+function rotate(e, action) {
   var cube = $(".cube.selected");
-  var action;
+  var action = action || {};
 
-  if(target.id == "toFront" || e.which == 37)
-    action = { axis: "z", coord: cube.data("z"), direction: -1 };
+  if(e) {
+    var target = e.currentTarget;
 
-  if(target.id == "toBack" || e.which == 39)
-    action = { axis: "z", coord: cube.data("z"), direction: 1 };
+    if(target.id == "toFront")
+      action = { axis: "z", coord: cube.data("z"), direction: -1 };
 
-  if(target.id == "toLeft" || e.which == 37)
-    action = { axis: "y", coord: cube.data("y"), direction: -1 };
+    if(target.id == "toBack")
+      action = { axis: "z", coord: cube.data("z"), direction: 1 };
 
-  if(target.id == "toRight" || e.which == 39) 
-    action = { axis: "y", coord: cube.data("y"), direction: 1 };
+    if(target.id == "toLeft")
+      action = { axis: "y", coord: cube.data("y"), direction: -1 };
 
-  if(target.id == "toUp" || e.which == 38)
-    action = { axis: "x", coord: cube.data("x"), direction: -1 };
+    if(target.id == "toRight") 
+      action = { axis: "y", coord: cube.data("y"), direction: 1 };
 
-  if(target.id == "toDown" || e.which == 40) 
-    action = { axis: "x", coord: cube.data("x"), direction: 1 };
+    if(target.id == "toUp")
+      action = { axis: "x", coord: cube.data("x"), direction: -1 };
+
+    if(target.id == "toDown") 
+      action = { axis: "x", coord: cube.data("x"), direction: 1 };
+  }
 
   $actionArray[$actionIndex++] = action;
   if($actionIndex < $actionArray.length) {
@@ -408,9 +456,7 @@ function rotate(e) {
   rotateCube(action.axis, action.coord, action.direction);
   $totalActions++;
 
-  if(e.which) cancelSelection(e);
-  $(window).off("keydown", rotate);
-
+  if(e) cancelSelection(e);
   if(checkCube()) gameComplete();
 }
 

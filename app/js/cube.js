@@ -9,41 +9,41 @@ var colorMap = { front:"red", back:"orange", top:"white", bottom:"green", left:"
 //  STICKER MAPPING
 // - Assigns each sticker to its initial cube
 //===============================
-var stickersMap = { "1-1-1" : { front: "1-1-1", top: "3-3-1", left: "5-1-3", type: "corner" },
-                    "1-1-2" : { front: "1-1-2", top: "3-3-2", type: "edge" },          
-                    "1-1-3" : { front: "1-1-3", top: "3-3-3", right: "6-1-1", type: "corner" },
+var stickersMap = { "1-1-1" : { front: "1-1-1", top: "3-3-1", left: "5-1-3" },
+                    "1-1-2" : { front: "1-1-2", top: "3-3-2" },          
+                    "1-1-3" : { front: "1-1-3", top: "3-3-3", right: "6-1-1" },
 
-                    "1-2-1" : { front: "1-2-1", left: "5-2-3", type: "edge" },
-                    "1-2-2" : { front: "1-2-2", type: "center" },
-                    "1-2-3" : { front: "1-2-3", right: "6-2-1", type: "edge" },
+                    "1-2-1" : { front: "1-2-1", left: "5-2-3" },
+                    "1-2-2" : { front: "1-2-2" },
+                    "1-2-3" : { front: "1-2-3", right: "6-2-1" },
 
-                    "1-3-1" : { front: "1-3-1", bottom: "4-1-1", left: "5-3-3", type: "corner" },      
+                    "1-3-1" : { front: "1-3-1", bottom: "4-1-1", left: "5-3-3" },      
                     "1-3-2" : { front: "1-3-2", bottom: "4-1-2" },
-                    "1-3-3" : { front: "1-3-3", bottom: "4-1-3", right: "6-3-1", type: "corner" },
+                    "1-3-3" : { front: "1-3-3", bottom: "4-1-3", right: "6-3-1" },
 
-                    "2-1-1" : { top: "3-2-1", left: "5-1-2", type: "edge" },
-                    "2-1-2" : { top: "3-2-2", type: "center" },
-                    "2-1-3" : { top: "3-2-3", right: "6-1-2", type: "edge" },
+                    "2-1-1" : { top: "3-2-1", left: "5-1-2" },
+                    "2-1-2" : { top: "3-2-2" },
+                    "2-1-3" : { top: "3-2-3", right: "6-1-2" },
 
-                    "2-2-1" : { left: "5-2-2", type: "center" },
+                    "2-2-1" : { left: "5-2-2" },
                     // 2-2-2 has no visible faces
-                    "2-2-3" : { right: "6-2-2", type: "center" },
+                    "2-2-3" : { right: "6-2-2" },
 
-                    "2-3-1" : { bottom: "4-2-1", left: "5-3-2", type: "edge" },
-                    "2-3-2" : { bottom: "4-2-2", type: "center" },
-                    "2-3-3" : { bottom: "4-2-3", right: "6-3-2", type: "edge" },
+                    "2-3-1" : { bottom: "4-2-1", left: "5-3-2" },
+                    "2-3-2" : { bottom: "4-2-2" },
+                    "2-3-3" : { bottom: "4-2-3", right: "6-3-2" },
 
-                    "3-1-1" : { back: "2-3-1", top: "3-1-1", left: "5-1-1", type: "corner" },
-                    "3-1-2" : { back: "2-3-2", top: "3-1-2", type: "edge" },
-                    "3-1-3" : { back: "2-3-3", top: "3-1-3", right: "6-1-3", type: "corner" },
+                    "3-1-1" : { back: "2-3-1", top: "3-1-1", left: "5-1-1" },
+                    "3-1-2" : { back: "2-3-2", top: "3-1-2" },
+                    "3-1-3" : { back: "2-3-3", top: "3-1-3", right: "6-1-3" },
 
-                    "3-2-1" : { back: "2-2-1", left: "5-2-1", type: "edge" },
-                    "3-2-2" : { back: "2-2-2", type: "center" },
-                    "3-2-3" : { back: "2-2-3", right: "6-2-3", type: "edge" },
+                    "3-2-1" : { back: "2-2-1", left: "5-2-1" },
+                    "3-2-2" : { back: "2-2-2" },
+                    "3-2-3" : { back: "2-2-3", right: "6-2-3" },
 
-                    "3-3-1" : { back: "2-1-1", bottom: "4-3-1", left: "5-3-1", type: "corner" },
-                    "3-3-2" : { back: "2-1-2", bottom: "4-3-2", type: "edge" },
-                    "3-3-3" : { back: "2-1-3", bottom: "4-3-3", right: "6-3-3", type: "corner" } };
+                    "3-3-1" : { back: "2-1-1", bottom: "4-3-1", left: "5-3-1" },
+                    "3-3-2" : { back: "2-1-2", bottom: "4-3-2" },
+                    "3-3-3" : { back: "2-1-3", bottom: "4-3-3", right: "6-3-3" } };
 
 
 //===============================
@@ -390,7 +390,7 @@ function resetCube() {
 
 function randomizeCube() {
   var randomActions = 20;
-  var delay = 100;
+  var delay = 150;
 
   var doRandomAction = function() {
     var axis = ["z", "x", "y"];

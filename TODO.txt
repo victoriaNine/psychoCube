@@ -10,6 +10,7 @@
 ! Cube solved check
 ! Cube solved : save current game data (timer, date, player name, save count) in high scores array, new game (delete completed game data)
 ! Confirm when leaving page
+! Keyboard shortcuts
 - Clean JS
 - Comment
 
