@@ -457,32 +457,32 @@ html:not(.noGlow) .color-blue > .face-wrapper .face {
 
 @include keyframes(redBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($red, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($red, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($red, .75); }
 }
 
 @include keyframes(orangeBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($orange, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($orange, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($orange, .75); }
 }
 
 @include keyframes(whiteBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($white, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($white, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($white, .75); }
 }
 
 @include keyframes(greenBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($green, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($green, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($green, .75); }
 }
 
 @include keyframes(yellowBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($yellow, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($yellow, .75); }
 }
 
 @include keyframes(blueBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($blue, .5); }
-  50% { box-shadow: inset 0 0 8px 1px opacify($blue, .75); }
+  50% { box-shadow: inset 0 0 4px 1px opacify($blue, .75); }
 }
 
 $roofWidth: .75;
@@ -559,32 +559,32 @@ html:not(.noGlow) .color-blue .roof .face {
 
 @include keyframes(redRoof) {
   0%, 100% { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, 0.5); }
-  50% { background: opacify($red, .5); box-shadow: inset 0 0 8px 1px opacify($red, .75); }
+  50% { background: opacify($red, .5); box-shadow: inset 0 0 4px 1px opacify($red, .75); }
 }
 
 @include keyframes(orangeRoof) {
   0%, 100% { background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5); }
-  50% { background: opacify($orange, .5); box-shadow: inset 0 0 8px 1px opacify($orange, .75); }
+  50% { background: opacify($orange, .5); box-shadow: inset 0 0 4px 1px opacify($orange, .75); }
 }
 
 @include keyframes(whiteRoof) {
   0%, 100% { background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5); }
-  50% { background: opacify($white, .5); box-shadow: inset 0 0 8px 1px opacify($white, .75); }
+  50% { background: opacify($white, .5); box-shadow: inset 0 0 4px 1px opacify($white, .75); }
 }
 
 @include keyframes(greenRoof) {
   0%, 100% { background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5); }
-  50% { background: opacify($green, .5); box-shadow: inset 0 0 8px 1px opacify($green, .75); }
+  50% { background: opacify($green, .5); box-shadow: inset 0 0 4px 1px opacify($green, .75); }
 }
 
 @include keyframes(yellowRoof) {
   0%, 100% { background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
-  50% { background: opacify($yellow, .5); box-shadow: inset 0 0 8px 1px opacify($yellow, .75); }
+  50% { background: opacify($yellow, .5); box-shadow: inset 0 0 4px 1px opacify($yellow, .75); }
 }
 
 @include keyframes(blueRoof) {
   0%, 100% { background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5); }
-  50% { background: opacify($blue, .5); box-shadow: inset 0 0 8px 1px opacify($blue, .75); }
+  50% { background: opacify($blue, .5); box-shadow: inset 0 0 4px 1px opacify($blue, .75); }
 }
 
 
