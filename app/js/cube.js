@@ -563,3 +563,27 @@ function getInitialOrientation(sticker, cubeMap) {
 
   return ["pyramid-"+orientation, "sticker"+coord];
 }
+
+
+//===============================
+// CHECKING THE CUBE'S COMPLETION
+function checkCube() {
+//===============================
+  var check = false;
+
+  // Check each color
+  for(face in colorMap) {
+    // Check each sticker from that color
+    $(".color-"+colorMap[face]).each(function() {
+
+      // If the sticker isn't on the right face for its color
+      // Then the cube hasn't been solved yet
+      check = $(this).hasClass("pyramid-"+face);
+      return check;
+    });
+
+    if(!check) break;
+  }
+
+  return check;
+}

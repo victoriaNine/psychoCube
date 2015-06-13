@@ -29,6 +29,7 @@ var $isReady = false;
 var $playerName = "";
 var $finishDate = null;
 var $totalTime;
+var $saveCount = 0;
 
 var $actionArray = [];
 var $actionIndex = 0;
@@ -69,6 +70,7 @@ $(document).ready(function() {
 
     $playerName = $game.playerName;
     $finishDate = $game.finishDate;
+    $saveCount = $game.saveCount;
 
     $actionIndex = $game.actionIndex;
     $actionArray = $game.actions;
@@ -91,7 +93,7 @@ function initGame(isNewGame, reinit) {
   }
 
   if(isNewGame) {
-    $game = { playerName: "", finishDate: null, totalTime: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
+    $game = { playerName: "", finishDate: null, totalTime: 0, saveCount: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
 
@@ -124,7 +126,7 @@ function initGame(isNewGame, reinit) {
 
 
 //===============================
-// NEW GAME & SAVE GAME
+// NEW GAME, SAVE GAME & GAME COMPLETED
 //===============================
 function newGame() {
   if($isNewGame) {
@@ -150,6 +152,7 @@ function saveGame() {
   $game.playerName = $playerName;
   $game.finishDate = $finishDate;
   $game.totalTime = $totalTime;
+  $game.saveCount = $saveCount;
 
   $game.totalActions = $totalActions;
   $game.actionIndex = $actionIndex;
@@ -158,6 +161,12 @@ function saveGame() {
   $(".cube").each(function() { $game.cubes[this.id] = $(this).data(); });
 
   setLocalStorage("psychoCubeGame", $game);
+}
+
+function gameComplete() {
+  clearInterval($updateTimer);
+  $finishDate = new Date();
+  saveGame();
 }
 
 
@@ -189,6 +198,7 @@ function addListeners() {
 
   $("#saveGame").on(eventtype, function() {
     if(!$isReady) return;
+    $saveCount++;
     saveGame();
 
     $("#saveGame").html("Game saved");
@@ -333,6 +343,8 @@ function rotate(e) {
 
   if(e.which) cancelSelection(e);
   $(window).off("keydown", rotate);
+
+  if(checkCube()) gameComplete();
 }
 
 function undo() {
