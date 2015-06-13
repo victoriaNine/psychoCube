@@ -36,10 +36,11 @@ var $totalActions = 0;
 
 var $currentTime;
 var $startTotalTime;
-var $updateTimer;
+var $updateTimer = null;
 
 var $protoCube;
 var $protoPyramid;
+var $listenersAdded;
 
 
 //===============================
@@ -80,11 +81,10 @@ $(document).ready(function() {
 
 function initGame(isNewGame) {
   $isReady = false;
-  if($updateTimer) {
-    clearInterval($updateTimer);
-    $updateTimer = null;
-  }
 
+  if($updateTimer != null) clearInterval($updateTimer);
+  if($("body").hasClass("paused")) $("body").removeClass("paused");
+  
   if(isNewGame) {
     $game = { playerName: "", finishDate: null, totalTime: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
@@ -122,7 +122,7 @@ function newGame() {
   var delay = $isNewGame ? (randomActions * randomDelay) : 0;
   setTimeout(function() {
     checkFocus(function() {
-      addListeners();
+      if(!$listenersAdded) addListeners();
 
       $startTotalTime = $game.totalTime;
       $updateTimer = setInterval(updateTimer, 1000);
@@ -169,20 +169,23 @@ function addListeners() {
   $("#pause").on(eventtype, togglePause);
   $("#undo").on(eventtype, undo);
   $("#redo").on(eventtype, redo);
-  $("#randomizeCube").on(eventtype, function() { initGame(true); });
 
   $("#saveGame").on(eventtype, function() {
+    if(!$isReady) return;
     saveGame();
 
     $("#saveGame").html("Game saved");
     setTimeout(function() { $("#saveGame").html("Save game"); }, 1000);
   });
 
+  $("#randomizeCube").on(eventtype, function() { if($isReady) initGame(true); });
   $("#glowSwitch").on(eventtype, glowMode);
   $("#resetCube").on(eventtype, resetCube);
 
   /* Pause the game when the window is inactive ------------*/
   $(window).on("blur", pause);
+
+  $listenersAdded = true;
 }
 
 

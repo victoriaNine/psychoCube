@@ -5,7 +5,7 @@ $green: rgba(0, 100, 0, 0);
 $yellow: rgba(100, 100, 0, 0);
 $blue: rgba(0, 0, 100, 0);
 
-$darkGrey: #0C0C0C;
+$translucentDarkGrey: rgba(12,12,12,.25);
 
 
 /*=======================*/
@@ -268,8 +268,8 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   height:9em;
 }
 .block .face {
-  background-color:$darkGrey;
-  box-shadow: inset 0px 0px 1em .25em rgba(255, 255, 255, .1);
+  background-color:$translucentDarkGrey;
+  box-shadow: inset 0px 0px 1em .25em rgba(255, 255, 255, .025);
 }
 .block .ft {
   width:9em;
@@ -356,7 +356,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 .pyramid > .face-wrapper .face {
   width:9em;
   height:9em;
-  background-color:$darkGrey;
+  background-color:$translucentDarkGrey;
 }
 .pyramid > .ft {
   transform:scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(56.30993247402022deg);
@@ -636,7 +636,7 @@ body.selecting .cube:not(.selected) {
 
 #rotationMenu button {
   border:1px solid;
-  background: $darkGrey;
+  background: $translucentDarkGrey;
   padding: 8px;
   margin-bottom: 1.5em;
   letter-spacing: inherit;

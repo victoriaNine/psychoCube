@@ -555,7 +555,7 @@ function getInitialOrientation(sticker, cubeMap) {
   var orientation, coord;
 
   for(face in colorMap) {
-    if(sticker.classList.contains(colorMap[face])) {
+    if(sticker.classList.contains("color-"+colorMap[face])) {
       orientation = face;
       if(cubeMap) coord = cubeMap[face];
     }
