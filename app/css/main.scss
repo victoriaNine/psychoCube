@@ -5,7 +5,10 @@ $green: rgba(0, 100, 0, 0);
 $yellow: rgba(100, 100, 0, 0);
 $blue: rgba(0, 0, 100, 0);
 
-$translucentDarkGrey: rgba(12,12,12,.25);
+$darkGrey:#222;
+$brightBlue: #37AEB8;
+$palePink: #CC5880;
+$translucentDarkGrey: rgba(12,12,12,.75);
 
 
 /*=======================*/
@@ -53,28 +56,21 @@ $translucentDarkGrey: rgba(12,12,12,.25);
   transition: #{$str};
 }
 
+.brightBlue { color:$brightBlue; }
+.italic { font-style: italic; }
+.w700 { font-weight: 700; }
+
 
 /*=======================*/
 /* GENERAL RULES
 /*=======================*/
 html, body {
   overflow:hidden;
-  background:#050505;
-  color: #666;
+  background:#DDD;
+  color: $darkGrey;
   text-transform: uppercase;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
-  letter-spacing: 2px;
-}
-
-body:before {
-  content:"";
-  position: absolute;
-  background:#050505 url("../img/bgTest.png") no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
 }
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
@@ -116,7 +112,7 @@ button {
   color:inherit;
 }
 
-#ui {
+#menu {
   position: absolute;
   left: 0;
   top: 0;
@@ -125,19 +121,48 @@ button {
   width:18em;
   height: 100%;
   z-index: 10;
-  text-align: -webkit-center;
-  background:rgba(255,255,255,.1);
+  background:rgba(0, 0, 0, .95);
+  color:#CCC;
 }
 
-#ui button {
+#menu button {
   width:100%;
-  height:3em;
-  line-height:3em;
-  background:rgba(0,0,0,.1);
+  height:2.5em;
+  line-height:2.5em;
+  background:rgba(255, 255, 255, .025);
   margin-bottom: 1px;
+  text-align: left;
+  padding-left:3em;
+  position: relative;
+  font-style: italic;
+
+  transition: all .2s .4s ease-out;
 }
 
-.timer { margin-bottom: 1.5em; }
+#menu button:before {
+  content:"";
+  width: .75em;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: $brightBlue;
+
+  transition:width .4s cubic-bezier(.4,1,.6,0), background .2s ease-out;
+}
+
+#menu button.palePink:before { background: $palePink; }
+#menu button:hover, body.paused #pause { color:$darkGrey; font-weight:900; }
+#menu button:hover:before, body.paused #pause:before { width: 100%; }
+
+.timer { margin-bottom: 1.5em; padding-left:3em; box-sizing: border-box; }
+.timer .value {
+  font-family: "Abel", sans-serif;
+  font-size: 2em;
+  margin-top: .1em;
+  display: block;
+}
 #totalTime { margin-bottom: 3em; }
 
 html:not(.debug) #resetCube { display: none; }

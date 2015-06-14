@@ -80,7 +80,6 @@ $(document).ready(function() {
   }
   else initGame(true);
 
-  debugMode();
   glowMode();
 });
 
@@ -224,8 +223,39 @@ function addListeners() {
   /* Rotation menu mouse controls ------------*/
   $("#rotationMenu button").on(eventtype, rotate);
 
-  /* Rotation menu keyboard controls ------------*/
-  $(window).on("keyup", function(e) {
+  /* Camera controls ------------*/
+  $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
+  $("#resetCamera").on(eventtype, function() {
+    TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
+      onComplete:function() {
+        $("#scene").css("transform", defaultAngle);
+      }
+    });
+  });
+
+  /* Side menu buttons ------------*/
+  $("#pause").on(eventtype, togglePause);
+  $("#undo").on(eventtype, undo);
+  $("#redo").on(eventtype, redo);
+
+  $("#saveGame").on(eventtype, function() {
+    if(!$isReady) return;
+    $saveCount++;
+    saveGame();
+
+    $("#saveGame").addClass("palePink").html("Game saved");
+    setTimeout(function() { $("#saveGame").removeClass("palePink").html("Save game"); }, 1000);
+  });
+
+  $("#newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
+  $("#glowSwitch").on(eventtype, glowMode);
+  $("#resetCube").on(eventtype, resetCube);
+
+  /* Keyboard controls ------------*/
+  $(window).on("keydown", function(e) {
+    e.preventDefault();
+
+    // Rotation menu
     var action;
 
     if(e.which == 70 && e.shiftKey)                                 // SHIFT + F : front counterclockwise
@@ -267,37 +297,22 @@ function addListeners() {
     else if(e.which == 82)                                          // R : right clockwise (inverted for notation coherence)
       action = { axis: "x", coord: 3, direction: 1 };
 
-    console.log(e.which, e.shiftKey, action);
-    if(action) rotate(null, action);
+    if(action) { rotate(null, action); return; } 
+    
+    // Side menu
+    if(e.which == 82 && e.ctrlKey)                                  // CTRL + R : Reset camera
+      $("#resetCamera").trigger(eventtype);
+    if(e.which == 90 && e.ctrlKey)                                  // CTRL + Z : Undo
+      $("#undo").trigger(eventtype);
+    if(e.which == 89 && e.ctrlKey)                                  // CTRL + Y : Redo
+      $("#redo").trigger(eventtype);
+    if(e.which == 32)                                               // Spacebar : Pause
+      $("#pause").trigger(eventtype);
+    if(e.which == 83 && e.ctrlKey)                                  // CTRL + S : Save game
+      $("#saveGame").trigger(eventtype);
+    if(e.which == 78 && e.ctrlKey)                                  // CTRL + N : New cube
+      $("#newCube").trigger(eventtype);
   });
-
-  /* Camera controls ------------*/
-  $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
-  $("#resetCamera").on(eventtype, function() {
-    TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
-      onComplete:function() {
-        $("#scene").css("transform", defaultAngle);
-      }
-    });
-  });
-
-  /* Side menu buttons ------------*/
-  $("#pause").on(eventtype, togglePause);
-  $("#undo").on(eventtype, undo);
-  $("#redo").on(eventtype, redo);
-
-  $("#saveGame").on(eventtype, function() {
-    if(!$isReady) return;
-    $saveCount++;
-    saveGame();
-
-    $("#saveGame").html("Game saved");
-    setTimeout(function() { $("#saveGame").html("Save game"); }, 1000);
-  });
-
-  $("#newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
-  $("#glowSwitch").on(eventtype, glowMode);
-  $("#resetCube").on(eventtype, resetCube);
 
   /* Pause the game when the window is inactive ------------*/
   $(window).on("blur", pause);
