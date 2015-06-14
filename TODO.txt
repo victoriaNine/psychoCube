@@ -16,7 +16,7 @@
 
 - UI Design & CSS :
  - Intro (How to play + About)
- - Pause
+ X Pause
  - Game completed (show stats, ask confirmation)
  - High scores
  - Main screen

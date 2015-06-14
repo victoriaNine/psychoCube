@@ -65,22 +65,49 @@ $(document).ready(function() {
   $protoPyramid = $("#protoPyramid").clone();
   $("#scene").find("#protoCube, #protoPyramid").remove();
 
-  if(getLocalStorage("psychoCube_Game")) {
-    $game = getLocalStorage("psychoCube_Game");
+  var load = function() {
+    if(getLocalStorage("psychoCube_Game")) {
+      $game = getLocalStorage("psychoCube_Game");
 
-    $playerName = $game.playerName;
-    $finishDate = $game.finishDate;
-    $saveCount = $game.saveCount;
+      $playerName = $game.playerName;
+      $finishDate = $game.finishDate;
+      $saveCount = $game.saveCount;
 
-    $actionIndex = $game.actionIndex;
-    $actionArray = $game.actions;
-    $totalActions = $game.totalActions;
+      $actionIndex = $game.actionIndex;
+      $actionArray = $game.actions;
+      $totalActions = $game.totalActions;
 
-    initGame();
+      initGame();
+    }
+    else initGame(true);
   }
-  else initGame(true);
+
+  var timeline = new TimelineMax({
+    onComplete: function() {
+        clearProps(this);
+    }
+  });
+  timeline.set("#sidebar button", { transition:"none" });
+  timeline.from("#sidebar", .5, { opacity:0, left:"-18em", ease:Power4.easeOut });
+  timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
+
+  $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
+
+
+  /*var checkViewport = function() {
+    if(window.innerHeight < $("#bt_soundSwitch").offset().top) {
+      $(".content").mCustomScrollbar("update");
+    }
+    else {
+      $(".content").mCustomScrollbar("disable");
+    }
+  }
+  $(window).resize(function() {
+    WIDTH = 
+  });*/
 
   glowMode();
+  load();
 });
 
 function initGame(isNewGame, reinit) {
@@ -102,12 +129,12 @@ function initGame(isNewGame, reinit) {
   $totalTime = $game.totalTime;
   $currentTime = 0;
 
-  $("#currentTime .value").html("-:-:-");
+  $("#currentTime .value").html("--:--:--");
   $("#totalTime .value").html(getFormatedTime($totalTime));
 
   var cubeSetup = function(timeline) {
     buildCube(function() {
-      timeline.to($("#scene"), 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
+      timeline.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
         onComplete: function() { $("#scene").css("transform", defaultAngle); }
       });
 
@@ -117,11 +144,11 @@ function initGame(isNewGame, reinit) {
 
   var timeline = new TimelineMax();
   if(reinit) {
-    timeline.to($("#scene"), 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    timeline.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
     timeline.call(cubeSetup, [timeline]);
   }
   else {
-    timeline.set($("#scene"), { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    timeline.set("#scene", { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
     cubeSetup(timeline);
   }
 }
@@ -175,7 +202,7 @@ function gameComplete() {
     if(e.which == 13) $("#input_confirm").click();
   });
 
-  $("#input_confirm").click(function() {
+  $("#bt_confirm").click(function() {
     $playerName = $("#input_playerName").val();
     saveGame();
     saveScore();
@@ -225,7 +252,7 @@ function addListeners() {
 
   /* Camera controls ------------*/
   $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
-  $("#resetCamera").on(eventtype, function() {
+  $("#bt_resetCamera").on(eventtype, function() {
     TweenMax.to($("#scene"), 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
       onComplete:function() {
         $("#scene").css("transform", defaultAngle);
@@ -234,26 +261,27 @@ function addListeners() {
   });
 
   /* Side menu buttons ------------*/
-  $("#pause").on(eventtype, togglePause);
-  $("#undo").on(eventtype, undo);
-  $("#redo").on(eventtype, redo);
+  $("#bt_pause").on(eventtype, togglePause);
+  $("#bt_undo").on(eventtype, undo);
+  $("#bt_redo").on(eventtype, redo);
 
-  $("#saveGame").on(eventtype, function() {
+  $("#bt_saveGame").on(eventtype, function() {
     if(!$isReady) return;
     $saveCount++;
     saveGame();
 
-    $("#saveGame").addClass("palePink").html("Game saved");
-    setTimeout(function() { $("#saveGame").removeClass("palePink").html("Save game"); }, 1000);
+    $("#bt_saveGame").addClass("palePink").html("Game saved");
+    setTimeout(function() { $("#bt_saveGame").removeClass("palePink").html("Save game"); }, 1000);
   });
 
-  $("#newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
-  $("#glowSwitch").on(eventtype, glowMode);
-  $("#resetCube").on(eventtype, resetCube);
+  $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
+  $("#bt_glowSwitch").on(eventtype, glowMode);
+  $("#bt_resetCube").on(eventtype, resetCube);
 
   /* Keyboard controls ------------*/
   $(window).on("keydown", function(e) {
     e.preventDefault();
+    var noKeyModifier = (e.shiftKey == false) && (e.ctrlKey == false) && (e.altKey == false);
 
     // Rotation menu
     var action;
@@ -264,7 +292,7 @@ function addListeners() {
       action = { axis: "z", coord: 1, direction: 1 };
     if(e.which == 83 && e.shiftKey)                                 // SHIFT + S : standing counterclockwise
       action = { axis: "z", coord: 2, direction: -1 };
-    else if(e.which == 83)                                          // S : standing clockwise
+    else if(e.which == 83 && noKeyModifier)                         // S : standing clockwise
       action = { axis: "z", coord: 2, direction: 1 };
     if(e.which == 66 && e.shiftKey)                                 // SHIFT + B : back counterclockwise (inverted for notation coherence)
       action = { axis: "z", coord: 3, direction: 1 };
@@ -294,24 +322,24 @@ function addListeners() {
       action = { axis: "x", coord: 2, direction: 1 };
     if(e.which == 82 && e.shiftKey)                                 // SHIFT + R : right counterclockwise (inverted for notation coherence)
       action = { axis: "x", coord: 3, direction: -1 };
-    else if(e.which == 82)                                          // R : right clockwise (inverted for notation coherence)
+    else if(e.which == 82  && noKeyModifier)                        // R : right clockwise (inverted for notation coherence)
       action = { axis: "x", coord: 3, direction: 1 };
 
     if(action) { rotate(null, action); return; } 
     
     // Side menu
-    if(e.which == 82 && e.ctrlKey)                                  // CTRL + R : Reset camera
-      $("#resetCamera").trigger(eventtype);
-    if(e.which == 90 && e.ctrlKey)                                  // CTRL + Z : Undo
-      $("#undo").trigger(eventtype);
-    if(e.which == 89 && e.ctrlKey)                                  // CTRL + Y : Redo
-      $("#redo").trigger(eventtype);
+    if(e.which == 82 && e.altKey)                                   // ALT + R : Reset camera
+      $("#bt_resetCamera").trigger(eventtype);
+    if(e.which == 90 && e.altKey)                                   // ALT + Z : Undo
+      $("#bt_undo").trigger(eventtype);
+    if(e.which == 89 && e.altKey)                                   // ALT + Y : Redo
+      $("#bt_redo").trigger(eventtype);
     if(e.which == 32)                                               // Spacebar : Pause
-      $("#pause").trigger(eventtype);
-    if(e.which == 83 && e.ctrlKey)                                  // CTRL + S : Save game
-      $("#saveGame").trigger(eventtype);
-    if(e.which == 78 && e.ctrlKey)                                  // CTRL + N : New cube
-      $("#newCube").trigger(eventtype);
+      $("#bt_pause").trigger(eventtype);
+    if(e.which == 83 && e.altKey)                                   // ALT + S : Save game
+      $("#bt_saveGame").trigger(eventtype);
+    if(e.which == 78 && e.altKey)                                   // ALT + N : New cube
+      $("#bt_newCube").trigger(eventtype);
   });
 
   /* Pause the game when the window is inactive ------------*/
@@ -373,7 +401,7 @@ function pause() {
   if($("body").hasClass("paused") || !$isReady) return;
 
   clearInterval($updateTimer);
-  $("#pause").html("Resume");
+  $("#bt_pause").html("Resume");
   $("body").addClass("paused");
 }
 
@@ -381,7 +409,7 @@ function resume() {
   if(!$("body").hasClass("paused") || !$isReady) return;
 
   $updateTimer = setInterval(updateTimer, 1000);
-  $("#pause").html("Pause");
+  $("#bt_pause").html("Pause");
   $("body").removeClass("paused");
 }
 
@@ -512,9 +540,19 @@ function debugMode(state) {
 }
 
 function glowMode(state) {
-  if(state == true) $("html").addClass("noGlow");
-  else if(state == false) $("html").removeClass("noGlow");
-  else $("html").toggleClass("noGlow");
+  if(state == true) { $("html").addClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
+  else if(state == false) { $("html").removeClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  else { $("html").toggleClass("noGlow"); $("#bt_glowSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
+}
+
+function clearProps(timeline) {
+  var targets = timeline.getChildren();
+  timeline.kill();
+
+  for (var i=0; i<targets.length; i++) {
+    if(targets[i].target != null)
+      TweenMax.set(targets[i].target, {clearProps:"all"});
+  }
 }
 
 function getCSSstyle(selector, property, valueOnly) {

@@ -1,9 +1,9 @@
-$red: rgba(100, 0, 0, 0);
-$orange: rgba(100, 50, 0, 0);
-$white: rgba(100, 100, 100, 0);
-$green: rgba(0, 100, 0, 0);
-$yellow: rgba(100, 100, 0, 0);
-$blue: rgba(0, 0, 100, 0);
+$red: rgba(200, 0, 0, 0);
+$orange: rgba(200, 100, 0, 0);
+$white: rgba(200, 200, 200, 0);
+$green: rgba(0, 200, 0, 0);
+$yellow: rgba(200, 200, 0, 0);
+$blue: rgba(0, 0, 200, 0);
 
 $darkGrey:#222;
 $brightBlue: #37AEB8;
@@ -60,10 +60,16 @@ $translucentDarkGrey: rgba(12,12,12,.75);
 .italic { font-style: italic; }
 .w700 { font-weight: 700; }
 
+.logo { width:648px; height: 73px; background-size: contain; background-repeat: no-repeat; background-position: 50% 50%; }
+.logo.black { background-image: url("../img/logo.png"); }
+.logo.white { background-image: url("../img/logo_white.png"); }
+
 
 /*=======================*/
 /* GENERAL RULES
 /*=======================*/
+* { box-sizing: border-box; }
+
 html, body {
   overflow:hidden;
   background:#DDD;
@@ -75,6 +81,21 @@ html, body {
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
 
+button {
+  border:none;
+  background:none;
+  font-family: inherit;
+  outline: none;
+  cursor:pointer;
+  text-transform: inherit;
+  display: block;
+  color:inherit;
+}
+
+
+/*=======================*/
+/* SCREEN CONTAINERS
+/*=======================*/
 .screen {
   position:absolute;
   width: 100%;
@@ -85,7 +106,7 @@ body.moving { cursor:move; cursor:-webkit-grabbing; }
 
 .overlay {
   z-index: 9999;
-  background: rgba(0,0,0,.95);
+  background: rgba(255, 255, 255, .9);
   opacity: 0;
   pointer-events:none;
 
@@ -100,29 +121,92 @@ body.moving { cursor:move; cursor:-webkit-grabbing; }
   @include transition("all .2s ease-out");
 }
 
-button {
-  border:none;
-  background:none;
-  font-family: inherit;
-  box-sizing: border-box;
-  outline: none;
-  cursor:pointer;
-  text-transform: inherit;
-  display: block;
-  color:inherit;
+
+/*=======================*/
+/* SCREEN : PAUSE
+/*=======================*/
+#screen_pause div {
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  width: 5em;
+  font-size: 3em;
+  font-weight: 900;
+  left: calc(50% - 2.5em);
+  top: calc(50% - 2em);
+  position: absolute;
+  color:#CCC;
+  background: $darkGrey;
+
+  transition: color .2s ease-out;
+  cursor: pointer;
 }
 
-#menu {
+#screen_pause div:hover { color: $brightBlue; }
+
+#screen_pause div:before {
+  content: "Press the spacebar to unlock";
+  position: absolute;
+  width: 100%;
+  height: 3em;
+  font-size: .75rem;
+  line-height: 2em;
+  bottom: -4em;
+  left: 0;
+  color: $darkGrey;
+  border-bottom: currentColor 2px solid;
+}
+
+/*=======================*/
+/* SIDE MENU
+/*=======================*/
+#sidebar {
   position: absolute;
   left: 0;
   top: 0;
   padding-top:3em;
-  box-sizing: border-box;
   width:18em;
   height: 100%;
   z-index: 10;
   background:rgba(0, 0, 0, .95);
   color:#CCC;
+}
+
+#sidebar .logo {
+  width: 200px;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5em;
+}
+
+.timer { margin-bottom: 1.5em; padding-left:3em; }
+.timer .value {
+  font-family: "Abel", sans-serif;
+  font-size: 2em;
+  margin-top: .1em;
+  display: block;
+}
+#totalTime { margin-bottom: 3em; }
+
+.timer .label { position: relative; }
+/*.timer .label:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: .5em;
+  height: 100%;
+  background: currentColor;
+  transform: skewX(-45deg);
+  transform-origin: 0% 100%;
+}*/
+
+@media (max-height:768px) {
+  #menu {
+    height:calc(100% - 225px);
+    overflow-y:hidden;
+  }
 }
 
 #menu button {
@@ -135,6 +219,7 @@ button {
   padding-left:3em;
   position: relative;
   font-style: italic;
+  font-size: .9em;
 
   transition: all .2s .4s ease-out;
 }
@@ -153,20 +238,17 @@ button {
 }
 
 #menu button.palePink:before { background: $palePink; }
-#menu button:hover, body.paused #pause { color:$darkGrey; font-weight:900; }
-#menu button:hover:before, body.paused #pause:before { width: 100%; }
+#menu button:hover, body.paused #bt_pause { color:$darkGrey; font-weight:900; }
+#menu button:hover:before, body.paused #bt_pause:before { width: 100%; }
 
-.timer { margin-bottom: 1.5em; padding-left:3em; box-sizing: border-box; }
-.timer .value {
-  font-family: "Abel", sans-serif;
-  font-size: 2em;
-  margin-top: .1em;
-  display: block;
-}
-#totalTime { margin-bottom: 3em; }
+#menu button i { float:right; margin-right: 1.5em; line-height: 2.5em; }
 
-html:not(.debug) #resetCube { display: none; }
+html:not(.debug) #bt_resetCube { display: none; }
 
+
+/*=======================*/
+/* PSYCHO-CUBE
+/*=======================*/
 #psychoCube {
   position: absolute;
   transform-style: preserve-3d;
@@ -196,6 +278,7 @@ html:not(.debug) #resetCube { display: none; }
 
 body:not(.moving) .cube:hover { cursor: pointer; }
 
+/* Cube positioning ------------*/
 @for $z from 1 through 3 {
   @for $y from 1 through 3 {
     @for $x from 1 through 3 {
@@ -210,6 +293,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   }
 }
 
+/* Tridiv style base START ------------*/
 /* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */
 #tridiv {
   perspective: 800px;
@@ -311,7 +395,9 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 [class*="pyramid"] > .rt, [class*="pyramid"] > .lt {
   transform-origin: 50% 0;
 }
-/* .block styles */
+/* Tridiv style base END ------------*/
+
+/* Block cubes ------------*/
 .block {
   transform:translate3D(0em, 0em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   opacity:1;
@@ -407,7 +493,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   width:0.025em;
 }
 
-/* .pyramid styles */
+/* Pyramid stickers ------------*/
 .pyramid {
   opacity:1;
   width:9em;
@@ -441,7 +527,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   height:9em;
 }
 
-/* .pyr-2 styles */
+/* Pyramid orientations ------------*/
 .pyramid-front {
   transform:translate3D(0em, 0em, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg);
 }
@@ -461,65 +547,30 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   transform:translate3D(6em, 0em, 0em) rotateX(90deg) rotateY(0deg) rotateZ(90deg);
 }
 
-.color-red > .face-wrapper .face {
-  // front : red
-  box-shadow: inset 0 0 0 1px opacify($red, .5);
-}
+/* Pyramid colors ------------*/
+// front : red
+.color-red > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($red, .5); }
+html:not(.noGlow) .color-red > .face-wrapper .face { @include animation("redBorder 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-red > .face-wrapper .face {
-  // front : red
-  @include animation("redBorder 2s ease-out infinite");
-}
+// back : orange
+.color-orange > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($orange, .5); }
+html:not(.noGlow) .color-orange > .face-wrapper .face { @include animation("orangeBorder 2s ease-out infinite"); }
 
-.color-orange > .face-wrapper .face {
-  // back : orange
-  box-shadow: inset 0 0 0 1px opacify($orange, .5);
-}
+// top : white
+.color-white > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($white, .5); }
+html:not(.noGlow) .color-white > .face-wrapper .face { @include animation("whiteBorder 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-orange > .face-wrapper .face {
-  // back : orange
-  @include animation("orangeBorder 2s ease-out infinite");
-}
+// bottom : green
+.color-green > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($green, .5); }
+html:not(.noGlow) .color-green > .face-wrapper .face { @include animation("greenBorder 2s ease-out infinite"); }
 
-.color-white > .face-wrapper .face {
-  // top : white
-  box-shadow: inset 0 0 0 1px opacify($white, .5);
-}
+// left : yellow
+.color-yellow > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
+html:not(.noGlow) .color-yellow > .face-wrapper .face { @include animation("yellowBorder 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-white > .face-wrapper .face {
-  // top : white
-  @include animation("whiteBorder 2s ease-out infinite");
-}
-
-.color-green > .face-wrapper .face {
-  // bottom : green
-  box-shadow: inset 0 0 0 1px opacify($green, .5);
-}
-
-html:not(.noGlow) .color-green > .face-wrapper .face {
-  // bottom : green
- @include animation("greenBorder 2s ease-out infinite");
-}
-
-.color-yellow > .face-wrapper .face {
-  // left : yellow
-  box-shadow: inset 0 0 0 1px opacify($yellow, .5);
-}
-
-html:not(.noGlow) .color-yellow > .face-wrapper .face {
-  // left : yellow
-  @include animation("yellowBorder 2s ease-out infinite");
-}
-
-.color-blue > .face-wrapper .face {
-  // right : blue
-  box-shadow: inset 0 0 0 1px opacify($blue, .5);
-}
-
-html:not(.noGlow) .color-blue > .face-wrapper .face {
-  // right : blue
-  @include animation("blueBorder 2s ease-out infinite");
-}
+// right : blue
+.color-blue > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($blue, .5); }
+html:not(.noGlow) .color-blue > .face-wrapper .face { @include animation("blueBorder 2s ease-out infinite"); }
 
 @include keyframes(redBorder) {
   0%, 100% { box-shadow: inset 0 0 0 1px opacify($red, .5); }
@@ -551,8 +602,9 @@ html:not(.noGlow) .color-blue > .face-wrapper .face {
   50% { box-shadow: inset 0 0 4px 1px opacify($blue, .75); }
 }
 
+/* Pyramid square roofs ------------*/
 $roofWidth: .75;
-/* .roof styles */
+
 .roof {
   transform: translate3D(0em, #{-1 - $roofWidth / 2}em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   opacity: 1;
@@ -575,53 +627,24 @@ $roofWidth: .75;
   height:#{$roofWidth}em;
 }
 
-.color-red .roof .face {
-  background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, .5);
-}
+/* Pyramid square roofs colors ------------*/
+.color-red .roof .face { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, .5); }
+html:not(.noGlow) .color-red .roof .face { @include animation("redRoof 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-red .roof .face {
-  @include animation("redRoof 2s ease-out infinite");
-}
+.color-orange .roof .face { background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5); }
+html:not(.noGlow) .color-orange .roof .face { @include animation("orangeRoof 2s ease-out infinite"); }
 
-.color-orange .roof .face {
-  background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5);
-}
+.color-white .roof .face { background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5); }
+html:not(.noGlow) .color-white .roof .face { @include animation("whiteRoof 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-orange .roof .face {
-  @include animation("orangeRoof 2s ease-out infinite");
-}
+.color-green .roof .face { background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5); }
+html:not(.noGlow) .color-green .roof .face { @include animation("greenRoof 2s ease-out infinite"); }
 
-.color-white .roof .face {
-  background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5);
-}
+.color-yellow .roof .face { background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5); }
+html:not(.noGlow) .color-yellow .roof .face { @include animation("yellowRoof 2s ease-out infinite"); }
 
-html:not(.noGlow) .color-white .roof .face {
-  @include animation("whiteRoof 2s ease-out infinite");
-}
-
-.color-green .roof .face {
-  background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5);
-}
-
-html:not(.noGlow) .color-green .roof .face {
-  @include animation("greenRoof 2s ease-out infinite");
-}
-
-.color-yellow .roof .face {
-  background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5);
-}
-
-html:not(.noGlow) .color-yellow .roof .face {
-  @include animation("yellowRoof 2s ease-out infinite");
-}
-
-.color-blue .roof .face {
-  background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5);
-}
-
-html:not(.noGlow) .color-blue .roof .face {
-  @include animation("blueRoof 2s ease-out infinite");
-}
+.color-blue .roof .face { background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5); }
+html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease-out infinite"); }
 
 @include keyframes(redRoof) {
   0%, 100% { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, 0.5); }
@@ -654,7 +677,9 @@ html:not(.noGlow) .color-blue .roof .face {
 }
 
 
-/* ROTATION MENU */
+/*=======================*/
+/* CUBE ROTATION MENU
+/*=======================*/
 body.selecting .cube:not(.selected) {
   opacity:.15;
   transition: opacity .2s ease-in-out;

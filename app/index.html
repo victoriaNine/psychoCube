@@ -18,36 +18,37 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <link rel="stylesheet prefetch" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
     <section id="screen_intro" class="screen overlay">
       
     </section>
-    <section id="screen_pause" class="screen overlay">
-      
-    </section>
     <section id="screen_gameComplete" class="screen overlay">
       <input id="input_playerName">
-      <button id="input_confirm">Confirm</button>
+      <button id="bt_confirm">Confirm</button>
     </section>
     <section id="screen_highScores" class="screen overlay">
       
     </section>
     <section id="screen_main" class="screen">
-      <aside id="menu">
-        <div id="currentTime" class="timer"><span class="label w700 italic">Current play time</span><br /><span class="value brightBlue"></span></div>
-        <div id="totalTime" class="timer"><span class="label w700 italic">Total time</span><br /><span class="value brightBlue"></span></div>
-        <button id="pause">Pause</button>
-        <button id="undo">Undo</button>
-        <button id="redo">Redo</button>
-        <button id="saveGame">Save game</button>
-        <button id="newCube">New cube</button>
-        <button id="resetCamera">Reset camera</button>
-        <button id="highScores">High scores</button>
-        <button id="glowSwitch">Toggle glow FX</button>
-        <button id="soundSwitch">Toggle sound</button>
-        <button id="resetCube">Reset cube</button>
+      <aside id="sidebar">
+        <div class="logo white"></div>
+        <div id="currentTime" class="timer"><span class="label w700 italic">Current play time //</span><br /><span class="value brightBlue"></span></div>
+        <div id="totalTime" class="timer"><span class="label w700 italic">Total time //</span><br /><span class="value brightBlue"></span></div>
+        <nav id="menu">
+          <button id="bt_pause">Pause</button>
+          <button id="bt_undo">Undo</button>
+          <button id="bt_redo">Redo</button>
+          <button id="bt_saveGame">Save game</button>
+          <button id="bt_newCube">New cube</button>
+          <button id="bt_resetCamera">Reset camera</button>
+          <button id="bt_highScores">High scores</button>
+          <button id="bt_glowSwitch">Toggle glow FX <i class="fa fa-toggle-on"></i></button>
+          <button id="bt_soundSwitch">Toggle sound <i class="fa fa-toggle-on"></i></button>
+          <button id="bt_resetCube">Reset cube</button>
+        </nav>
       </aside>
       <nav id="rotationMenu">
         <button id="toFront"><i class="fa fa-rotate-left"></i></button>
@@ -180,6 +181,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.min.js"></script>
     <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/cube.js"></script>
     <script src="js/camera.js"></script>
     <script src="js/main.js"></script>
