@@ -18,7 +18,7 @@
   background-position: 50% 50%; }
 
 .logo.black {
-  background-image: url("../img/logo.png"); }
+  background-image: url("../img/logo_black.png"); }
 
 .logo.white {
   background-image: url("../img/logo_white.png"); }
@@ -63,7 +63,7 @@ button {
 
 .overlay {
   z-index: 9999;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   pointer-events: none;
   -webkit-transform: scale(1.2);
@@ -90,6 +90,28 @@ button {
   -ms-transition: -ms-all .2s ease-out;
   -o-transition: -o-all .2s ease-out;
   transition: all .2s ease-out; }
+
+.container {
+  width: 80em;
+  height: 40em;
+  position: absolute;
+  left: calc(50% - 40em);
+  top: calc(50% - 20em); }
+
+/*=======================*/
+/* SCREEN : MAIN
+/*=======================*/
+#screen_main {
+  background: url("../img/bg.jpg") no-repeat 50% 100%;
+  background-size: cover; }
+
+/*=======================*/
+/* SCREEN : ABOUT
+/*=======================*/
+#screen_about .logo {
+  width: 20em;
+  margin-left: auto;
+  margin-right: auto; }
 
 /*=======================*/
 /* SCREEN : PAUSE
@@ -187,7 +209,7 @@ button {
   position: relative;
   font-style: italic;
   font-size: .9em;
-  transition: all .2s .4s ease-out; }
+  transition: all .25s .5s ease-out; }
 
 #menu button:before {
   content: "";
@@ -198,7 +220,7 @@ button {
   left: 0;
   z-index: -1;
   background: #37AEB8;
-  transition: width 0.4s cubic-bezier(0.4, 1, 0.6, 0), background 0.2s ease-out; }
+  transition: width 0.5s cubic-bezier(0, 1, 1, -0.5), background 0.25s ease-out; }
 
 #menu button.palePink:before {
   background: #CC5880; }
@@ -479,7 +501,7 @@ body:not(.moving) .cube:hover {
   height: 9em; }
 
 .block .face {
-  background-color: rgba(12, 12, 12, 0.75);
+  background-color: rgba(24, 24, 24, 0.75);
   box-shadow: inset 0px 0px 1em 0.25em rgba(255, 255, 255, 0.025); }
 
 .block .ft {
@@ -566,7 +588,7 @@ body:not(.moving) .cube:hover {
 .pyramid > .face-wrapper .face {
   width: 9em;
   height: 9em;
-  background-color: rgba(12, 12, 12, 0.75); }
+  background-color: rgba(24, 24, 24, 0.75); }
 
 .pyramid > .ft {
   transform: scaleZ(1.20185) scaleY(1.20185) rotateX(56.30993deg); }
@@ -1181,7 +1203,7 @@ body.selecting .cube:not(.selected) {
 
 #rotationMenu button {
   border: 1px solid;
-  background: rgba(12, 12, 12, 0.75);
+  background: rgba(24, 24, 24, 0.75);
   padding: 8px;
   margin-bottom: 1.5em;
   letter-spacing: inherit;

@@ -8,7 +8,7 @@ $blue: rgba(0, 0, 200, 0);
 $darkGrey:#222;
 $brightBlue: #37AEB8;
 $palePink: #CC5880;
-$translucentDarkGrey: rgba(12,12,12,.75);
+$translucentDarkGrey: rgba(24, 24, 24,.75);
 
 
 /*=======================*/
@@ -61,7 +61,7 @@ $translucentDarkGrey: rgba(12,12,12,.75);
 .w700 { font-weight: 700; }
 
 .logo { width:648px; height: 73px; background-size: contain; background-repeat: no-repeat; background-position: 50% 50%; }
-.logo.black { background-image: url("../img/logo.png"); }
+.logo.black { background-image: url("../img/logo_black.png"); }
 .logo.white { background-image: url("../img/logo_white.png"); }
 
 
@@ -106,7 +106,7 @@ button {
 
 .overlay {
   z-index: 9999;
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, .8);
   opacity: 0;
   pointer-events:none;
 
@@ -121,6 +121,31 @@ button {
   @include transition("all .2s ease-out");
 }
 
+.container {
+  width: 80em;
+  height: 40em;
+  position: absolute;
+  left: calc(50% - 40em);
+  top: calc(50% - 20em);
+}
+
+/*=======================*/
+/* SCREEN : MAIN
+/*=======================*/
+#screen_main {
+  background: url("../img/bg.jpg") no-repeat 50% 100%;
+  background-size:cover;
+}
+
+
+/*=======================*/
+/* SCREEN : ABOUT
+/*=======================*/
+#screen_about .logo {
+  width:20em;
+  margin-left:auto;
+  margin-right: auto;
+}
 
 /*=======================*/
 /* SCREEN : PAUSE
@@ -221,7 +246,7 @@ button {
   font-style: italic;
   font-size: .9em;
 
-  transition: all .2s .4s ease-out;
+  transition: all .25s .5s ease-out;
 }
 
 #menu button:before {
@@ -234,7 +259,7 @@ button {
   z-index: -1;
   background: $brightBlue;
 
-  transition:width .4s cubic-bezier(.4,1,.6,0), background .2s ease-out;
+  transition:width .5s cubic-bezier(0,1,1,-0.5), background .25s ease-out;
 }
 
 #menu button.palePink:before { background: $palePink; }

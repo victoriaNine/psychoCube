@@ -280,7 +280,6 @@ function addListeners() {
 
   /* Keyboard controls ------------*/
   $(window).on("keydown", function(e) {
-    e.preventDefault();
     var noKeyModifier = (e.shiftKey == false) && (e.ctrlKey == false) && (e.altKey == false);
 
     // Rotation menu
