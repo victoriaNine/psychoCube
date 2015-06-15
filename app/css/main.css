@@ -26,9 +26,6 @@
 /*=======================*/
 /* GENERAL RULES
 /*=======================*/
-* {
-  box-sizing: border-box; }
-
 html, body {
   overflow: hidden;
   background: #DDD;
@@ -112,39 +109,6 @@ button {
   width: 20em;
   margin-left: auto;
   margin-right: auto; }
-
-/*=======================*/
-/* SCREEN : PAUSE
-/*=======================*/
-#screen_pause div {
-  height: 2em;
-  text-align: center;
-  line-height: 2em;
-  width: 5em;
-  font-size: 3em;
-  font-weight: 900;
-  left: calc(50% - 2.5em);
-  top: calc(50% - 2em);
-  position: absolute;
-  color: #CCC;
-  background: #222;
-  transition: color .2s ease-out;
-  cursor: pointer; }
-
-#screen_pause div:hover {
-  color: #37AEB8; }
-
-#screen_pause div:before {
-  content: "Press the spacebar to unlock";
-  position: absolute;
-  width: 100%;
-  height: 3em;
-  font-size: .75rem;
-  line-height: 2em;
-  bottom: -4em;
-  left: 0;
-  color: #222;
-  border-bottom: currentColor 2px solid; }
 
 /*=======================*/
 /* SIDE MENU
@@ -1215,20 +1179,20 @@ body.selecting .cube:not(.selected) {
 #rotationMenu button:hover {
   background: #191919; }
 
-#toFront {
+#bt_front {
   transform: translate(-50px, 60%); }
 
-#toBack {
+#bt_back {
   transform: translate(40px, 60%); }
 
-#toLeft {
+#bt_left {
   transform: translate(-50px, -60%); }
 
-#toRight {
+#bt_right {
   transform: translate(40px, -60%); }
 
-#toUp {
+#bt_up {
   transform: translate(-25%, -50px); }
 
-#toDown {
+#bt_down {
   transform: translate(-25%, 40px); }

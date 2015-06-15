@@ -26,7 +26,7 @@ var stickersMap = { "1-1-1" : { front: "1-1-1", top: "3-3-1", left: "5-1-3" },
                     "2-1-3" : { top: "3-2-3", right: "6-1-2" },
 
                     "2-2-1" : { left: "5-2-2" },
-                    // 2-2-2 has no visible faces
+                    // 2-2-2 isn't visible and has no stickers
                     "2-2-3" : { right: "6-2-2" },
 
                     "2-3-1" : { bottom: "4-2-1", left: "5-3-2" },
@@ -413,17 +413,23 @@ function randomizeCube() {
 // CUBE ROTATION
 function rotateCube(axis, coord, direction) {
 //===============================
+  // Look up all cubes corresponding to the coordinate in the given axis
   var range = findRange(axis, coord);
 
+  // For each cube in that range
   $(range).each(function() {
+    // Determine which rotation map to check depending on the rotation axis
     var axisName = (axis == "x") ? "column" : (axis == "y") ? "row" : "depth";
 
+    // Memorize its current coordinates and update them
     var currentClass = "cube"+$(this).data("z")+"-"+$(this).data("y")+"-"+$(this).data("x");
     updateCoord(axisName, this.id, direction);
 
+    // Remove the previous coordinates in the cube's class name and add the new ones
     var newClass = "cube"+$(this).data("z")+"-"+$(this).data("y")+"-"+$(this).data("x");
     $(this).removeClass(currentClass).addClass(newClass);
 
+    // Update the cube's stickers with its new coordinates
     $(this).find(".pyramid").each(function() {
       updateSticker(axisName, this, direction);
     });
