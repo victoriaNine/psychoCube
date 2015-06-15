@@ -93,19 +93,6 @@ $(document).ready(function() {
 
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
-
-  /*var checkViewport = function() {
-    if(window.innerHeight < $("#bt_soundSwitch").offset().top) {
-      $(".content").mCustomScrollbar("update");
-    }
-    else {
-      $(".content").mCustomScrollbar("disable");
-    }
-  }
-  $(window).resize(function() {
-    WIDTH = 
-  });*/
-
   glowMode();
   load();
 });
@@ -470,22 +457,22 @@ function rotate(e, action) {
   if(e) {
     var target = e.currentTarget;
 
-    if(target.id == "toFront")
+    if(target.id == "bt_front")
       action = { axis: "z", coord: cube.data("z"), direction: -1 };
 
-    if(target.id == "toBack")
+    if(target.id == "bt_back")
       action = { axis: "z", coord: cube.data("z"), direction: 1 };
 
-    if(target.id == "toLeft")
+    if(target.id == "bt_left")
       action = { axis: "y", coord: cube.data("y"), direction: -1 };
 
-    if(target.id == "toRight") 
+    if(target.id == "bt_right") 
       action = { axis: "y", coord: cube.data("y"), direction: 1 };
 
-    if(target.id == "toUp")
+    if(target.id == "bt_up")
       action = { axis: "x", coord: cube.data("x"), direction: -1 };
 
-    if(target.id == "toDown") 
+    if(target.id == "bt_down") 
       action = { axis: "x", coord: cube.data("x"), direction: 1 };
   }
 
