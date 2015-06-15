@@ -93,7 +93,7 @@ $(document).ready(function() {
 
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
-  glowMode();
+  glowFX();
   load();
 });
 
@@ -108,13 +108,15 @@ function initGame(isNewGame, reinit) {
     if($("body").hasClass("paused")) $("body").removeClass("paused");
   }
 
+  // If the player is starting a new game, initialize th game data
+  // And set the "new game" flag
   if(isNewGame) {
     $game = { playerName: "", finishDate: null, totalTime: 0, saveCount: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
 
-  $totalTime = $game.totalTime;
-  $currentTime = 0;
+  $totalTime = $game.totalTime; // Start the timer at the time the player left off
+  $currentTime = 0; // Initialize the play time
 
   $("#currentTime .value").html("--:--:--");
   $("#totalTime .value").html(getFormatedTime($totalTime));
@@ -145,12 +147,15 @@ function initGame(isNewGame, reinit) {
 // NEW GAME, SAVE GAME & GAME COMPLETED
 //===============================
 function newGame() {
+  // If the player is starting a new game, randomize the cube...
   if($isNewGame) {
     var randomCube = randomizeCube();
     var randomActions = randomCube.randomActions;
     var randomDelay = randomCube.delay;
   }
 
+  // ... and wait until the animation is finished
+  // If the player is loading a game save, start right away
   var delay = $isNewGame ? (randomActions * randomDelay) : 0;
   setTimeout(function() {
     checkFocus(function() {
@@ -185,16 +190,11 @@ function gameComplete() {
 
   $("#screen_gameComplete").addClass("active");
 
-  $("#input_playerName").keydown(function(e) {
-    if(e.which == 13) $("#input_confirm").click();
-  });
-
   $("#bt_confirm").click(function() {
     $playerName = $("#input_playerName").val();
     saveGame();
     saveScore();
   });
-  
 }
 
 function saveScore() {
@@ -262,7 +262,7 @@ function addListeners() {
   });
 
   $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
-  $("#bt_glowSwitch").on(eventtype, glowMode);
+  $("#bt_glowSwitch").on(eventtype, glowFX);
   $("#bt_resetCube").on(eventtype, resetCube);
 
   /* Keyboard controls ------------*/
@@ -525,7 +525,7 @@ function debugMode(state) {
   else $("html").toggleClass("debug");
 }
 
-function glowMode(state) {
+function glowFX(state) {
   if(state == true) { $("html").addClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
   else if(state == false) { $("html").removeClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
   else { $("html").toggleClass("noGlow"); $("#bt_glowSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
