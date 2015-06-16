@@ -61,12 +61,15 @@ $(document).ready(function() {
       }
   };
 
+  // Save the cube and pyramid prototypes in variables and remove them from the DOM
   $protoCube = $("#protoCube").clone();
   $protoPyramid = $("#protoPyramid").clone();
   $("#scene").find("#protoCube, #protoPyramid").remove();
 
   var load = function() {
+    // If the player has a game save
     if(getLocalStorage("psychoCube_Game")) {
+      // Fetch the data from the local storage
       $game = getLocalStorage("psychoCube_Game");
 
       $playerName = $game.playerName;
@@ -79,20 +82,20 @@ $(document).ready(function() {
 
       initGame();
     }
+    // If not, initialize it with a "new game" flag on
     else initGame(true);
   }
 
-  var timeline = new TimelineMax({
-    onComplete: function() {
-        clearProps(this);
-    }
-  });
+  // Sidebar animation
+  var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
   timeline.set("#sidebar button", { transition:"none" });
   timeline.from("#sidebar", .5, { opacity:0, left:"-18em", ease:Power4.easeOut });
   timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
 
+  // Add a scrollbar to the menu (for smaller screen sizes)
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
+  // Disable the glow FX by default and load the game
   glowFX();
   load();
 });
@@ -123,20 +126,26 @@ function initGame(isNewGame, reinit) {
 
   var cubeSetup = function(timeline) {
     buildCube(function() {
+      // Set the camera to the default viewing angle and fade the cube in
       timeline.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
         onComplete: function() { $("#scene").css("transform", defaultAngle); }
       });
 
+      // Start a new game
       newGame();
     });
   }
 
   var timeline = new TimelineMax();
   if(reinit) {
+    // If the game is being reinitialized, tween the camera to its initial angle and make the cube fade
+    // Before building the cube again
     timeline.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
     timeline.call(cubeSetup, [timeline]);
   }
   else {
+    // If this is the first initialization, set the camera to its initial angle and the cube's opacity to zero
+    // So that it fades in while being built
     timeline.set("#scene", { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
     cubeSetup(timeline);
   }
@@ -159,6 +168,7 @@ function newGame() {
   var delay = $isNewGame ? (randomActions * randomDelay) : 0;
   setTimeout(function() {
     checkFocus(function() {
+      // Add the listeners and start the timer
       addListeners();
 
       $startTotalTime = $game.totalTime;
@@ -179,19 +189,24 @@ function saveGame() {
   $game.actionIndex = $actionIndex;
   $game.actions = $actionArray;
 
+  // Fetch each cube's data and put it in the save data
   $(".cube").each(function() { $game.cubes[this.id] = $(this).data(); });
 
+  // Save the game in the local storage
   setLocalStorage("psychoCube_Game", $game);
 }
 
 function gameComplete() {
+  // Stop the timer and get the current date
   clearInterval($updateTimer);
   $finishDate = new Date();
 
+  // Show the end screen
   $("#screen_gameComplete").addClass("active");
-
   $("#bt_confirm").click(function() {
     $playerName = $("#input_playerName").val();
+
+    // Save the game a last time and put the data in the high scores
     saveGame();
     saveScore();
   });
@@ -207,6 +222,7 @@ function saveScore() {
   var highScores = getLocalStorage("psychoCube_HighScores") || [[], [], [], [], [], [], [], [], [], []];
   var newRecord = false;
 
+  // Add the new score to the high scores array at the right rank
   for(var i = 0; i < highScores.length; i++) {
     if(highScores[i].totalTime == undefined || newScore.totalTime < highScores[i].totalTime) {
       for(var j = highScores.length - 2; j >= i; j--) {
@@ -215,12 +231,14 @@ function saveScore() {
 
       highScores[i] = newScore;
       setLocalStorage("psychoCube_HighScores", highScores);
-      if(i == 0) newRecord = true;
+      if(i == 0) newRecord = true; // If it tops the first rank, it's a new record
       break;
     }
   }
 
+  // Delete the game save to allow new games
   removeLocalStorage("psychoCube_Game");
+  // Fade the end screen and show the results screen
   $("#screen_gameComplete").removeClass("active");
   //showResults();
 }
@@ -255,9 +273,11 @@ function addListeners() {
 
   $("#bt_saveGame").on(eventtype, function() {
     if(!$isReady) return;
-    $saveCount++;
+    // Save the game and increment the save counter
     saveGame();
+    $saveCount++;
 
+    // Visual feedback for the player
     $("#bt_saveGame").addClass("palePink").html("Game saved");
     setTimeout(function() { $("#bt_saveGame").removeClass("palePink").html("Save game"); }, 1000);
   });
@@ -358,6 +378,7 @@ function addListeners() {
     return confirmationMessage;                                // Gecko and WebKit
   });
 
+  // Add a flag when the listeners have been added
   $listenersAdded = true;
 }
 
@@ -413,20 +434,28 @@ function togglePause() {
 //===============================
 function rotationMenu(e) {
   var target = e.currentTarget;
+  // If the cube selection has been cancelled or the game is paused, cancel the request
   if(cancelSelection(e) || $("body").hasClass("paused")) return;
 
+  // For mobile devices, check the touch events instead to detect the cube selection
   if(mobileCheck()) e = e.originalEvent.touches[0];
 
   var posX = e.pageX;
   var posY = e.pageY;
+  // Position the rotation menu where the player clicked
   $("#rotationMenu").css({ left:posX+"px", top:posY+"px" });
 
+  // If a cube is being selected 
   if(!$("body").hasClass("selecting")) {
+    // Open the rotation menu after it has finished moving to the designated place
     setTimeout(function() { $("#rotationMenu").addClass("open"); }, 200);
+    // And add the "selecting" flag to the body
     $("body").addClass("selecting").on(eventtype, cancelSelection);
   }
+  // If not, remove all "selected" flags on the cubes
   else $(".cube.selected").removeClass("selected");
 
+  // Add the "selected" flag on the cube the player clicked on
   if($(target) != $("body")) $(target).addClass("selected");
 }
 
@@ -434,9 +463,12 @@ function cancelSelection(e) {
   var check = false;
   var target = e.currentTarget;
 
+  // If a cube is being selected
   if($("body").hasClass("selecting")) {
+    // And the player has just clicked on that cube or an empty area
     if($(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
-      $(".selected").removeClass("selected");
+      // Cancel the selection
+      $(".cube.selected").removeClass("selected");
       $("body").removeClass("selecting").off(eventtype, cancelSelection);
       $("#rotationMenu").removeClass("open");
 
