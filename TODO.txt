@@ -11,8 +11,8 @@
 ! Cube solved : save current game data (timer, date, player name, save count) in high scores array, new game (delete completed game data)
 ! Confirm when leaving page
 ! Keyboard shortcuts
-- Clean JS
-- Comment
+! Clean JS
+! Comment
 
 - UI Design & CSS :
  - Intro (How to play + About)
@@ -21,7 +21,7 @@
  - High scores
  - Main screen
 - Clean CSS
-- Clean JS
+- Clean JS & Comment
 
 - Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
 - SFX ?

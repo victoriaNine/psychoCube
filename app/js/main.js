@@ -232,6 +232,7 @@ function addListeners() {
 //===============================
   /* Cube controls ------------*/
   $(".cube").on(eventtype, rotationMenu);
+  // No need to re-add the other listeners if the game has already been initialized once
   if($listenersAdded) return;
 
   /* Rotation menu mouse controls ------------*/
@@ -311,6 +312,8 @@ function addListeners() {
     else if(e.which == 82  && noKeyModifier)                        // R : right clockwise (inverted for notation coherence)
       action = { axis: "x", coord: 3, direction: 1 };
 
+    // If an action was determined based on the keyboard input
+    // Rotate the cube and stop analyzing the event
     if(action) { rotate(null, action); return; } 
     
     // Side menu
@@ -422,11 +425,9 @@ function rotationMenu(e) {
     setTimeout(function() { $("#rotationMenu").addClass("open"); }, 200);
     $("body").addClass("selecting").on(eventtype, cancelSelection);
   }
-  else
-    $(".cube.selected").removeClass("selected");
+  else $(".cube.selected").removeClass("selected");
 
-  if($(target) != $("body"))
-    $(target).addClass("selected");
+  if($(target) != $("body")) $(target).addClass("selected");
 }
 
 function cancelSelection(e) {
@@ -434,7 +435,7 @@ function cancelSelection(e) {
   var target = e.currentTarget;
 
   if($("body").hasClass("selecting")) {
-    if($(".cube.selected")[0] == target || $(event.target).closest(".cube").length == 0) {
+    if($(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
       $(".selected").removeClass("selected");
       $("body").removeClass("selecting").off(eventtype, cancelSelection);
       $("#rotationMenu").removeClass("open");
@@ -451,10 +452,13 @@ function cancelSelection(e) {
 // ROTATION ACTIONS & HISTORY
 //===============================
 function rotate(e, action) {
-  var cube = $(".cube.selected");
-  var action = action || {};
+  var cube = $(".cube.selected"); // Find the currently selected cube, if any
+  var action = action || {}; // Fetch the action passed as an argument, or create an empty object to create it
 
+  // If there's an event passed as an argument, the player is selecting a cube
+  // And the action needs to be determined
   if(e) {
+    // Determining the rotation to apply depending on which button the player clicked
     var target = e.currentTarget;
 
     if(target.id == "bt_front")
@@ -476,31 +480,39 @@ function rotate(e, action) {
       action = { axis: "x", coord: cube.data("x"), direction: 1 };
   }
 
+  // Pushing the action in the history
   $actionArray[$actionIndex++] = action;
-  if($actionIndex < $actionArray.length) {
-    // Remove any remaining actions following in the history
-    $actionArray.splice(-1, $actionIndex);
-  }
+  // And removing any remaining actions following it
+  if($actionIndex < $actionArray.length) $actionArray.splice(-1, $actionIndex);
 
+  // Applying the rotation to the cube and incrementing the action counter
   rotateCube(action.axis, action.coord, action.direction);
   $totalActions++;
 
-  if(e) cancelSelection(e);
-  if(checkCube()) gameComplete();
+  if(e) cancelSelection(e); // Cancel the selection on the cube, if there was one
+  if(checkCube()) gameComplete(); // Check if the cube has been solved
 }
 
 function undo() {
+  // If there's no previous action in the history or the game is paused, cancel the request
   if($actionIndex < 1 || $("body").hasClass("paused")) return;
+
+  // Fetching the previous action
   var lastAction = $actionArray[--$actionIndex];
 
+  // Applying the rotation to the cube and incrementing the action counter
   rotateCube(lastAction.axis, lastAction.coord, lastAction.direction * -1);
   $totalActions++;
 }
 
 function redo() {
+  // If there's no next action in the history or the game is paused, cancel the request
   if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
+
+  // Fetching the next action
   var nextAction = $actionArray[$actionIndex++];
 
+  // Applying the rotation to the cube and incrementing the action counter
   rotateCube(nextAction.axis, nextAction.coord, nextAction.direction);
   $totalActions++;
 }
