@@ -439,15 +439,7 @@
 			"file": "app/js/main.js",
 			"settings":
 			{
-				"buffer_size": 24241,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/js/cube.js",
-			"settings":
-			{
-				"buffer_size": 22212,
+				"buffer_size": 27374,
 				"line_ending": "Windows"
 			}
 		},
@@ -455,7 +447,7 @@
 			"file": "TODO.txt",
 			"settings":
 			{
-				"buffer_size": 826,
+				"buffer_size": 836,
 				"line_ending": "Windows",
 				"name": "- Rubik's cube rotation logic"
 			}
@@ -509,6 +501,15 @@
 	],
 	"file_history":
 	[
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/camera.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/cube.js",
+		"/C/wamp/www/devTests/clubMed/mFooter/css/style.scss",
+		"/C/wamp/www/devTests/clubMed/mTab/css/style.scss",
+		"/C/wamp/www/devTests/clubMed/mTab/index_iPad.html",
+		"/C/wamp/www/devTests/clubMed/mFooter/index_iPad.html",
+		"/C/wamp/www/devTests/clubMed/mFooter/js/main.js",
+		"/C/wamp/www/devTests/clubMed/mTab/js/main.js",
+		"/C/wamp/www/devTests/clubMed/mTab/index_spAndroid.html",
 		"/C/wamp/www/devTests/toyota/studioCompiler.html",
 		"/C/wamp/www/devTests/toyota/mTab/js/main.js",
 		"/C/wamp/www/devTests/toyota/mFooter/js/main.js",
@@ -518,7 +519,6 @@
 		"/C/wamp/www/devTests/toyota/mTab/css/style.scss",
 		"/C/wamp/www/devTests/toyota/mTab/index_iPad.html",
 		"/C/wamp/www/devTests/toyota/mTab/index_spAndroid.html",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/camera.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/reset.css",
 		"/C/wamp/www/devTests/oreo/custom/css/style.css",
@@ -628,15 +628,7 @@
 		"/E/labs/waltzRevolution/node_modules/grunt-contrib-sass/docs/sass-examples.md",
 		"/E/labs/waltzRevolution/bower_components/modernizr/feature-detects/script-async.js",
 		"/E/labs/waltzRevolution/node_modules/grunt-contrib-sass/tasks/sass.js",
-		"/E/labs/waltzRevolution/node_modules/grunt-contrib-concat/node_modules/source-map/build/assert-shim.js",
-		"/E/labs/waltzRevolution/node_modules/grunt-svgmin/node_modules/chalk/node_modules/ansi-styles/ansi-styles.js",
-		"/E/labs/waltzRevolution/node_modules/grunt-contrib-sass/node_modules/async/lib/async.js",
-		"/E/labs/waltzRevolution/node_modules/jshint-stylish/node_modules/text-table/example/align.js",
-		"/E/labs/intertap/app/styles/main.scss",
-		"/C/Users/Leivvi/Desktop/main.js",
-		"/C/Users/Leivvi/Downloads/dmauro-Keypress-2.1.0-1-g06deea7/dmauro-Keypress-06deea7/keypress.js",
-		"/E/labs/waltzRevolution/app/js/score.js",
-		"/C/Users/Leivvi/Desktop/120527.xml"
+		"/E/labs/waltzRevolution/node_modules/grunt-contrib-concat/node_modules/source-map/build/assert-shim.js"
 	],
 	"find":
 	{
@@ -655,6 +647,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"typeArray",
+			"getCoord",
+			"stickerIndex",
+			"coordIndex",
+			"otationState",
+			"stickerId",
+			"parameters",
+			"d",
+			"iPad",
 			"glowFX",
 			"glowMode",
 			"getCurrentTransform",
@@ -773,16 +774,7 @@
 			"pause",
 			"AudioVisualizer",
 			"AudioVisualize",
-			"cancel",
-			"isCompleted",
-			"removeListeners",
-			"hasEnd",
-			"cancel",
-			"pause",
-			"timeout",
-			"screen_main",
-			"key",
-			"open"
+			"cancel"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -790,6 +782,11 @@
 		"regex": true,
 		"replace_history":
 		[
+			"rotationArray",
+			"rotationStep",
+			"otationStep",
+			"stickerCoord",
+			"spAndroid",
 			"glowFX",
 			"defaultAngle",
 			".color-blue",
@@ -882,7 +879,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -898,8 +895,8 @@
 						"selection":
 						[
 							[
-								71,
-								71
+								1763,
+								1763
 							]
 						],
 						"settings":
@@ -909,10 +906,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 855.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -939,10 +936,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1260.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -951,15 +948,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 24241,
+						"buffer_size": 27374,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								17266,
-								17266
+								9160,
+								9160
 							]
 						],
 						"settings":
@@ -977,49 +974,19 @@
 				},
 				{
 					"buffer": 3,
-					"file": "app/js/cube.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22212,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								787,
-								787
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 6480.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
 					"file": "TODO.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 826,
+						"buffer_size": 836,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								774,
-								774
+								756,
+								756
 							]
 						],
 						"settings":
@@ -1031,7 +998,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -1114,7 +1081,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 312.0,
+	"side_bar_width": 299.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

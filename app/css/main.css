@@ -186,7 +186,7 @@ button {
   background: #37AEB8;
   transition: width 0.5s cubic-bezier(0, 1, 1, -0.5), background 0.25s ease-out; }
 
-#menu button.palePink:before {
+#menu button[disabled]:before {
   background: #CC5880; }
 
 #menu button:hover, body.paused #bt_pause {

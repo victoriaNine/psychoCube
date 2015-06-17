@@ -124,6 +124,9 @@ function initGame(isNewGame, reinit) {
   $("#currentTime .value").html("--:--:--");
   $("#totalTime .value").html(getFormatedTime($totalTime));
 
+  // Check if the history buttons should be enabled
+  checkHistoryButtons();
+
   var cubeSetup = function(timeline) {
     buildCube(function() {
       // Set the camera to the default viewing angle and fade the cube in
@@ -139,7 +142,7 @@ function initGame(isNewGame, reinit) {
   var timeline = new TimelineMax();
   if(reinit) {
     // If the game is being reinitialized, tween the camera to its initial angle and make the cube fade
-    // Before building the cube again
+    // Before building the new cube
     timeline.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
     timeline.call(cubeSetup, [timeline]);
   }
@@ -278,8 +281,8 @@ function addListeners() {
     $saveCount++;
 
     // Visual feedback for the player
-    $("#bt_saveGame").addClass("palePink").html("Game saved");
-    setTimeout(function() { $("#bt_saveGame").removeClass("palePink").html("Save game"); }, 1000);
+    $("#bt_saveGame").prop("disabled", true).html("Game saved");
+    setTimeout(function() { $("#bt_saveGame").prop("disabled", false).html("Save game"); }, 1000);
   });
 
   $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
@@ -361,13 +364,13 @@ function addListeners() {
     // If there is a game save
     if(getLocalStorage("psychoCube_Game")) {
       // Check if any progress has been made since it was loaded
-      // If that's the case, prompt the user
+      // If that's the case, prompt the player
       if($totalActions != $game.totalActions) askConfirmation = true;
     }
     // If the player has never saved before
     else {
       // Check if any action has been made
-      // If that's the case, prompt the user
+      // If that's the case, prompt the player
       if($totalActions > 0) askConfirmation = true;
     }
 
@@ -412,6 +415,7 @@ function pause() {
 
   clearInterval($updateTimer);
   $("#bt_pause").html("Resume");
+  $("#bt_undo, #bt_redo").prop("disabled", true);
   $("body").addClass("paused");
 }
 
@@ -420,6 +424,7 @@ function resume() {
 
   $updateTimer = setInterval(updateTimer, 1000);
   $("#bt_pause").html("Pause");
+  checkHistoryButtons(); // Check if the history buttons should be enabled
   $("body").removeClass("paused");
 }
 
@@ -517,6 +522,9 @@ function rotate(e, action) {
   // And removing any remaining actions following it
   if($actionIndex < $actionArray.length) $actionArray.splice(-1, $actionIndex);
 
+  // Update the  history buttons status
+  checkHistoryButtons();
+
   // Applying the rotation to the cube and incrementing the action counter
   rotateCube(action.axis, action.coord, action.direction);
   $totalActions++;
@@ -526,27 +534,37 @@ function rotate(e, action) {
 }
 
 function undo() {
-  // If there's no previous action in the history or the game is paused, cancel the request
-  if($actionIndex < 1 || $("body").hasClass("paused")) return;
-
-  // Fetching the previous action
+  // Fetch the previous action in the history
   var lastAction = $actionArray[--$actionIndex];
 
-  // Applying the rotation to the cube and incrementing the action counter
-  rotateCube(lastAction.axis, lastAction.coord, lastAction.direction * -1);
+  // Apply the rotation to the cube and incrementing the action counter
+  rotateCube(lastAction.axis, lastAction.coord, lastAction.direction * -1); // Reverse direction to undo the action
   $totalActions++;
+
+  // Update the history buttons status
+  checkHistoryButtons();
 }
 
 function redo() {
-  // If there's no next action in the history or the game is paused, cancel the request
-  if($actionIndex >= $actionArray.length || $("body").hasClass("paused")) return;
-
-  // Fetching the next action
+  // Fetch the next action in the history
   var nextAction = $actionArray[$actionIndex++];
 
-  // Applying the rotation to the cube and incrementing the action counter
+  // Apply the rotation to the cube and incrementing the action counter
   rotateCube(nextAction.axis, nextAction.coord, nextAction.direction);
   $totalActions++;
+
+  // Update the  history buttons status
+  checkHistoryButtons();
+}
+
+function checkHistoryButtons() {
+  // If there's no previous action in the history, disable the undo button
+  if($actionIndex < 1) $("#bt_undo").prop("disabled", true);
+  else $("#bt_undo").prop("disabled", false);
+
+  // If there's no next action in the history, disable the redo button
+  if($actionIndex >= $actionArray.length) $("#bt_redo").prop("disabled", true);
+  else $("#bt_redo").prop("disabled", false);
 }
 
 
