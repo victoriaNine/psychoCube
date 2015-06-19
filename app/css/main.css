@@ -38,6 +38,10 @@ body.moving {
   cursor: move;
   cursor: -webkit-grabbing; }
 
+a {
+  color: inherit;
+  text-decoration: none; }
+
 button {
   border: none;
   background: none;
@@ -47,6 +51,29 @@ button {
   text-transform: inherit;
   display: block;
   color: inherit; }
+
+.colContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between; }
+
+.col {
+  position: relative;
+  display: inline-block;
+  height: calc(100% - 110px);
+  vertical-align: bottom; }
+
+.col1 {
+  width: 375px; }
+
+.col2 {
+  width: 485px; }
+
+.panel {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 24px; }
 
 /*=======================*/
 /* SCREEN CONTAINERS
@@ -60,7 +87,6 @@ button {
 
 .overlay {
   z-index: 9999;
-  background: rgba(255, 255, 255, 0.8);
   opacity: 0;
   pointer-events: none;
   -webkit-transform: scale(1.2);
@@ -73,6 +99,16 @@ button {
   -ms-transition: -ms-all .2s .4s ease-out;
   -o-transition: -o-all .2s .4s ease-out;
   transition: all .2s .4s ease-out; }
+
+.overlay:before {
+  content: "";
+  background: url("../img/bg2.jpg") no-repeat 50% 100%;
+  opacity: .9;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0; }
 
 .overlay.active {
   opacity: 1;
@@ -106,9 +142,11 @@ button {
 /* SCREEN : ABOUT
 /*=======================*/
 #screen_about .logo {
-  width: 20em;
-  margin-left: auto;
-  margin-right: auto; }
+  width: 485px;
+  height: 55px; }
+
+#screen_about .col {
+  margin-top: 55px; }
 
 /*=======================*/
 /* SIDE MENU
