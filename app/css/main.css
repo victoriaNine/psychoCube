@@ -85,13 +85,20 @@ button {
   color: #999; }
 
 .panel {
-  padding: 24px;
+  padding: 60px 24px 24px;
   line-height: 1.25em; }
 
 .panel h2 {
   font-style: italic;
   font-weight: 700;
-  margin-bottom: 24px; }
+  margin-bottom: 24px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #CCC;
+  padding: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; }
 
 .panel p {
   width: 100%; }
@@ -118,46 +125,14 @@ button {
   font-style: italic; }
 
 .panel .note {
-  text-align: center;
   font-size: 0.75em;
   line-height: 1.175em;
   position: absolute;
-  bottom: 24px;
-  left: 0; }
-
-#panel_mouse p {
-  font-family: "Abel", sans-serif; }
-
-#panel_mouse span {
-  font-family: "Open Sans"; }
-
-#panel_shortcuts ul {
-  display: inline-block; }
-
-#panel_shortcuts ul:first-of-type {
-  margin-right: 24px; }
-
-#panel_shortcuts li {
-  padding-left: 80px; }
-
-.credits, .cta {
-  padding: 8px; }
-
-.credits .label {
-  font-style: italic;
-  font-size: 0.875em;
-  font-weight: 600; }
-
-.credits .value {
-  font-family: "Abel", sans-serif;
-  color: #37AEB8;
-  float: right; }
-
-.cta {
-  background: rgba(55, 174, 184, 0.3);
-  font-style: italic;
-  color: #FFF;
-  font-weight: 600; }
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.025);
+  padding: 8px 0 8px 16px;
+  border-left: 8px solid #37AEB8; }
 
 /*=======================*/
 /* SCREEN CONTAINERS
@@ -225,12 +200,113 @@ button {
 /* SCREEN : ABOUT
 /*=======================*/
 #screen_about .logo {
-  width: 485px;
+  width: 375px;
   height: 55px; }
 
 #screen_about .col {
   margin-top: 55px; }
 
+#panel_mouse p {
+  font-family: "Abel", sans-serif; }
+
+#panel_mouse span {
+  font-family: "Open Sans"; }
+
+#panel_shortcuts ul {
+  display: inline-block; }
+
+#panel_shortcuts ul:first-of-type {
+  margin-right: 24px; }
+
+#panel_shortcuts li {
+  padding-left: 80px; }
+
+.credits, .cta {
+  padding: 8px; }
+
+.credits .label {
+  font-style: italic;
+  font-size: 0.875em;
+  font-weight: 600;
+  color: #CCC; }
+
+.credits .value {
+  font-family: "Abel", sans-serif;
+  float: right; }
+
+.cta {
+  background: rgba(255, 255, 255, 0.025);
+  color: #37AEB8;
+  font-style: italic;
+  font-size: 0.875em;
+  font-weight: 600; }
+
+#loading {
+  color: #CCC;
+  border-bottom: 1px currentColor solid;
+  padding-bottom: 8px; }
+
+#loading .label {
+  text-transform: none;
+  font-size: 2em;
+  font-weight: 300;
+  vertical-align: super; }
+
+#loading .value {
+  float: right;
+  text-align: right;
+  font-size: 4em;
+  font-weight: 700;
+  font-style: italic;
+  margin-top: -24px; }
+
+#loadingHue {
+  height: 2em;
+  width: .5em;
+  background-color: #37AEB8;
+  display: inline-block;
+  margin-left: .5em; }
+
+#psychoCube_model {
+  background: url("../img/cube_2.png") no-repeat;
+  width: 306px;
+  height: 275px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6em; }
+
+#screen_about.active #psychoCube_model {
+  -webkit-animation: levitateModel 8s ease-in-out infinite;
+  -moz-animation: levitateModel 8s ease-in-out infinite;
+  -ms-animation: levitateModel 8s ease-in-out infinite;
+  -o-animation: levitateModel 8s ease-in-out infinite;
+  animation: levitateModel 8s ease-in-out infinite; }
+
+@-webkit-keyframes levitateModel {
+  0%, 100% {
+    transform: translateY(0); }
+  50% {
+    transform: translateY(1em); } }
+@-moz-keyframes levitateModel {
+  0%, 100% {
+    transform: translateY(0); }
+  50% {
+    transform: translateY(1em); } }
+@-ms-keyframes levitateModel {
+  0%, 100% {
+    transform: translateY(0); }
+  50% {
+    transform: translateY(1em); } }
+@-o-keyframes levitateModel {
+  0%, 100% {
+    transform: translateY(0); }
+  50% {
+    transform: translateY(1em); } }
+@keyframes levitateModel {
+  0%, 100% {
+    transform: translateY(0); }
+  50% {
+    transform: translateY(1em); } }
 /*=======================*/
 /* SIDE MENU
 /*=======================*/

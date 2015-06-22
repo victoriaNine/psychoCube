@@ -117,8 +117,8 @@ button {
 .rowContainer { height:370px; display: flex; flex-direction: column; }
 
 .panel, .credits { width:100%; background:rgba(255, 255, 255, .025); margin-bottom: 15px;  position: relative; color:#999; }
-.panel { padding: 24px; line-height: 1.25em; }
-.panel h2 { font-style: italic; font-weight: 700; margin-bottom: 24px; }
+.panel { padding:60px 24px 24px; line-height: 1.25em; }
+.panel h2 { font-style: italic; font-weight: 700; margin-bottom: 24px; background:rgba(0, 0, 0, .5); color:#CCC; padding:8px; position: absolute; top:0; left:0; width: 100%; }
 .panel p { width: 100%; }
 
 #panel_keyboards, #panel_shortcuts { flex:1; }
@@ -141,21 +141,16 @@ button {
   font-style: italic;
 }
 
-.panel .note { text-align: center; font-size: $fontSize12px; line-height: 1.175em; position: absolute; bottom:24px; left:0; }
-
-#panel_mouse p { font-family: "Abel", sans-serif; }
-#panel_mouse span { font-family: "Open Sans"; }
-
-#panel_shortcuts ul { display: inline-block; }
-#panel_shortcuts ul:first-of-type { margin-right: 24px; }
-
-#panel_shortcuts li { padding-left:80px; }
-
-.credits, .cta { padding: 8px; }
-.credits .label { font-style: italic;  font-size: $fontSize14px; font-weight: 600; }
-.credits .value { font-family: "Abel", sans-serif; color:$brightBlue; float:right; }
-
-.cta { background: transparentize($brightBlue, .7); font-style: italic; color:#FFF; font-weight: 600; }
+.panel .note {
+  font-size: $fontSize12px;
+  line-height: 1.175em;
+  position: absolute;
+  bottom:0;
+  left:0;
+  background:rgba(255, 255, 255, .025);
+  padding: 8px 0 8px 16px;
+  border-left:8px solid $brightBlue;
+}
 
 
 /*=======================*/
@@ -217,13 +212,52 @@ button {
 /*=======================*/
 /* SCREEN : ABOUT
 /*=======================*/
-#screen_about .logo {
-  width:485px;
-  height: 55px;
+#screen_about .logo { width:375px; height: 55px; }
+
+#screen_about .col { margin-top: 55px; }
+
+#panel_mouse p { font-family: "Abel", sans-serif; }
+#panel_mouse span { font-family: "Open Sans"; }
+
+#panel_shortcuts ul { display: inline-block; }
+#panel_shortcuts ul:first-of-type { margin-right: 24px; }
+
+#panel_shortcuts li { padding-left:80px; }
+
+.credits, .cta { padding: 8px; }
+.credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
+.credits .value { font-family: "Abel", sans-serif; float:right; }
+
+.cta { background:rgba(255, 255, 255, .025); color:$brightBlue; font-style: italic; font-size: $fontSize14px; font-weight: 600; }
+
+#loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }
+#loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }
+#loading .value { float: right; text-align: right; font-size: 4em; font-weight: 700; font-style: italic; margin-top: -24px; }
+
+#loadingHue {
+  height: 2em;
+  width: .5em;
+  background-color: $brightBlue;
+  display: inline-block;
+  margin-left: .5em;
 }
 
-#screen_about .col {
-  margin-top: 55px;
+#psychoCube_model {
+  background: url("../img/cube_2.png") no-repeat;
+  width: 306px;
+  height: 275px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6em;
+}
+
+#screen_about.active #psychoCube_model {
+  @include animation("levitateModel 8s ease-in-out infinite");
+}
+
+@include keyframes(levitateModel) {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1em); }
 }
 
 
