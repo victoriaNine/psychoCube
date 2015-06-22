@@ -69,11 +69,95 @@ button {
   width: 375px; }
 
 .col2 {
-  width: 485px; }
+  width: 485px;
+  margin-left: 15px; }
+
+.rowContainer {
+  height: 370px;
+  display: flex;
+  flex-direction: column; }
+
+.panel, .credits {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.025);
+  margin-bottom: 15px;
+  position: relative;
+  color: #999; }
 
 .panel {
-  background: rgba(255, 255, 255, 0.25);
-  padding: 24px; }
+  padding: 24px;
+  line-height: 1.25em; }
+
+.panel h2 {
+  font-style: italic;
+  font-weight: 700;
+  margin-bottom: 24px; }
+
+.panel p {
+  width: 100%; }
+
+#panel_keyboards, #panel_shortcuts {
+  flex: 1; }
+
+#panel_mouse {
+  height: 150px; }
+
+.panel li {
+  position: relative;
+  padding-left: 40px;
+  font-family: "Abel"; }
+
+.panel li:after {
+  content: attr(data-value);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #37AEB8;
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-style: italic; }
+
+.panel .note {
+  text-align: center;
+  font-size: 0.75em;
+  line-height: 1.175em;
+  position: absolute;
+  bottom: 24px;
+  left: 0; }
+
+#panel_mouse p {
+  font-family: "Abel", sans-serif; }
+
+#panel_mouse span {
+  font-family: "Open Sans"; }
+
+#panel_shortcuts ul {
+  display: inline-block; }
+
+#panel_shortcuts ul:first-of-type {
+  margin-right: 24px; }
+
+#panel_shortcuts li {
+  padding-left: 80px; }
+
+.credits, .cta {
+  padding: 8px; }
+
+.credits .label {
+  font-style: italic;
+  font-size: 0.875em;
+  font-weight: 600; }
+
+.credits .value {
+  font-family: "Abel", sans-serif;
+  color: #37AEB8;
+  float: right; }
+
+.cta {
+  background: rgba(55, 174, 184, 0.3);
+  font-style: italic;
+  color: #FFF;
+  font-weight: 600; }
 
 /*=======================*/
 /* SCREEN CONTAINERS
@@ -102,8 +186,7 @@ button {
 
 .overlay:before {
   content: "";
-  background: url("../img/bg2.jpg") no-repeat 50% 100%;
-  opacity: .9;
+  background: rgba(0, 0, 0, 0.95);
   position: absolute;
   width: 100%;
   height: 100%;
