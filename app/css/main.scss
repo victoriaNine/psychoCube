@@ -116,13 +116,10 @@ button {
 
 .rowContainer { height:370px; display: flex; flex-direction: column; }
 
-.panel, .credits { width:100%; background:rgba(255, 255, 255, .025); margin-bottom: 15px;  position: relative; color:#999; }
-.panel { padding:60px 24px 24px; line-height: 1.25em; }
+.panel, .credits { width:100%; margin-bottom: 15px; position: relative; color:#999; }
+.panel { padding:60px 24px 24px; line-height: 1.25em; background:rgba(255, 255, 255, .025); }
 .panel h2 { font-style: italic; font-weight: 700; margin-bottom: 24px; background:rgba(0, 0, 0, .5); color:#CCC; padding:8px; position: absolute; top:0; left:0; width: 100%; }
 .panel p { width: 100%; }
-
-#panel_keyboards, #panel_shortcuts { flex:1; }
-#panel_mouse { height: 150px; }
 
 .panel li {
   position:relative;
@@ -139,17 +136,6 @@ button {
   font-family: "Open Sans";
   font-weight: 700;
   font-style: italic;
-}
-
-.panel .note {
-  font-size: $fontSize12px;
-  line-height: 1.175em;
-  position: absolute;
-  bottom:0;
-  left:0;
-  background:rgba(255, 255, 255, .025);
-  padding: 8px 0 8px 16px;
-  border-left:8px solid $brightBlue;
 }
 
 
@@ -213,22 +199,34 @@ button {
 /* SCREEN : ABOUT
 /*=======================*/
 #screen_about .logo { width:375px; height: 55px; }
-
 #screen_about .col { margin-top: 55px; }
+
+#panel_keyboards, #panel_shortcuts { flex:1; }
+#panel_mouse { height: 150px; }
 
 #panel_mouse p { font-family: "Abel", sans-serif; }
 #panel_mouse span { font-family: "Open Sans"; }
 
 #panel_shortcuts ul { display: inline-block; }
 #panel_shortcuts ul:first-of-type { margin-right: 24px; }
-
 #panel_shortcuts li { padding-left:80px; }
 
-.credits, .cta { padding: 8px; }
+.panel .note {
+  font-size: $fontSize12px;
+  line-height: 1.175em;
+  position: absolute;
+  bottom:0;
+  left:0;
+  background:rgba(255, 255, 255, .025);
+  padding: 8px 0 8px 16px;
+  border-left:8px solid $brightBlue;
+}
+
+.credits, .cta { background:rgba(0, 0, 0, .5); padding: 8px; }
 .credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
 .credits .value { font-family: "Abel", sans-serif; float:right; }
 
-.cta { background:rgba(255, 255, 255, .025); color:$brightBlue; font-style: italic; font-size: $fontSize14px; font-weight: 600; }
+.cta { color:$brightBlue; font-style: italic; font-size: $fontSize14px; font-weight: 600; }
 
 #loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }
 #loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }
@@ -259,6 +257,18 @@ button {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(1em); }
 }
+
+#screen_about.init:before { background:url("../img/bg2.jpg"); }
+
+#screen_about.init .panel,
+#screen_about.init .panel .note { background:rgba(255, 255, 255, .25); }
+
+#screen_about.init .panel,
+#screen_about.init #loading { color:#111; }
+
+#screen_about.init .credits,
+#screen_about.init .cta,
+#screen_about.init .panel h2 { background:rgba(0, 0, 0, .85); }
 
 
 /*=======================*/
