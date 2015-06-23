@@ -14,19 +14,26 @@
 ! Clean JS
 ! Comment
 
-! UI Design & CSS :
+! UI Design & CSS : (http://recruit.birdman.ne.jp/)
  ! Intro (How to play + About)
  ! Game completed (show stats, ask confirmation)
  ! High scores
- ! Main screen
-- UI JS
+ ~ Main screen (rotation menu)
+
+- UI JS :
  - Disable cube keyboard listener when inactive
  - Screen transitions & animations
 - Clean JS & Comment
 - Clean CSS
 
 - Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
-- SFX ?
+- SFX :
+ - Hover menu
+ - Toggle option
+ - Rotate cube
+ - Open overlay
+ - Close overlay
+ - Start game
 - Mute switch
 
 - Three.js BG (http://www.ro.me/tech, district13.co.in)
