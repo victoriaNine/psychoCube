@@ -14,20 +14,23 @@
 ! Clean JS
 ! Comment
 
-- UI Design & CSS :
- - Intro (How to play + About)
- X Pause
- - Game completed (show stats, ask confirmation)
- - High scores
- - Main screen
-- Clean CSS
+! UI Design & CSS :
+ ! Intro (How to play + About)
+ ! Game completed (show stats, ask confirmation)
+ ! High scores
+ ! Main screen
+- UI JS
+ - Disable cube keyboard listener when inactive
+ - Screen transitions & animations
 - Clean JS & Comment
+- Clean CSS
 
 - Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
 - SFX ?
 - Mute switch
 
 - Three.js BG (http://www.ro.me/tech, district13.co.in)
+- Loading process
 
 - Clean CSS
 - Clean JS

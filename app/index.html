@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <section id="screen_about" class="screen overlay active">
+    <section id="screen_about" class="screen overlay">
       <div class="container">
         <div class="logo white"></div>
         <div class="colContainer">
@@ -31,17 +31,17 @@
               <div id="panel_keyboards" class="panel">
                 <h2>Keyboard Controls</h2>
                 <ul>
-                  <li data-value="L">Left clockwise</li>
-                  <li data-value="M">Middle clockwise</li>
-                  <li data-value="R">Right clockwise</li>
+                  <li data-shortcut="L">Left clockwise</li>
+                  <li data-shortcut="M">Middle clockwise</li>
+                  <li data-shortcut="R">Right clockwise</li>
                   <br>
-                  <li data-value="U">Up clockwise</li>
-                  <li data-value="E">Equator clockwise</li>
-                  <li data-value="D">Down clockwise</li>
+                  <li data-shortcut="U">Up clockwise</li>
+                  <li data-shortcut="E">Equator clockwise</li>
+                  <li data-shortcut="D">Down clockwise</li>
                   <br>
-                  <li data-value="F">Front clockwise</li>
-                  <li data-value="S">Standing clockwise</li>
-                  <li data-value="B">Back clockwise</li>
+                  <li data-shortcut="F">Front clockwise</li>
+                  <li data-shortcut="S">Standing clockwise</li>
+                  <li data-shortcut="B">Back clockwise</li>
                 </ul>
                 <p class="note">To turn any slice counterclockwise,<br>press <span class="w700 italic">Shift + Key</span></p>
               </div>
@@ -60,20 +60,20 @@
               <div id="panel_shortcuts" class="panel">
                 <h2>Menu shortcuts</h2>
                 <ul>
-                  <li data-value="Space">Pause</li>
-                  <li data-value="Alt + Z">Undo</li>
-                  <li data-value="Alt + Y">Redo</li>
+                  <li data-shortcut="Space">Pause</li>
+                  <li data-shortcut="Alt + Z">Undo</li>
+                  <li data-shortcut="Alt + Y">Redo</li>
                 </ul>
                 <ul>
-                  <li data-value="Alt + S">Save game</li>
-                  <li data-value="Alt + N">New cube</li>
-                  <li data-value="Alt + R">Reset camera</li>
+                  <li data-shortcut="Alt + S">Save game</li>
+                  <li data-shortcut="Alt + N">New cube</li>
+                  <li data-shortcut="Alt + R">Reset camera</li>
                 </ul>
                 <p class="note">You can toggle the Glow FX in the menu<br><span class="w700 italic">Warning :</span> Resource intensive</p>
               </div>
             </div>
             <div class="credits"><span class="label">Design, Development &amp; SFX</span><span class="value"><a href="http://orion9.net" target="_blank">Victoria Nine</a></span></div>
-            <div class="cta">Click anywhere to continue</div>
+            <div class="info">Click anywhere to continue</div>
           </div>
           <div class="col col2">
             <div id="loading">
@@ -88,12 +88,120 @@
     </section>
     <section id="screen_gameComplete" class="screen overlay">
       <div class="container">
-        <input id="input_playerName">
-        <button id="bt_confirm">Confirm</button>
+        <h1>CONGRATULATIONS//cube:solved</h1>
+        <div class="panel">
+          <h2>Player name</h2>
+          <input id="input_playerName" placeholder="ENTER YOUR NAME HERE">
+        </div>
+        <div class="panel">
+          <h2>Total time</h2>
+          <span class="value">00:50:37</span>
+        </div>
+        <div class="panel">
+          <h2>Total actions</h2>
+          <span class="value">73</span>
+        </div>
+        <div class="panel">
+          <h2>Save count</h2>
+          <span class="value">56</span>
+        </div>
+        <button id="bt_confirm" class="cta">Confirm</button>
       </div>
     </section>
     <section id="screen_highScores" class="screen overlay">
       <div class="container">
+        <h1>HIGHSCORES//cube:report</h1>
+        <div id="table_highScores" class="table">
+          <div class="title row">
+            <span class="col col1"></span>
+            <span class="col col2">Player name</span>
+            <span class="col col3">Finished on</span>
+            <span class="col col4">Total time</span>
+            <span class="col col5">Total actions</span>
+            <span class="col col6">Save count</span>
+          </div>
+          <div class="row">
+            <span class="col col1">01</span>
+            <span class="col col2">Kelly C</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">02</span>
+            <span class="col col2">J-Bear</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">03</span>
+            <span class="col col2">Kelly C</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">04</span>
+            <span class="col col2">J-Bear</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">05</span>
+            <span class="col col2">Kelly C</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">06</span>
+            <span class="col col2">J-Bear</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">07</span>
+            <span class="col col2">Kelly C</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">08</span>
+            <span class="col col2">J-Bear</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">09</span>
+            <span class="col col2">Kelly C</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+          <div class="row">
+            <span class="col col1">10</span>
+            <span class="col col2">J-Bear</span>
+            <span class="col col3">18 Jun 2015</span>
+            <span class="col col4">00:37:58</span>
+            <span class="col col5">73</span>
+            <span class="col col6">8</span>
+          </div>
+        </div>
+        <button id="bt_close" class="cta">Close</button>
       </div>
     </section>
     <section id="screen_main" class="screen">
