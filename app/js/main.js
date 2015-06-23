@@ -76,10 +76,6 @@ $(document).ready(function() {
       $finishDate = $game.finishDate;
       $saveCount = $game.saveCount;
 
-      $actionIndex = $game.actionIndex;
-      $actionArray = $game.actions;
-      $totalActions = $game.totalActions;
-
       initGame();
     }
     // If not, initialize it with a "new game" flag on
@@ -117,6 +113,11 @@ function initGame(isNewGame, reinit) {
     $game = { playerName: "", finishDate: null, totalTime: 0, saveCount: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
+
+  // Initialize the history
+  $actionIndex = $game.actionIndex;
+  $actionArray = $game.actions;
+  $totalActions = $game.totalActions;
 
   $totalTime = $game.totalTime; // Start the timer at the time the player left off
   $currentTime = 0; // Initialize the play time
