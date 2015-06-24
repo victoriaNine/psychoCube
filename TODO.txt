@@ -20,9 +20,10 @@
  ! High scores
  ! Main screen (rotation menu)
 
-- UI JS :
+~ UI JS :
  ! Disable cube keyboard listener when inactive
- - Screen transitions & animations
+ ~ Show high scores
+ ~ Screen transitions & animations
 - Clean JS & Comment
 - Clean CSS
 
@@ -34,6 +35,7 @@
  - Open overlay
  - Close overlay
  - Start game
+ - Error
 - Mute switch
 
 - Three.js BG (http://www.ro.me/tech, district13.co.in)

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <section id="screen_about" class="screen overlay active">
+    <section id="screen_about" class="screen overlay">
       <div class="container">
         <div class="logo white"></div>
         <div class="colContainer">
@@ -92,118 +92,120 @@
         <div class="content">
           <div class="panel">
             <h2>Player name</h2>
-            <input id="input_playerName" placeholder="ENTER YOUR NAME HERE">
+            <input id="input_playerName" placeholder="Enter your name here">
           </div>
           <div class="panel">
             <h2>Total time</h2>
-            <span class="value">00:50:37</span>
+            <span class="value"></span>
           </div>
           <div class="panel">
             <h2>Total actions</h2>
-            <span class="value">73</span>
+            <span class="value"></span>
           </div>
           <div class="panel">
             <h2>Save count</h2>
-            <span class="value">56</span>
+            <span class="value"></span>
           </div>
         </div>
-        <button id="bt_confirm" class="cta">Confirm</button>
+        <button id="bt_confirm" class="cta close">Confirm</button>
       </div>
     </section>
-    <section id="screen_highScores" class="screen overlay">
+    <section id="screen_highScores" class="screen overlay active">
       <div class="container">
         <h1>HIGHSCORES//cube:report</h1>
-        <div id="table_highScores" class="table">
-          <div class="title row">
-            <span class="col col1"></span>
-            <span class="col col2">Player name</span>
-            <span class="col col3">Finished on</span>
-            <span class="col col4">Total time</span>
-            <span class="col col5">Total actions</span>
-            <span class="col col6">Save count</span>
-          </div>
-          <div class="row">
-            <span class="col col1">01</span>
-            <span class="col col2">Kelly C</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">02</span>
-            <span class="col col2">J-Bear</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">03</span>
-            <span class="col col2">Kelly C</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">04</span>
-            <span class="col col2">J-Bear</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">05</span>
-            <span class="col col2">Kelly C</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">06</span>
-            <span class="col col2">J-Bear</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">07</span>
-            <span class="col col2">Kelly C</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">08</span>
-            <span class="col col2">J-Bear</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">09</span>
-            <span class="col col2">Kelly C</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
-          </div>
-          <div class="row">
-            <span class="col col1">10</span>
-            <span class="col col2">J-Bear</span>
-            <span class="col col3">18 Jun 2015</span>
-            <span class="col col4">00:37:58</span>
-            <span class="col col5">73</span>
-            <span class="col col6">8</span>
+        <div class="content">
+          <div id="table_highScores" class="table">
+            <div class="title row">
+              <span class="col col1"></span><!--
+           --><span class="col col2">Player name</span><!--
+           --><span class="col col3">Finished on</span><!--
+           --><span class="col col4">Total time</span><!--
+           --><span class="col col5">Total actions</span><!--
+           --><span class="col col6">Save count</span>
+            </div>
+            <div class="row">
+              <span class="col col1">01</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">02</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">03</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">04</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">05</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">06</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">07</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">08</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">09</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
+            <div class="row">
+              <span class="col col1">10</span><!--
+           --><span class="col col2">-</span><!--
+           --><span class="col col3">-</span><!--
+           --><span class="col col4">-</span><!--
+           --><span class="col col5">-</span><!--
+           --><span class="col col6">-</span>
+            </div>
           </div>
         </div>
-        <button id="bt_close" class="cta">Close</button>
+        <button class="cta close">Close</button>
       </div>
     </section>
     <section id="screen_main" class="screen">

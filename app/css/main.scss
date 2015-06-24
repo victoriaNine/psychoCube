@@ -98,75 +98,6 @@ button {
   position: relative;
 }
 
-.panel, .credits { width:100%; margin-bottom: 15px; position: relative; color:#999; }
-.panel { padding:60px 24px 24px; line-height: 1.25em; background:rgba(255, 255, 255, .05); }
-.panel h2, .table .title {
-  font-style: italic;
-  font-weight: 700;
-  background:rgba(0, 0, 0, .5);
-  color:#CCC;
-}
-.panel h2 {
-  padding:8px;
-  margin-bottom: 24px;
-  position: absolute;
-  top:0;
-  left:0;
-  width: 100%;
-}
-.panel p { width: 100%; }
-
-.panel li {
-  position:relative;
-  padding-left:40px;
-  font-family: "Abel";
-}
-
-.panel li:after {
-  content:attr(data-shortcut);
-  position:absolute;
-  left:0;
-  top:0;
-  color:$brightBlue;
-  font-family: "Open Sans";
-  font-weight: 700;
-  font-style: italic;
-}
-
-.table { position:relative; }
-.table .row:not(.title) { font-family: "Abel", sans-serif; color:$brightBlue; font-size: $fontSize18px; }
-.table .row:not(.title):nth-child(2n+1) { background: rgba(255,255,255,.05); }
-.table .col { padding:8px 8px 8px 12px; }
-.table .col:not(:first-child):after { content:""; position:absolute; height:100%; width:1px; background:rgba(255,255,255,.1); top:0; left:0; }
-
-.colContainer {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-}
-
-.col { position: relative; display: inline-block; }
-
-.rowContainer { display: flex; flex-direction: column; }
-
-.cta {
-  background:rgba(255, 255, 255, .075);
-  color:#CCC;
-  font-style: italic;
-  font-weight: 700;
-  height:40px;
-  width: 150px;
-  text-align: left;
-  font-size: $fontSize18px;
-  padding-left:24px;
-  z-index: 0;
-  margin-top: 32px;
-
-  transition: all .25s .5s ease-out;
-}
-
 ::-moz-selection {
   background:  $brightBlue;
   color:       #FFF;
@@ -181,8 +112,9 @@ button {
 
 
 /*=======================*/
-/* SCREEN CONTAINERS
+/* COMPONENTS
 /*=======================*/
+/* Containers ------------*/
 .screen {
   position:absolute;
   width: 100%;
@@ -247,6 +179,77 @@ button {
   background-color: #CCC;
   left: 12px;
   transform: skewX(-45deg);
+}
+
+/* Panels ------------*/
+.panel, .credits { width:100%; margin-bottom: 15px; position: relative; color:#999; }
+.panel { padding:60px 24px 24px; line-height: 1.25em; background:rgba(255, 255, 255, .05); }
+.panel h2, .table .title {
+  font-style: italic;
+  font-weight: 700;
+  background:rgba(0, 0, 0, .5);
+  color:#CCC;
+}
+.panel h2 {
+  padding:8px;
+  margin-bottom: 24px;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+}
+.panel p { width: 100%; }
+
+.panel li {
+  position:relative;
+  padding-left:40px;
+  font-family: "Abel";
+}
+
+.panel li:after {
+  content:attr(data-shortcut);
+  position:absolute;
+  left:0;
+  top:0;
+  color:$brightBlue;
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Tables ------------*/
+.table { position:relative; }
+.table .row:not(.title) { font-family: "Abel", sans-serif; color:$brightBlue; font-size: $fontSize18px; }
+.table .row:not(.title):nth-child(2n+1) { background: rgba(255,255,255,.05); }
+.table .col { padding:8px 8px 8px 12px; }
+.table .col:not(:first-child):after { content:""; position:absolute; height:100%; width:1px; background:rgba(255,255,255,.1); top:0; left:0; }
+
+.colContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+}
+
+.col { position: relative; display: inline-block; }
+
+.rowContainer { display: flex; flex-direction: column; }
+
+.cta {
+  background:rgba(255, 255, 255, .075);
+  color:#CCC;
+  font-style: italic;
+  font-weight: 700;
+  height:40px;
+  width: 150px;
+  text-align: left;
+  font-size: $fontSize18px;
+  padding-left:24px;
+  z-index: 0;
+  margin-top: 32px;
+
+  transition: all .25s .5s ease-out;
 }
 
 
@@ -322,7 +325,7 @@ button {
 #screen_about.loading .panel .note { background:rgba(255, 255, 255, .25); }
 
 #screen_about.loading .panel,
-#screen_about.loading #loading { color:#111; }
+#screen_about.loading #loading { color:$darkGrey; }
 
 #screen_about.loading .credits,
 #screen_about.loading .info,
@@ -341,15 +344,19 @@ button {
   transition: all .3s ease-out;
 }
 
-#screen_gameComplete input:focus {
-  background-color: rgba(255,255,255,.05);
-  padding-left:8px;
-}
+#screen_gameComplete input:focus, #screen_gameComplete input[disabled] { background-color: rgba(255,255,255,.05); padding-left:8px; }
 
-#screen_gameComplete ::-webkit-input-placeholder { color:$brightBlue; } /* WebKit browsers */
-#screen_gameComplete :-moz-placeholder { color:$brightBlue; } /* Mozilla Firefox 4 to 18 */
-#screen_gameComplete ::-moz-placeholder { color:$brightBlue; } /* Mozilla Firefox 19+ */
-#screen_gameComplete :-ms-input-placeholder { color:$brightBlue; } /* Internet Explorer 10+ */
+#screen_gameComplete input::-webkit-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* WebKit browsers */
+#screen_gameComplete input[disabled]::-webkit-input-placeholder { color:$palePink; }
+
+#screen_gameComplete :-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 4 to 18 */
+#screen_gameComplete input[disabled]:-moz-placeholder { color:$palePink; }
+
+#screen_gameComplete ::-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 19+ */
+#screen_gameComplete input[disabled]::-moz-placeholder { color:$palePink; }
+
+#screen_gameComplete :-ms-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* Internet Explorer 10+ */
+#screen_gameComplete input[disabled]:-ms-input-placeholder { color:$palePink; }
 
 #screen_gameComplete input,
 #screen_gameComplete .value {
@@ -358,16 +365,8 @@ button {
   font-size: $fontSize24px;
 }
 
-#screen_gameComplete .content {
-  display:flex;
-  flex-wrap:wrap;
-}
-
-#screen_gameComplete .panel {
-  flex:1;
-  flex-basis: calc(50% - 15px);
-}
-
+#screen_gameComplete .content { display:flex; flex-wrap:wrap; }
+#screen_gameComplete .panel { flex:1; flex-basis: calc(50% - 15px); }
 #screen_gameComplete .panel:nth-child(2n+1) { margin-right: 15px; }
 
 
@@ -375,8 +374,10 @@ button {
 /* SCREEN : HIGH SCORES
 /*=======================*/
 #screen_highScores .col1 { width:50px; }
-#screen_highScores .col2 { width:200px; }
-#screen_highScores .col3, #screen_highScores .col4, #screen_highScores .col5 { width:150px; }
+#screen_highScores .col2, #screen_highScores .col3 { width:200px; }
+#screen_highScores .col4, #screen_highScores .col5 { width:150px; }
+
+#screen_highScores .row:not(.title) .col2 { text-transform: none; }
 
 
 /*=======================*/
@@ -411,6 +412,7 @@ button {
 }
 
 .timer { margin-bottom: 1.5em; padding-left:3em; }
+.timer .label { position: relative; }
 .timer .value {
   font-family: "Abel", sans-serif;
   font-size: 2em;
@@ -418,19 +420,6 @@ button {
   display: block;
 }
 #totalTime { margin-bottom: 3em; }
-
-.timer .label { position: relative; }
-/*.timer .label:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: .5em;
-  height: 100%;
-  background: currentColor;
-  transform: skewX(-45deg);
-  transform-origin: 0% 100%;
-}*/
 
 @media (max-height:768px) {
   #menu {
@@ -628,7 +617,7 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 
 /* Block cubes ------------*/
 .block {
-  transform:translate3D(0em, 0em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  transform:translate3D(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0);
   opacity:1;
   width:9em;
   height:9em;
@@ -650,25 +639,25 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 }
 .block .face {
   background-color:$translucentDarkGrey;
-  box-shadow: inset 0px 0px 1em .25em rgba(255, 255, 255, .025);
+  box-shadow: inset 0 0 1em .25em rgba(255, 255, 255, .025);
 }
 .block .ft {
   width:9em;
-  margin-left:0em;
+  margin-left:0;
 }
 .block .bk {
   width:9em;
-  margin-left:0em;
+  margin-left:0;
 }
 .block .rt, .block .lt {
   width:9em;
 }
 .block .tp, .block .bm, .block .tp .photon-shader, .block .bm .photon-shader {
-  border-radius:0em;
+  border-radius:0;
 }
 .block .cr {
-  width:0em;
-  left:0em;
+  width:0;
+  left:0;
 }
 .block .cr-0 {
   transform: translate3D(9em, 0, 4.5em);
@@ -758,22 +747,22 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 
 /* Pyramid orientations ------------*/
 .pyramid-front {
-  transform:translate3D(0em, 0em, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg);
+  transform:translate3D(0, 0, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg);
 }
 .pyramid-back {
-  transform:translate3D(0em, 0em, -6em) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+  transform:translate3D(0, 0, -6em) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
 }
 .pyramid-top {
-  transform:translate3D(0em, -6em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  transform:translate3D(0, -6em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
 .pyramid-bottom {
-  transform: translate3D(0em, 6em, 0em) rotateX(180deg) rotateY(0deg) rotateZ(0deg);
+  transform: translate3D(0, 6em, 0) rotateX(180deg) rotateY(0deg) rotateZ(0deg);
 }
 .pyramid-left {
-  transform:translate3D(-6em, 0em, 0em) rotateX(90deg) rotateY(0deg) rotateZ(-90deg);
+  transform:translate3D(-6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(-90deg);
 }
 .pyramid-right {
-  transform:translate3D(6em, 0em, 0em) rotateX(90deg) rotateY(0deg) rotateZ(90deg);
+  transform:translate3D(6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(90deg);
 }
 
 /* Pyramid colors ------------*/
@@ -835,7 +824,7 @@ html:not(.noGlow) .color-blue > .face-wrapper .face { @include animation("blueBo
 $roofWidth: .75;
 
 .roof {
-  transform: translate3D(0em, #{-1 - $roofWidth / 2}em, 0em) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  transform: translate3D(0, #{-1 - $roofWidth / 2}em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   opacity: 1;
   width: #{$roofWidth}em;
   height: .25em;
@@ -953,7 +942,7 @@ body.selecting .cube:not(.selected) {
 
 /* You can change these default styles any way you want */
 #circulus .item .sector {
-    fill: rgba(24, 24, 24, 0.75);
+    fill: $translucentDarkGrey;
     transition: all .15s ease-out;
 }
 
@@ -963,7 +952,7 @@ body.selecting .cube:not(.selected) {
 }
 
 #circulus text { font-family: "FontAwesome"; fill:#CCC; font-size:4em; text-anchor:middle; transition: fill .15s ease-out; }
-#circulus .item:hover text { fill:#222; }
+#circulus .item:hover text { fill:$darkGrey; }
 
 #circulus .menu-trigger {
     fill: rgba(200, 200, 200, 0.5);

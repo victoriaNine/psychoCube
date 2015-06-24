@@ -72,10 +72,6 @@ $(document).ready(function() {
       // Fetch the data from the local storage
       $game = getLocalStorage("psychoCube_Game");
 
-      $playerName = $game.playerName;
-      $finishDate = $game.finishDate;
-      $saveCount = $game.saveCount;
-
       initGame();
     }
     // If not, initialize it with a "new game" flag on
@@ -107,14 +103,18 @@ function initGame(isNewGame, reinit) {
     if($("body").hasClass("paused")) $("body").removeClass("paused");
   }
 
-  // If the player is starting a new game, initialize th game data
+  // If the player is starting a new game, initialize the game data
   // And set the "new game" flag
   if(isNewGame) {
     $game = { playerName: "", finishDate: null, totalTime: 0, saveCount: 0, totalActions: 0, actionIndex: 0, actions: [], cubes: {} };
     $isNewGame = true;
   }
 
-  // Initialize the history
+  // Set the current game instance data
+  $playerName = $game.playerName;
+  $finishDate = $game.finishDate;
+  $saveCount = $game.saveCount;
+
   $actionIndex = $game.actionIndex;
   $actionArray = $game.actions;
   $totalActions = $game.totalActions;
@@ -205,14 +205,27 @@ function gameComplete() {
   clearInterval($updateTimer);
   $finishDate = new Date();
 
-  // Show the end screen
-  $("#screen_gameComplete").addClass("active");
-  $("#bt_confirm").click(function() {
-    $playerName = $("#input_playerName").val();
+  $("#screen_gameComplete .panel").eq(1).find(".value").html($totalTime);
+  $("#screen_gameComplete .panel").eq(2).find(".value").html($totalActions);
+  $("#screen_gameComplete .panel").eq(3).find(".value").html($saveCount);
 
-    // Save the game a last time and put the data in the high scores
-    saveGame();
-    saveScore();
+  // Show the end screen
+  toggleScreen("gameComplete", true);
+
+  $("#bt_confirm").click(function() {
+    // If the player name has been entered
+    if($("#input_playerName").val().length > 0) {
+      $playerName = $("#input_playerName").val();
+
+      // Save the game a last time and put the data in the high scores
+      saveGame();
+      saveScore();
+    }
+    else {
+      // Visual feedback for the player
+      $("#input_playerName").prop("disabled", true);
+      setTimeout(function() { $("#input_playerName").prop("disabled", false); }, 1000);
+    }
   });
 }
 
@@ -242,9 +255,39 @@ function saveScore() {
 
   // Delete the game save to allow new games
   removeLocalStorage("psychoCube_Game");
+
   // Fade the end screen and show the results screen
-  $("#screen_gameComplete").removeClass("active");
-  //showResults();
+  toggleScreen("gameComplete", false);
+  showHighScores();
+}
+
+function showHighScores() {
+  var highScores = getLocalStorage("psychoCube_HighScores") || [[], [], [], [], [], [], [], [], [], []];
+
+  for(var i = 0; i < highScores.length; i++) {
+    if(highScores[i].length == 0) break;
+
+    var nb = $("<span>").addClass("col col1").html((i+1) > 9 ? (i+1) : "0"+(i+1));
+    var playerName = $("<span>").addClass("col col2").html(highScores[i].playerName);
+    var finishDate = $("<span>").addClass("col col3").html(getFormatedDate(highScores[i].finishDate));
+    var totalTime = $("<span>").addClass("col col4").html(getFormatedTime(highScores[i].totalTime));
+    var totalActions = $("<span>").addClass("col col5").html(highScores[i].totalActions);
+    var saveCount = $("<span>").addClass("col col6").html(highScores[i].saveCount);
+
+    $("#screen_highScores .row").eq(i+1).empty().append(nb, playerName, finishDate, totalTime, totalActions, saveCount);
+  }
+
+  toggleScreen("highScores", true);
+}
+
+function toggleScreen(screenName, state) {
+  pause();
+
+  var screen = $("#screen_"+screenName);
+
+  if(state == true) screen.addClass("active");
+  else if(state == false) screen.removeClass("active");
+  else screen.toggleClass("active");
 }
 
 
@@ -288,7 +331,18 @@ function addListeners() {
 
   $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
   $("#bt_glowSwitch").on(eventtype, glowFX);
+
+  $("#bt_highScores").on(eventtype, function() { toggleScreen("highScores", true); });
+  $("#bt_about").on(eventtype, function() { toggleScreen("about", true); });
+
   $("#bt_resetCube").on(eventtype, resetCube);
+
+  $("#screen_highScores .close").on(eventtype, function() {
+    toggleScreen("highScores", false);
+
+    // If the player has just finished a party, start a new game when exiting
+    if($finishedDate) initGame(true, true);
+  });
 
   /* Keyboard controls ------------*/
   $(window).on("keydown", function(e) {
@@ -411,6 +465,20 @@ function getFormatedTime(seconds) {
 
   var timeString = h+":"+m+":"+s;
   return timeString;
+}
+
+function getFormatedDate(date) {
+  var dateData = new Date(date);
+  var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  var dateString = dateData.getDate() > 9 ? dateData.getDate() : "0"+dateData.getDate();
+  dateString += " "+monthName[dateData.getMonth()];
+  dateString += " "+dateData.getFullYear();
+  dateString += " - ";
+  dateString += dateData.getHours() > 9 ? dateData.getHours()+":" : "0"+dateData.getHours()+":";
+  dateString += dateData.getMinutes() > 9 ? dateData.getMinutes() : "0"+dateData.getMinutes();
+
+  return dateString;
 }
 
 function pause() {
