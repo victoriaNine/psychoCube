@@ -84,7 +84,8 @@ html, body {
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
 
-a { color:inherit; text-decoration: none; }
+a { color:inherit; text-decoration: none; transition: color .3s ease-out; }
+a:hover { color:$brightBlue; }
 
 button {
   border:none;
@@ -256,7 +257,9 @@ button {
 /*=======================*/
 /* SCREEN : ABOUT
 /*=======================*/
-#screen_about .logo { width:375px; height: 55px; margin-bottom: 55px; }
+#screen_about .logo { @extend .logo.white; width:375px; height: 55px; margin-bottom: 55px; }
+#screen_about.loading .logo { @extend .logo.black; }
+
 #screen_about .col { height: calc(100% - 110px); vertical-align: bottom; }
 #screen_about .col1 { width:375px; }
 #screen_about .col2 { width:485px; margin-left:15px; }
@@ -283,11 +286,13 @@ button {
   border-left:8px solid $brightBlue;
 }
 
-.credits, .info { background:rgba(0, 0, 0, .5); padding: 8px; }
+.credits, .info { padding: 8px; }
+.credits { background:rgba(0, 0, 0, .5); }
 .credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
 .credits .value { font-family: "Abel", sans-serif; float:right; }
 
-.info { color:$brightBlue; font-style: italic; font-size: $fontSize14px; font-weight: 600; }
+.info { background: $brightBlue; color: #222; font-style: italic; font-size: $fontSize14px; font-weight: 600; transition:all .15s ease-out; cursor:pointer; }
+.info:hover { background:$palePink; }
 
 #loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }
 #loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }
@@ -328,7 +333,6 @@ button {
 #screen_about.loading #loading { color:$darkGrey; }
 
 #screen_about.loading .credits,
-#screen_about.loading .info,
 #screen_about.loading .panel h2 { background:rgba(0, 0, 0, .85); }
 
 

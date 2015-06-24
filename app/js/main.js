@@ -61,6 +61,12 @@ $(document).ready(function() {
       }
   };
 
+  $("#screen_about").addClass("active loading");
+  $("#screen_about .info").click(function() {
+    $("#screen_about").removeClass("active");
+    setTimeout(function() { $("#screen_about").removeClass("loading"); $("#screen_about .info").html("Click here to close") }, 600);
+  });
+
   // Save the cube and pyramid prototypes in variables and remove them from the DOM
   $protoCube = $("#protoCube").clone();
   $protoPyramid = $("#protoPyramid").clone();
@@ -205,28 +211,31 @@ function gameComplete() {
   clearInterval($updateTimer);
   $finishDate = new Date();
 
-  $("#screen_gameComplete .panel").eq(1).find(".value").html($totalTime);
-  $("#screen_gameComplete .panel").eq(2).find(".value").html($totalActions);
-  $("#screen_gameComplete .panel").eq(3).find(".value").html($saveCount);
+  // Add the completed game's data to the end screen
+  $("#screen_gameComplete .totalTime").find(".value").html(getFormatedTime($totalTime));
+  $("#screen_gameComplete .totalActions").find(".value").html($totalActions);
+  $("#screen_gameComplete .saveCount").find(".value").html($saveCount);
 
-  // Show the end screen
-  toggleScreen("gameComplete", true);
+  setTimeout(function() {
+    // Show the end screen
+    toggleScreen("gameComplete", true);
 
-  $("#bt_confirm").click(function() {
-    // If the player name has been entered
-    if($("#input_playerName").val().length > 0) {
-      $playerName = $("#input_playerName").val();
+    $("#bt_confirm").click(function() {
+      // If the player name has been entered
+      if($("#input_playerName").val().length > 0) {
+        $playerName = $("#input_playerName").val();
 
-      // Save the game a last time and put the data in the high scores
-      saveGame();
-      saveScore();
-    }
-    else {
-      // Visual feedback for the player
-      $("#input_playerName").prop("disabled", true);
-      setTimeout(function() { $("#input_playerName").prop("disabled", false); }, 1000);
-    }
-  });
+        // Save the game a last time and put the data in the high scores
+        saveGame();
+        saveScore();
+      }
+      else {
+        // Visual feedback for the player
+        $("#input_playerName").prop("disabled", true);
+        setTimeout(function() { $("#input_playerName").prop("disabled", false); }, 1000);
+      }
+    });
+  }, 1000);
 }
 
 function saveScore() {
@@ -332,7 +341,7 @@ function addListeners() {
   $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
   $("#bt_glowSwitch").on(eventtype, glowFX);
 
-  $("#bt_highScores").on(eventtype, function() { toggleScreen("highScores", true); });
+  $("#bt_highScores").on(eventtype, showHighScores);
   $("#bt_about").on(eventtype, function() { toggleScreen("about", true); });
 
   $("#bt_resetCube").on(eventtype, resetCube);
@@ -341,12 +350,12 @@ function addListeners() {
     toggleScreen("highScores", false);
 
     // If the player has just finished a party, start a new game when exiting
-    if($finishedDate) initGame(true, true);
+    if($finishDate) initGame(true, true);
   });
 
   /* Keyboard controls ------------*/
   $(window).on("keydown", function(e) {
-    if(!$isReady || $("body").hasClass("paused")) return;
+    if($(".overlay.active").length > 0) return;
 
     var noKeyModifier = (e.shiftKey == false) && (e.ctrlKey == false) && (e.altKey == false);
 
@@ -392,9 +401,9 @@ function addListeners() {
     else if(e.which == 82  && noKeyModifier)                        // R : right clockwise (inverted for notation coherence)
       action = { axis: "x", coord: 3, direction: 1 };
 
-    // If an action was determined based on the keyboard input
+    // If an action was determined based on the keyboard input and the game isn't paused
     // Rotate the cube and stop analyzing the event
-    if(action) rotate(null, action); return;
+    if(action && !$("body").hasClass("paused")) { rotate(null, action); return; }
     
     // Side menu
     if(e.which == 82 && e.altKey)                                   // ALT + R : Reset camera

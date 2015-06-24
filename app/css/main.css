@@ -17,10 +17,10 @@
   background-repeat: no-repeat;
   background-position: 50% 50%; }
 
-.logo.black {
+.logo.black, #screen_about.loading .logo {
   background-image: url("../img/logo_black.png"); }
 
-.logo.white {
+.logo.white, #screen_about .logo {
   background-image: url("../img/logo_white.png"); }
 
 /*=======================*/
@@ -40,7 +40,11 @@ body.moving {
 
 a {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+  transition: color .3s ease-out; }
+
+a:hover {
+  color: #37AEB8; }
 
 button {
   border: none;
@@ -291,8 +295,10 @@ button {
   border-left: 8px solid #37AEB8; }
 
 .credits, .info {
-  background: rgba(0, 0, 0, 0.5);
   padding: 8px; }
+
+.credits {
+  background: rgba(0, 0, 0, 0.5); }
 
 .credits .label {
   font-style: italic;
@@ -305,10 +311,16 @@ button {
   float: right; }
 
 .info {
-  color: #37AEB8;
+  background: #37AEB8;
+  color: #222;
   font-style: italic;
   font-size: 0.875em;
-  font-weight: 600; }
+  font-weight: 600;
+  transition: all .15s ease-out;
+  cursor: pointer; }
+
+.info:hover {
+  background: #CC5880; }
 
 #loading {
   color: #CCC;
@@ -388,7 +400,6 @@ button {
   color: #222; }
 
 #screen_about.loading .credits,
-#screen_about.loading .info,
 #screen_about.loading .panel h2 {
   background: rgba(0, 0, 0, 0.85); }
 

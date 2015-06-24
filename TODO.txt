@@ -22,7 +22,9 @@
 
 ~ UI JS :
  ! Disable cube keyboard listener when inactive
- ~ Show high scores
+ ! Game complete screen
+ ! Show high scores
+ ! About screen
  ~ Screen transitions & animations
 - Clean JS & Comment
 - Clean CSS
