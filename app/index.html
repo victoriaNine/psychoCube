@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <section id="screen_about" class="screen overlay">
+    <section id="screen_about" class="screen overlay active">
       <div class="container">
         <div class="logo white"></div>
         <div class="colContainer">
@@ -89,21 +89,23 @@
     <section id="screen_gameComplete" class="screen overlay">
       <div class="container">
         <h1>CONGRATULATIONS//cube:solved</h1>
-        <div class="panel">
-          <h2>Player name</h2>
-          <input id="input_playerName" placeholder="ENTER YOUR NAME HERE">
-        </div>
-        <div class="panel">
-          <h2>Total time</h2>
-          <span class="value">00:50:37</span>
-        </div>
-        <div class="panel">
-          <h2>Total actions</h2>
-          <span class="value">73</span>
-        </div>
-        <div class="panel">
-          <h2>Save count</h2>
-          <span class="value">56</span>
+        <div class="content">
+          <div class="panel">
+            <h2>Player name</h2>
+            <input id="input_playerName" placeholder="ENTER YOUR NAME HERE">
+          </div>
+          <div class="panel">
+            <h2>Total time</h2>
+            <span class="value">00:50:37</span>
+          </div>
+          <div class="panel">
+            <h2>Total actions</h2>
+            <span class="value">73</span>
+          </div>
+          <div class="panel">
+            <h2>Save count</h2>
+            <span class="value">56</span>
+          </div>
         </div>
         <button id="bt_confirm" class="cta">Confirm</button>
       </div>
@@ -224,12 +226,50 @@
         </nav>
       </aside>
       <nav id="rotationMenu">
-        <button id="bt_front"><i class="fa fa-rotate-left"></i></button>
-        <button id="bt_back"><i class="fa fa-rotate-right"></i></button>
-        <button id="bt_left"><i class="fa fa-caret-left"></i></button>
-        <button id="bt_right"><i class="fa fa-caret-right"></i></button>
-        <button id="bt_up"><i class="fa fa-caret-up"></i></button>
-        <button id="bt_down"><i class="fa fa-caret-down"></i></button>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="circulus" style="transform-origin: 50% 50% 0px; transform: translate3d(0px, 0px, 0px); touch-action: none; -webkit-user-select: none;">
+          <g id="symbolsContainer">
+           <g id="itemsContainer">
+              <g class="item" id="bt_front" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(1,0,0,1,0,0)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(160 -90)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf01e;</text>
+                  </g>
+              </g>
+              <g class="item" id="bt_up" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(0.5,-0.86602,0.86602,0.5,-91.5063509461097,341.5063509461096)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(160 80) rotate(60 397.2243347167969 165)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf0d8;</text>
+                  </g>
+              </g>
+              <g class="item" id="bt_back" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(-0.49999,-0.86602,0.86602,-0.49999,158.49364905389024,591.5063509461097)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(100 135) rotate(90 397.2243347167969 165)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf0e2;</text>
+                  </g>
+              </g>
+              <g class="item" id="bt_left" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(-1,0,0,-1,500,500)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(-120 75) rotate(180 397.2243347167969 165)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf0d9;</text>
+                  </g>
+              </g>
+              <g class="item" id="bt_down" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(-0.5,0.86602,-0.86602,-0.5,591.5063509461097,158.4936490538905)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(-125 -90) rotate(240 397.2243347167969 165)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf0d7;</text>
+                  </g>
+              </g>
+              <g class="item" id="bt_right" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(0.5,0.86602,-0.86602,0.5,341.5063509461096,-91.5063509461097)" data-svg-origin="250 250">
+                  <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
+                  <g class="icon" width="40" height="40" transform="translate(20 -180) rotate(300 397.2243347167969 165)" viewBox="0 0 40 40">
+                    <text x="50%" y="50%" dy=".3em">&#xf0da;</text>
+                  </g>
+              </g>
+          </g>
+          <g id="trigger" class="trigger menu-trigger" role="button">
+              <circle cx="250" cy="250" r="45"></circle>
+          </g>
+      </svg>
       </nav>
       <div id="tridiv">
         <div id="scene">

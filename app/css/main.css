@@ -62,7 +62,7 @@ button {
 .panel {
   padding: 60px 24px 24px;
   line-height: 1.25em;
-  background: rgba(255, 255, 255, 0.025); }
+  background: rgba(255, 255, 255, 0.05); }
 
 .panel h2, .table .title {
   font-style: italic;
@@ -105,7 +105,7 @@ button {
   font-size: 1.125em; }
 
 .table .row:not(.title):nth-child(2n+1) {
-  background: rgba(255, 255, 255, 0.025); }
+  background: rgba(255, 255, 255, 0.05); }
 
 .table .col {
   padding: 8px 8px 8px 12px; }
@@ -135,7 +135,7 @@ button {
   flex-direction: column; }
 
 .cta {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.075);
   color: #CCC;
   font-style: italic;
   font-weight: 700;
@@ -185,7 +185,7 @@ button {
 
 .overlay:before {
   content: "";
-  background: rgba(0, 0, 0, 0.925);
+  background: rgba(0, 0, 0, 0.95);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -213,6 +213,9 @@ button {
   left: calc(50% - 40em);
   top: calc(50% - 20em); }
 
+@media (max-height: 768px) {
+  .container {
+    top: calc(50% - 17.5em); } }
 .screen h1 {
   color: #CCC;
   font-weight: 700;
@@ -280,7 +283,7 @@ button {
   position: absolute;
   bottom: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(255, 255, 255, 0.05);
   padding: 8px 0 8px 16px;
   border-left: 8px solid #37AEB8; }
 
@@ -336,7 +339,7 @@ button {
   height: 275px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 6em; }
+  margin-top: 5em; }
 
 #screen_about.active #psychoCube_model {
   -webkit-animation: levitateModel 8s ease-in-out infinite;
@@ -421,6 +424,17 @@ button {
   font-family: "Abel", sans-serif;
   color: #37AEB8;
   font-size: 1.5em; }
+
+#screen_gameComplete .content {
+  display: flex;
+  flex-wrap: wrap; }
+
+#screen_gameComplete .panel {
+  flex: 1;
+  flex-basis: calc(50% - 15px); }
+
+#screen_gameComplete .panel:nth-child(2n+1) {
+  margin-right: 15px; }
 
 /*=======================*/
 /* SCREEN : HIGH SCORES
@@ -1468,61 +1482,58 @@ body.selecting .cube:not(.selected) {
     opacity: .35; } }
 #rotationMenu {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  top: calc(50% - 10px);
-  left: calc(50% - 10px);
+  width: 130px;
+  height: 130px;
   opacity: 0;
   pointer-events: none;
   transition: all .2s ease-in-out;
   z-index: 20;
-  background: rgba(200, 200, 200, 0.5);
-  border-radius: 50%;
   transform: scale(1.5) translate(-50%, -50%); }
-
-#rotationMenu:before {
-  content: "";
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgba(200, 200, 200, 0.5);
-  border-radius: 50%;
-  top: calc(50% - 50px);
-  left: calc(50% - 50px); }
 
 #rotationMenu.open {
   opacity: 1;
   transform: scale(1) translate(-50%, -50%);
   pointer-events: auto; }
 
-#rotationMenu button {
-  border: 1px solid;
-  background: rgba(24, 24, 24, 0.75);
-  padding: 8px;
-  margin-bottom: 1.5em;
-  letter-spacing: inherit;
-  position: absolute;
-  margin: 0;
-  width: 30px;
-  height: 30px; }
+/* SVG elements ------------*/
+#circulus {
+  display: block;
+  margin: 0 auto; }
 
-#rotationMenu button:hover {
-  background: #191919; }
+#circulus .item {
+  cursor: pointer;
+  outline: none; }
 
-#bt_front {
-  transform: translate(-50px, 60%); }
+/* You can change these default styles any way you want */
+#circulus .item .sector {
+  fill: rgba(24, 24, 24, 0.75);
+  transition: all .15s ease-out; }
 
-#bt_back {
-  transform: translate(40px, 60%); }
+#circulus .item:hover .sector,
+#circulus .item:focus .sector {
+  fill: #37AEB8; }
 
-#bt_left {
-  transform: translate(-50px, -60%); }
+#circulus text {
+  font-family: "FontAwesome";
+  fill: #CCC;
+  font-size: 4em;
+  text-anchor: middle;
+  transition: fill .15s ease-out; }
 
-#bt_right {
-  transform: translate(40px, -60%); }
+#circulus .item:hover text {
+  fill: #222; }
 
-#bt_up {
-  transform: translate(-25%, -50px); }
+#circulus .menu-trigger {
+  fill: rgba(200, 200, 200, 0.5);
+  pointer-events: auto;
+  /* KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
+  transition: fill .15s ease-out; }
 
-#bt_down {
-  transform: translate(-25%, 40px); }
+#circulus .menu-trigger:hover, #circulus .menu-trigger:focus {
+  fill: #CC5880;
+  cursor: pointer; }
+
+#circulus symbol {
+  overflow: visible; }
+
+/* KEEP THIS so that text will not get cut off it it is wider than the icon width */

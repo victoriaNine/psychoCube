@@ -258,7 +258,7 @@ function addListeners() {
   if($listenersAdded) return;
 
   /* Rotation menu mouse controls ------------*/
-  $("#rotationMenu button").on(eventtype, rotate);
+  $("#rotationMenu .item").on(eventtype, rotate);
 
   /* Camera controls ------------*/
   $("#tridiv").on("mousedown touchstart", startCameraRotation).on("mouseup touchend", stopCameraRotation).on("mousemove touchmove", setCameraRotation).on("mousewheel", setCameraZoom);
@@ -292,6 +292,8 @@ function addListeners() {
 
   /* Keyboard controls ------------*/
   $(window).on("keydown", function(e) {
+    if(!$isReady || $("body").hasClass("paused")) return;
+
     var noKeyModifier = (e.shiftKey == false) && (e.ctrlKey == false) && (e.altKey == false);
 
     // Rotation menu
@@ -338,7 +340,7 @@ function addListeners() {
 
     // If an action was determined based on the keyboard input
     // Rotate the cube and stop analyzing the event
-    if(action) { rotate(null, action); return; } 
+    if(action) rotate(null, action); return;
     
     // Side menu
     if(e.which == 82 && e.altKey)                                   // ALT + R : Reset camera
@@ -418,6 +420,9 @@ function pause() {
   $("#bt_pause").html("Resume");
   $("#bt_undo, #bt_redo").prop("disabled", true);
   $("body").addClass("paused");
+
+  // Cancel any cube selection
+  cancelSelection();
 }
 
 function resume() {
@@ -467,12 +472,12 @@ function rotationMenu(e) {
 
 function cancelSelection(e) {
   var check = false;
-  var target = e.currentTarget;
+  var target = e ? e.currentTarget : null;
 
   // If a cube is being selected
   if($("body").hasClass("selecting")) {
-    // And the player has just clicked on that cube or an empty area
-    if($(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
+    // And the player has either just clicked on that cube or an empty area, or there is no target at all
+    if(!target || $(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
       // Cancel the selection
       $(".cube.selected").removeClass("selected");
       $("body").removeClass("selecting").off(eventtype, cancelSelection);
@@ -500,10 +505,10 @@ function rotate(e, action) {
     var target = e.currentTarget;
 
     if(target.id == "bt_front")
-      action = { axis: "z", coord: cube.data("z"), direction: -1 };
+      action = { axis: "z", coord: cube.data("z"), direction: 1 };
 
     if(target.id == "bt_back")
-      action = { axis: "z", coord: cube.data("z"), direction: 1 };
+      action = { axis: "z", coord: cube.data("z"), direction: -1 };
 
     if(target.id == "bt_left")
       action = { axis: "y", coord: cube.data("y"), direction: -1 };

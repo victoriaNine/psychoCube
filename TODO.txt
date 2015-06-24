@@ -18,10 +18,10 @@
  ! Intro (How to play + About)
  ! Game completed (show stats, ask confirmation)
  ! High scores
- ~ Main screen (rotation menu)
+ ! Main screen (rotation menu)
 
 - UI JS :
- - Disable cube keyboard listener when inactive
+ ! Disable cube keyboard listener when inactive
  - Screen transitions & animations
 - Clean JS & Comment
 - Clean CSS
