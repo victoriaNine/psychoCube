@@ -61,14 +61,6 @@ $fontSize24px: 1.5em;
   transition: #{$str};
 }
 
-.brightBlue { color:$brightBlue; }
-.italic { font-style: italic; }
-.w700 { font-weight: 700; }
-
-.logo { width:648px; height: 73px; background-size: contain; background-repeat: no-repeat; background-position: 50% 50%; }
-.logo.black { background-image: url("../img/logo_black.png"); }
-.logo.white { background-image: url("../img/logo_white.png"); }
-
 
 /*=======================*/
 /* GENERAL RULES
@@ -84,7 +76,7 @@ html, body {
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
 
-a { color:inherit; text-decoration: none; transition: color .3s ease-out; }
+a { color:inherit; text-decoration: none; }
 a:hover { color:$brightBlue; }
 
 button {
@@ -235,6 +227,17 @@ button {
 
 .rowContainer { display: flex; flex-direction: column; }
 
+/* Common styles ------------*/
+.brightBlue { color:$brightBlue; }
+.italic { font-style: italic; }
+.w700 { font-weight: 700; }
+
+/* Logo ------------*/
+.logo { width:648px; height: 73px; background-size: contain; background-repeat: no-repeat; background-position: 50% 50%; }
+.logo.black { background-image: url("../img/logo_black.png"); }
+.logo.white { background-image: url("../img/logo_white.png"); }
+
+/* CTA ------------*/
 .cta {
   background:rgba(255, 255, 255, .075);
   color:#CCC;
@@ -287,7 +290,10 @@ button {
 .credits, .info { padding: 8px; }
 .credits { background:rgba(0, 0, 0, .5); }
 .credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
-.credits .value { font-family: "Abel", sans-serif; float:right; }
+.credits .value { font-family: "Abel", sans-serif; float:right; transition: color .3s ease-out; }
+
+.credits.inspiration { cursor:pointer; }
+.credits.inspiration:hover .value { color:$brightBlue; }
 
 .info {
   background: $brightBlue;
@@ -336,7 +342,16 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   50% { transform: translateY(1em); }
 }
 
-#screen_about.loading:before { background:url("../img/bg2.jpg"); }
+#screen_about.loading:before {
+  @extend #screen_main;
+  background-position: calc(50% + (40em - 90px)) calc(50% + (20em - 90px)), 0 0 !important;
+}
+
+@media (max-height: 768px) {
+  #screen_about.loading:before {
+    background-position: calc(50% + (40em - 90px)) calc(50% + (17.5em - 90px)), 0 0 !important;
+  }
+}
 
 #screen_about.loading .panel,
 #screen_about.loading .panel .note { background:rgba(255, 255, 255, .25); }
@@ -365,13 +380,13 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 #screen_gameComplete input::-webkit-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* WebKit browsers */
 #screen_gameComplete input[disabled]::-webkit-input-placeholder { color:$palePink; }
 
-#screen_gameComplete :-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 4 to 18 */
+#screen_gameComplete input:-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 4 to 18 */
 #screen_gameComplete input[disabled]:-moz-placeholder { color:$palePink; }
 
-#screen_gameComplete ::-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 19+ */
+#screen_gameComplete input::-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 19+ */
 #screen_gameComplete input[disabled]::-moz-placeholder { color:$palePink; }
 
-#screen_gameComplete :-ms-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* Internet Explorer 10+ */
+#screen_gameComplete input:-ms-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* Internet Explorer 10+ */
 #screen_gameComplete input[disabled]:-ms-input-placeholder { color:$palePink; }
 
 #screen_gameComplete input,
@@ -400,12 +415,16 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 /* SCREEN : MAIN
 /*=======================*/
 #screen_main {
-  background: url("../img/bg2.jpg") no-repeat 50% 100%;
-  background-size:cover;
+  background:url(../img/mwpsb_logo.svg) no-repeat,
+             url(../img/bg.jpg) no-repeat;
+  background-size: 180px 180px, cover;
+  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;
+  background-blend-mode:overlay;
 }
 
+
 /*=======================*/
-/* SIDE MENU
+/* SIDE BAR
 /*=======================*/
 #sidebar {
   position: absolute;

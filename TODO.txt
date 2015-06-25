@@ -42,6 +42,10 @@
  - Error
 ! Mute switch
 
+~ Inspiration screen
+ ! CSS & JS
+ - Pictures montage
+
 - Responsive
 - Clean JS & Comment
 - Clean CSS

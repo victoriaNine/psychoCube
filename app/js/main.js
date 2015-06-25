@@ -64,7 +64,13 @@ $(document).ready(function() {
   };
 
   // Show the loading screen
-  TweenMax.from("#screen_about .container", 2, { opacity:0, ease: RoughEase.ease.config({ template: Bounce.easeOut, strength: 1, points: 20, taper: "none", randomize: true, clamp: true}) });
+  var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
+  timeline.from("#screen_about .container", 2, { opacity:0, ease: RoughEase.ease.config({ template: Bounce.easeOut, strength: 1, points: 20, taper: "none", randomize: true, clamp: true }) });
+  timeline.to("#screen_about .container", .05, { transform:"skewX(60deg) scale(1.25)" }, 1);
+  timeline.to("#screen_about .container", .05, { transform:"none" }, 1.1);
+  timeline.to("#screen_about .logo", .05, { opacity:.5, transform:"skewX(-60deg) scale(1.25)" }, 1.5);
+  timeline.to("#screen_about .logo", .05, { opacity:1, transform:"none" }, 1.6);
+
   // Add event listeners on the loaded files
   $(document).on("loadingBGM loadingSFX", loadingScreen);
 
@@ -105,18 +111,31 @@ function loadingScreen() {
         $(document).off("loadingBGM loadingSFX", loadingScreen);
         $("body").addClass("loaded");
         
+        /* About and Inspiration screens event listeners  ------------*/
         $("#screen_about .info").on(eventtype, function() {
           toggleScreen("about", false);
 
+          // If we're initializing the game
           if(!$game) {
             setTimeout(function() {
+              // Wait until the screen fades out to remove the background
+              // And update the info button
               $("#screen_about").removeClass("loading");
               $("#screen_about .info").html("Click here to close");
 
+              // Start the BGM and go to the game screen
               $audioEngine.BGM.play();
               toGameScreen();
             }, 600);
           }
+        });
+
+        $("#screen_about .inspiration").on(eventtype, function() {
+          toggleScreen("inspiration", true);
+        });
+
+        $("#screen_inspiration .close").on(eventtype, function() {
+          toggleScreen("inspiration", false);
         });
       }
     }
@@ -138,13 +157,7 @@ function toGameScreen() {
 
   toggleScreen("main", true);
   // Sidebar animation
-  var timeline = new TimelineMax({
-    onComplete: function() {
-      clearProps(this);
-      // Load the game
-      //load();
-    }
-  });
+  var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
   timeline.set("#sidebar button", { transition:"none" });
   timeline.from("#sidebar", .5, { opacity:0, left:"-18em", ease:Power4.easeOut });
   timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
@@ -152,7 +165,7 @@ function toGameScreen() {
   // Add a scrollbar to the menu (for smaller screen sizes)
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
-  // Disable the glow FX by default
+  // Disable the glow FX by default and load the game
   glowSwitch();
   load();
 }

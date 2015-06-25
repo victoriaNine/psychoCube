@@ -4,8 +4,32 @@
 		"selected_items":
 		[
 			[
+				"getF",
+				"getFormatedDate"
+			],
+			[
+				"fini",
+				"finishDate"
+			],
+			[
 				"total",
 				"totalActions"
+			],
+			[
+				"play",
+				"playerName"
+			],
+			[
+				"date",
+				"date_string"
+			],
+			[
+				"high",
+				"highScores"
+			],
+			[
+				"has",
+				"hasClass"
 			],
 			[
 				"fon",
@@ -312,10 +336,6 @@
 				"openWindow"
 			],
 			[
-				"play",
-				"playCrossfade"
-			],
-			[
 				"BGM",
 				"BGMloaded"
 			],
@@ -447,7 +467,7 @@
 			"file": "app/index.html",
 			"settings":
 			{
-				"buffer_size": 17154,
+				"buffer_size": 21209,
 				"line_ending": "Windows"
 			}
 		},
@@ -455,7 +475,7 @@
 			"file": "app/css/main.scss",
 			"settings":
 			{
-				"buffer_size": 24247,
+				"buffer_size": 25191,
 				"line_ending": "Windows"
 			}
 		},
@@ -463,7 +483,7 @@
 			"file": "app/js/main.js",
 			"settings":
 			{
-				"buffer_size": 27941,
+				"buffer_size": 30786,
 				"line_ending": "Windows"
 			}
 		},
@@ -471,7 +491,7 @@
 			"file": "TODO.txt",
 			"settings":
 			{
-				"buffer_size": 1080,
+				"buffer_size": 1109,
 				"line_ending": "Windows",
 				"name": "- Rubik's cube rotation logic"
 			}
@@ -524,6 +544,10 @@
 	],
 	"file_history":
 	[
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/img/menu.svg",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu (1).svg",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu.svg",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/index - Copie.html",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/index_iPad.html",
 		"/C/wamp/www/devTests/adopteUnMec/mTab/css/style.scss",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/css/style.scss",
@@ -647,11 +671,7 @@
 		"/E/labs/waltzRevolution/node_modules/grunt-autoprefixer/node_modules/autoprefixer-core/node_modules/postcss/lib/css-syntax-error.js",
 		"/E/labs/waltzRevolution/node_modules/grunt/node_modules/findup-sync/node_modules/glob/node_modules/minimatch/test/extglob-ending-with-state-char.js",
 		"/E/labs/waltzRevolution/node_modules/grunt-autoprefixer/node_modules/autoprefixer-core/node_modules/caniuse-db/features-json/speech-synthesis.json",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/glob/sync.js",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/inquirer/node_modules/cli-color/node_modules/es5-ext/reg-exp/#/search/implement.js",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/handlebars/coverage/lcov-report/spec/helpers.js.html",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/inquirer/node_modules/cli-color/node_modules/es5-ext/string/#/camel-to-hyphen.js",
-		"/E/labs/waltzRevolution/node_modules/grunt/node_modules/colors/colors.js"
+		"/E/labs/waltzRevolution/node_modules/bower/node_modules/glob/sync.js"
 	],
 	"find":
 	{
@@ -670,6 +690,29 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"not",
+			"<span class=\"col col5\"></span>",
+			"span class=\"col col5\"></span>",
+			"<span class=\"col col6\"></span>",
+			"span class=\"col col6\"></span>",
+			"span class=\"col col6\">-</span>",
+			"span class=\"col col5\">-</span>",
+			"<span class=\"col col4\"></span>",
+			"<span class=\"col col3\"></span>",
+			"cta",
+			"cancel",
+			"font-size",
+			"0px",
+			"0em",
+			"darkGre",
+			"#222",
+			"#111",
+			"200,",
+			"content",
+			"click",
+			"025",
+			"255, 255, 255, .025",
+			"px",
 			"\\$actionArray =",
 			"history",
 			"h2",
@@ -774,30 +817,7 @@
 			"};",
 			"fontSize18px",
 			"$fontSize18px",
-			"fontSize24px",
-			"fontSize22px",
-			"$fontSize22px",
-			"margin",
-			"em/16",
-			"new",
-			"em",
-			"Size16px",
-			"Size18px",
-			"Size24px",
-			"Size22px",
-			"Size20px",
-			"Size22px",
-			"Size20px",
-			"Size18px",
-			"Size16px",
-			"Size10px",
-			"Size60px",
-			"font-s",
-			"font-",
-			"px",
-			"ready",
-			"red",
-			" red"
+			"fontSize24px"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -805,6 +825,13 @@
 		"regex": true,
 		"replace_history":
 		[
+			"<span class=\"col col5\">-</span>",
+			"<span class=\"col col6\">-</span>",
+			"<span class=\"col col5\">-</span>",
+			"<span class=\"col col4\">-</span>",
+			"<span class=\"col col3\">-</span>",
+			"-",
+			"0",
 			".loading",
 			"top",
 			"bottom",
@@ -917,15 +944,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17154,
+						"buffer_size": 21209,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5493,
-								5493
+								102,
+								102
 							]
 						],
 						"settings":
@@ -938,7 +965,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -947,15 +974,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 24247,
+						"buffer_size": 25191,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3095,
-								3095
+								9365,
+								9365
 							]
 						],
 						"settings":
@@ -965,10 +992,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1916.0,
+						"translation.y": 5203.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -977,15 +1004,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 27941,
+						"buffer_size": 30786,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3781,
-								3781
+								11654,
+								11654
 							]
 						],
 						"settings":
@@ -995,10 +1022,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1399.0,
+						"translation.y": 308.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1007,15 +1034,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1080,
+						"buffer_size": 1109,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								743,
-								743
+								747,
+								763
 							]
 						],
 						"settings":
@@ -1024,7 +1051,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 135.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1114,7 +1141,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 278.0,
+	"side_bar_width": 270.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
