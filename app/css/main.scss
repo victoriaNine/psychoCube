@@ -122,16 +122,19 @@ button {
   height: 100%;
   top:0;
   left:0;
-}
 
-.overlay {
-  z-index: 9999;
   opacity: 0;
   pointer-events:none;
-
-  @include transform("scale(1.2)");
   @include transition("all .2s .4s ease-out");
 }
+
+.screen.active {
+  opacity: 1;
+  pointer-events:auto;
+  @include transition("all .2s ease-out");
+}
+
+.overlay { z-index: 9999; @include transform("scale(1.2)"); }
 
 .overlay:before {
   content:"";
@@ -143,12 +146,7 @@ button {
   left:0;
 }
 
-.overlay.active {
-  opacity: 1;
-  pointer-events:auto;
-  @include transform("scale(1)");
-  @include transition("all .2s ease-out");
-}
+.overlay.active { @include transform("scale(1)"); }
 
 .container {
   width: 80em;
@@ -291,8 +289,22 @@ button {
 .credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
 .credits .value { font-family: "Abel", sans-serif; float:right; }
 
-.info { background: $brightBlue; color: #222; font-style: italic; font-size: $fontSize14px; font-weight: 600; transition:all .15s ease-out; cursor:pointer; }
+.info {
+  background: $brightBlue;
+  color: #222;
+  font-style: italic;
+  font-size: $fontSize14px;
+  font-weight: 600;
+  cursor:pointer;
+  pointer-events:none;
+  opacity: 0;
+  transform: translateY(-15px);
+
+  transition:background .15s ease-out, opacity 1s ease-out, transform 1s ease-out;
+}
+
 .info:hover { background:$palePink; }
+body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 
 #loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }
 #loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }
@@ -301,7 +313,7 @@ button {
 #loadingHue {
   height: 2em;
   width: .5em;
-  background-color: $brightBlue;
+  background-color: $palePink;
   display: inline-block;
   margin-left: .5em;
 }

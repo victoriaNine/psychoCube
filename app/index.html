@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body>
-    <section id="screen_about" class="screen overlay">
+    <section id="screen_about" class="screen overlay active loading">
       <div class="container">
         <div class="logo"></div>
         <div class="colContainer">
@@ -79,7 +79,7 @@
             <div id="loading">
               <span class="label">Loading hue</span>
               <span id="loadingHue"></span>
-              <span class="value">100.0</span>
+              <span class="value">0.0</span>
             </div>
             <div id="psychoCube_model"></div>
           </div>
@@ -211,8 +211,8 @@
     <section id="screen_main" class="screen">
       <aside id="sidebar">
         <div class="logo white"></div>
-        <div id="currentTime" class="timer"><span class="label w700 italic">Current play time //</span><br /><span class="value brightBlue"></span></div>
-        <div id="totalTime" class="timer"><span class="label w700 italic">Total time //</span><br /><span class="value brightBlue"></span></div>
+        <div id="currentTime" class="timer"><span class="label w700 italic">Current play time //</span><br /><span class="value brightBlue">--:--:--</span></div>
+        <div id="totalTime" class="timer"><span class="label w700 italic">Total time //</span><br /><span class="value brightBlue">--:--:--</span></div>
         <nav id="menu">
           <button id="bt_pause">Pause</button>
           <button id="bt_undo">Undo</button>
@@ -399,6 +399,7 @@
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/cube.js"></script>
     <script src="js/camera.js"></script>
+    <script src="js/audio.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

@@ -43,6 +43,8 @@ var $protoCube;
 var $protoPyramid;
 var $listenersAdded;
 
+var $audioEngine;
+
 
 //===============================
 // MAIN INITIALIZATION
@@ -61,17 +63,67 @@ $(document).ready(function() {
       }
   };
 
-  $("#screen_about").addClass("active loading");
-  $("#screen_about .info").click(function() {
-    $("#screen_about").removeClass("active");
-    setTimeout(function() { $("#screen_about").removeClass("loading"); $("#screen_about .info").html("Click here to close") }, 600);
-  });
+  // Show the loading screen
+  TweenMax.from("#screen_about .container", 2, { opacity:0, ease: RoughEase.ease.config({ template: Bounce.easeOut, strength: 1, points: 20, taper: "none", randomize: true, clamp: true}) });
+  // Add event listeners on the loaded files
+  $(document).on("loadingBGM loadingSFX", loadingScreen);
+
+  // Initialize the audio engine
+  $audioEngine = AudioEngine.getInstance();
+  $audioEngine.BGM.setFile("hologram");
+  $audioEngine.BGM.addSource("audio/bgm/hologram");
 
   // Save the cube and pyramid prototypes in variables and remove them from the DOM
   $protoCube = $("#protoCube").clone();
   $protoPyramid = $("#protoPyramid").clone();
   $("#scene").find("#protoCube, #protoPyramid").remove();
+});
 
+
+//===============================
+// GAME SCREENS
+//===============================
+function loadingScreen() {
+  var percentBGM = ($audioEngine.loadBGM * 100 / $audioEngine.loadBGMTotal);
+  var percentSFX = ($audioEngine.loadSFX * 100 / $audioEngine.loadSFXTotal);
+
+  if(isNaN(percentBGM) || !isFinite(percentBGM)) percentBGM = 0;
+  if(isNaN(percentSFX) || !isFinite(percentSFX)) percentSFX = 0;
+
+  var totalPercent = (percentBGM + percentSFX) / 2;
+  var currentValue = parseFloat($("#loading .value").html());
+
+  var fadeIn = isNaN(currentValue) ? true : false;
+  if(isNaN(currentValue) || !isFinite(currentValue)) currentValue = 0;
+
+  var fadeHue = TweenMax.fromTo("#loadingHue", 1, { backgroundColor:"#CC5880" }, { backgroundColor:"#37AEB8" });
+  scrollToValue($("#loading .value"), currentValue, totalPercent.toFixed(1), true, fadeIn, false, true).eventCallback("onComplete",
+    function() {
+      fadeHue.progress(totalPercent / 100);
+
+      if(totalPercent == 100) {
+        $(document).off("loadingBGM loadingSFX", loadingScreen);
+        $("body").addClass("loaded");
+        
+        $("#screen_about .info").on(eventtype, function() {
+          toggleScreen("about", false);
+
+          if(!$game) {
+            setTimeout(function() {
+              $("#screen_about").removeClass("loading");
+              $("#screen_about .info").html("Click here to close");
+
+              $audioEngine.BGM.play();
+              toGameScreen();
+            }, 600);
+          }
+        });
+      }
+    }
+  );
+}
+
+function toGameScreen() {
   var load = function() {
     // If the player has a game save
     if(getLocalStorage("psychoCube_Game")) {
@@ -84,8 +136,15 @@ $(document).ready(function() {
     else initGame(true);
   }
 
+  toggleScreen("main", true);
   // Sidebar animation
-  var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
+  var timeline = new TimelineMax({
+    onComplete: function() {
+      clearProps(this);
+      // Load the game
+      //load();
+    }
+  });
   timeline.set("#sidebar button", { transition:"none" });
   timeline.from("#sidebar", .5, { opacity:0, left:"-18em", ease:Power4.easeOut });
   timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
@@ -93,11 +152,44 @@ $(document).ready(function() {
   // Add a scrollbar to the menu (for smaller screen sizes)
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
-  // Disable the glow FX by default and load the game
-  glowFX();
+  // Disable the glow FX by default
+  glowSwitch();
   load();
-});
+}
 
+function toHighScores() {
+  var highScores = getLocalStorage("psychoCube_HighScores") || [[], [], [], [], [], [], [], [], [], []];
+
+  for(var i = 0; i < highScores.length; i++) {
+    if(highScores[i].length == 0) break;
+
+    var nb = $("<span>").addClass("col col1").html((i+1) > 9 ? (i+1) : "0"+(i+1));
+    var playerName = $("<span>").addClass("col col2").html(highScores[i].playerName);
+    var finishDate = $("<span>").addClass("col col3").html(getFormatedDate(highScores[i].finishDate));
+    var totalTime = $("<span>").addClass("col col4").html(getFormatedTime(highScores[i].totalTime));
+    var totalActions = $("<span>").addClass("col col5").html(highScores[i].totalActions);
+    var saveCount = $("<span>").addClass("col col6").html(highScores[i].saveCount);
+
+    $("#screen_highScores .row").eq(i+1).empty().append(nb, playerName, finishDate, totalTime, totalActions, saveCount);
+  }
+
+  toggleScreen("highScores", true);
+}
+
+function toggleScreen(screenName, state) {
+  pause();
+
+  var screen = $("#screen_"+screenName);
+
+  if(state == true) screen.addClass("active");
+  else if(state == false) screen.removeClass("active");
+  else screen.toggleClass("active");
+}
+
+
+//===============================
+// GAME SEQUENCES
+//===============================
 function initGame(isNewGame, reinit) {
   $isReady = false;
 
@@ -161,10 +253,6 @@ function initGame(isNewGame, reinit) {
   }
 }
 
-
-//===============================
-// NEW GAME, SAVE GAME & GAME COMPLETED
-//===============================
 function newGame() {
   // If the player is starting a new game, randomize the cube...
   if($isNewGame) {
@@ -220,7 +308,7 @@ function gameComplete() {
     // Show the end screen
     toggleScreen("gameComplete", true);
 
-    $("#bt_confirm").click(function() {
+    $("#bt_confirm").on(eventtype, function() {
       // If the player name has been entered
       if($("#input_playerName").val().length > 0) {
         $playerName = $("#input_playerName").val();
@@ -267,36 +355,7 @@ function saveScore() {
 
   // Fade the end screen and show the results screen
   toggleScreen("gameComplete", false);
-  showHighScores();
-}
-
-function showHighScores() {
-  var highScores = getLocalStorage("psychoCube_HighScores") || [[], [], [], [], [], [], [], [], [], []];
-
-  for(var i = 0; i < highScores.length; i++) {
-    if(highScores[i].length == 0) break;
-
-    var nb = $("<span>").addClass("col col1").html((i+1) > 9 ? (i+1) : "0"+(i+1));
-    var playerName = $("<span>").addClass("col col2").html(highScores[i].playerName);
-    var finishDate = $("<span>").addClass("col col3").html(getFormatedDate(highScores[i].finishDate));
-    var totalTime = $("<span>").addClass("col col4").html(getFormatedTime(highScores[i].totalTime));
-    var totalActions = $("<span>").addClass("col col5").html(highScores[i].totalActions);
-    var saveCount = $("<span>").addClass("col col6").html(highScores[i].saveCount);
-
-    $("#screen_highScores .row").eq(i+1).empty().append(nb, playerName, finishDate, totalTime, totalActions, saveCount);
-  }
-
-  toggleScreen("highScores", true);
-}
-
-function toggleScreen(screenName, state) {
-  pause();
-
-  var screen = $("#screen_"+screenName);
-
-  if(state == true) screen.addClass("active");
-  else if(state == false) screen.removeClass("active");
-  else screen.toggleClass("active");
+  toHighScores();
 }
 
 
@@ -339,9 +398,10 @@ function addListeners() {
   });
 
   $("#bt_newCube").on(eventtype, function() { if($isReady) initGame(true, true); });
-  $("#bt_glowSwitch").on(eventtype, glowFX);
+  $("#bt_glowSwitch").on(eventtype, glowSwitch);
+  $("#bt_soundSwitch").on(eventtype, soundSwitch);
 
-  $("#bt_highScores").on(eventtype, showHighScores);
+  $("#bt_highScores").on(eventtype, toHighScores);
   $("#bt_about").on(eventtype, function() { toggleScreen("about", true); });
 
   $("#bt_resetCube").on(eventtype, resetCube);
@@ -349,8 +409,8 @@ function addListeners() {
   $("#screen_highScores .close").on(eventtype, function() {
     toggleScreen("highScores", false);
 
-    // If the player has just finished a party, start a new game when exiting
-    if($finishDate) initGame(true, true);
+    // If the player has just finished a party, start a new game after exiting
+    if($finishDate) setTimeout(function() { initGame(true, true); }, 600);
   });
 
   /* Keyboard controls ------------*/
@@ -420,8 +480,13 @@ function addListeners() {
       $("#bt_newCube").trigger(eventtype);
   });
 
-  /* Pause the game when the window is inactive ------------*/
-  $(window).on("blur", pause);
+  /* Pause the game and mute the sounds when the window is inactive ------------*/
+  $(window).on("blur", function() {
+    pause();
+    if($audioEngine.ready) $audioEngine.mute();
+  }).on("focus", function() {
+    if($audioEngine.ready) $audioEngine.unMute();
+  });
 
   /* Ask the player to confirm before closing the window ------------*/
   $(window).on("beforeunload", function(e) {
@@ -670,10 +735,16 @@ function debugMode(state) {
   else $("html").toggleClass("debug");
 }
 
-function glowFX(state) {
+function glowSwitch(state) {
   if(state == true) { $("html").addClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
   else if(state == false) { $("html").removeClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
   else { $("html").toggleClass("noGlow"); $("#bt_glowSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
+}
+
+function soundSwitch(state) {
+  if(state == true) { $audioEngine.unMute(); $("#bt_soundSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
+  else if(state == false) { $audioEngine.mute(); $("#bt_soundSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  else { $audioEngine.toggleMute(); $("#bt_soundSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
 }
 
 function clearProps(timeline) {
@@ -684,6 +755,24 @@ function clearProps(timeline) {
     if(targets[i].target != null)
       TweenMax.set(targets[i].target, {clearProps:"all"});
   }
+}
+
+function scrollToValue(target, from, to, toFixed, fadeIn, text, noSFX) {
+  var tween;
+  var text = text || "";
+
+  tween = TweenMax.to($({someValue: from}), .4, {someValue: to, ease:Power3.easeInOut,
+    onStart:function() {
+      if(fadeIn) TweenMax.from(target, .2, { opacity:0, ease:Power4.easeOut, clearProps:"all" });
+    },
+    onUpdate:function(tween) {
+      if(!noSFX && parseFloat(target.html()) != tween.target[0].someValue) $audioEngine.SFX.play("count");
+      target.html((tween.target[0].someValue).toFixed(toFixed)+text);
+    },
+    onUpdateParams:["{self}"]
+  });
+
+  return tween;
 }
 
 function getCSSstyle(selector, property, valueOnly) {

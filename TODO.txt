@@ -26,10 +26,12 @@
  ! Show high scores
  ! About screen
  ~ Screen transitions & animations
-- Clean JS & Comment
-- Clean CSS
+! Loading screen
 
-- Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
+~ Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
+ ! Loop
+ ! Pause onBlur
+ ~ Resume onFocus
 - SFX :
  - Hover menu
  - Toggle option
@@ -38,10 +40,13 @@
  - Close overlay
  - Start game
  - Error
-- Mute switch
+! Mute switch
+
+- Responsive
+- Clean JS & Comment
+- Clean CSS
 
 - Three.js BG (http://www.ro.me/tech, district13.co.in)
-- Loading process
 
+- Clean JS & Comment
 - Clean CSS
-- Clean JS

@@ -76,22 +76,31 @@ button {
   width: 100%;
   height: 100%;
   top: 0;
-  left: 0; }
-
-.overlay {
-  z-index: 9999;
+  left: 0;
   opacity: 0;
   pointer-events: none;
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -o-transform: scale(1.2);
-  transform: scale(1.2);
   -webkit-transition: -webkit-all .2s .4s ease-out;
   -moz-transition: -moz-all .2s .4s ease-out;
   -ms-transition: -ms-all .2s .4s ease-out;
   -o-transition: -o-all .2s .4s ease-out;
   transition: all .2s .4s ease-out; }
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transition: -webkit-all .2s ease-out;
+  -moz-transition: -moz-all .2s ease-out;
+  -ms-transition: -ms-all .2s ease-out;
+  -o-transition: -o-all .2s ease-out;
+  transition: all .2s ease-out; }
+
+.overlay {
+  z-index: 9999;
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.2); }
 
 .overlay:before {
   content: "";
@@ -103,18 +112,11 @@ button {
   left: 0; }
 
 .overlay.active {
-  opacity: 1;
-  pointer-events: auto;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   -o-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: -webkit-all .2s ease-out;
-  -moz-transition: -moz-all .2s ease-out;
-  -ms-transition: -ms-all .2s ease-out;
-  -o-transition: -o-all .2s ease-out;
-  transition: all .2s ease-out; }
+  transform: scale(1); }
 
 .container {
   width: 80em;
@@ -316,11 +318,19 @@ button {
   font-style: italic;
   font-size: 0.875em;
   font-weight: 600;
-  transition: all .15s ease-out;
-  cursor: pointer; }
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: background .15s ease-out, opacity 1s ease-out, transform 1s ease-out; }
 
 .info:hover {
   background: #CC5880; }
+
+body.loaded .info {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0); }
 
 #loading {
   color: #CCC;
@@ -344,7 +354,7 @@ button {
 #loadingHue {
   height: 2em;
   width: .5em;
-  background-color: #37AEB8;
+  background-color: #CC5880;
   display: inline-block;
   margin-left: .5em; }
 
