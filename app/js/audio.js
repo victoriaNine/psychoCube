@@ -242,7 +242,7 @@ function BGM() {
 
     source.buffer = buffer;
     this.songLength = source.buffer.duration;
-    gainNode.gain.value = this.muted ? 0 : .75;
+    gainNode.gain.value = this.muted ? 0 : .5;
 
     source.connect(gainNode);
     gainNode.connect(this.audioCtx.destination);

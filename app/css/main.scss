@@ -66,12 +66,22 @@ $fontSize24px: 1.5em;
 /* GENERAL RULES
 /*=======================*/
 html, body {
+  width: 100%;
+  height: 100%;
   overflow:hidden;
   background:#DDD;
   color: $darkGrey;
   text-transform: uppercase;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
+}
+
+body {
+  background:url(../img/mwpsb_logo.svg) no-repeat,
+             url(../img/bg.jpg) no-repeat;
+  background-size: 180px 180px, cover;
+  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;
+  background-blend-mode:overlay;
 }
 
 body.moving { cursor:move; cursor:-webkit-grabbing; }
@@ -117,13 +127,13 @@ button {
 
   opacity: 0;
   pointer-events:none;
-  @include transition("all .2s .4s ease-out");
+  @include transition("opacity .2s .4s ease-out, transform .2s .4s ease-out");
 }
 
 .screen.active {
   opacity: 1;
   pointer-events:auto;
-  @include transition("all .2s ease-out");
+  @include transition("opacity .2s ease-out, transform .2s ease-out");
 }
 
 .overlay { z-index: 9999; @include transform("translateY(-5px)"); }
@@ -156,10 +166,20 @@ button {
   color: #CCC;
   font-weight: 700;
   font-size: $fontSize24px;
-  border-bottom: 1px solid #CCC;
   padding: 0 0 8px 48px;
   text-transform: none;
   margin-bottom: 32px;
+  position: relative;
+}
+
+.screen h1:before {
+  content: "";
+  position: absolute;
+  width: 97.5%;
+  right: 0;
+  background: currentColor;
+  height: 2px;
+  bottom: 0;
 }
 
 .screen h1:after {
@@ -167,8 +187,8 @@ button {
   position: absolute;
   width: .4em;
   height: 1em;
-  background-color: #CCC;
-  left: 12px;
+  background: currentColor;
+  left: .4em;
   transform: skewX(-45deg);
 }
 
@@ -342,20 +362,6 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   50% { transform: translateY(1em); }
 }
 
-#screen_about.loading:before {
-  @extend #screen_main;
-  background-position: calc(50% + (40em - 90px)) calc(50% + (17.5em - 90px)), 0 0 !important;
-}
-
-#screen_about.loading .panel,
-#screen_about.loading .panel .note { background:rgba(255, 255, 255, .25); }
-
-#screen_about.loading .panel,
-#screen_about.loading #loading { color:$darkGrey; }
-
-#screen_about.loading .credits,
-#screen_about.loading .panel h2 { background:rgba(0, 0, 0, .85); }
-
 
 /*=======================*/
 /* SCREEN : GAME COMPLETE
@@ -408,18 +414,20 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 /*=======================*/
 /* SCREEN : MAIN
 /*=======================*/
-#screen_main {
-  background:url(../img/mwpsb_logo.svg) no-repeat,
-             url(../img/bg.jpg) no-repeat;
-  background-size: 180px 180px, cover;
-  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;
-  background-blend-mode:overlay;
+/* Particles canvas ------------*/
+#particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  -webkit-filter:blur(2px);
+  -moz-filter:blur(2px);
+  -ms-filter:blur(2px);
+  -o-filter:blur(2px);
+  filter:blur(2px);
 }
 
-
-/*=======================*/
-/* SIDE BAR
-/*=======================*/
+/* Sidebar ------------*/
 #sidebar {
   position: absolute;
   left: 0;
@@ -501,7 +509,9 @@ html:not(.debug) #bt_resetCube { display: none; }
   transform-style: preserve-3d;
   width: 27em;
   height: 27em;
-  @include animation("levitate 8s ease-in-out infinite");
+  transform: translate3d(27em,27em,-27em);
+
+  //@include animation("levitate 8s ease-in-out infinite");
 }
 
 @include keyframes(levitate) {
@@ -519,11 +529,23 @@ html:not(.debug) #bt_resetCube { display: none; }
   left: 0;
   transform-style: preserve-3d;
   transform-origin: 13.5em 13.5em 0em;
+  will-change: transform, opacity;
 
-  transition: transform .3s ease-in-out;
+  transition: transform .3s ease-in-out, opacity .2s ease-in-out;
 }
 
 body:not(.moving) .cube:hover { cursor: pointer; }
+
+body.selecting .cube:not(.selected) {
+  opacity:.15;
+
+  @include animation("transparency 2s ease-out infinite");
+}
+
+@include keyframes(transparency) {
+  0%, 100% { opacity:.15; }
+  50% { opacity:.35; }
+}
 
 /* Cube positioning ------------*/
 @for $z from 1 through 3 {
@@ -544,12 +566,14 @@ body:not(.moving) .cube:hover { cursor: pointer; }
 /* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */
 #tridiv {
   perspective: 800px;
+  backface-visibility: hidden;
   position: absolute;
   overflow: hidden;
   width: 100%;
   height: 100%;
   background: transparent;
   font-size: 100%;
+  transform: translateZ(0);
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -746,7 +770,9 @@ body:not(.moving) .cube:hover { cursor: pointer; }
   width:9em;
   height:3em;
   margin:-1.5em 0 0 -4.5em;
-  transition:all .2s ease-out;
+  transition:transform .2s ease-out;
+
+  will-change: transform;
 }
 .pyramid > .face-wrapper {
   width:9em;
@@ -927,25 +953,13 @@ html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease
 /*=======================*/
 /* CUBE ROTATION MENU
 /*=======================*/
-body.selecting .cube:not(.selected) {
-  opacity:.15;
-  transition: opacity .2s ease-in-out;
-
-  @include animation("transparency 2s ease-out infinite");
-}
-
-@include keyframes(transparency) {
-  0%, 100% { opacity:.15; }
-  50% { opacity:.35; }
-}
-
 #rotationMenu {
   position: absolute;
   width: 130px;
   height: 130px;
   opacity:0;
   pointer-events:none;
-  transition: all .2s ease-in-out;
+  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
   z-index: 20;
 
   transform:scale(1.5) translate(-50%, -50%);

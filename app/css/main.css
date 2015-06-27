@@ -5,12 +5,20 @@
 /* GENERAL RULES
 /*=======================*/
 html, body {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   background: #DDD;
   color: #222;
   text-transform: uppercase;
   font-family: "Open Sans", sans-serif;
   font-weight: 400; }
+
+body {
+  background: url(../img/mwpsb_logo.svg) no-repeat, url(../img/bg.jpg) no-repeat;
+  background-size: 180px 180px, cover;
+  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;
+  background-blend-mode: overlay; }
 
 body.moving {
   cursor: move;
@@ -56,20 +64,20 @@ button {
   left: 0;
   opacity: 0;
   pointer-events: none;
-  -webkit-transition: -webkit-all .2s .4s ease-out;
-  -moz-transition: -moz-all .2s .4s ease-out;
-  -ms-transition: -ms-all .2s .4s ease-out;
-  -o-transition: -o-all .2s .4s ease-out;
-  transition: all .2s .4s ease-out; }
+  -webkit-transition: -webkit-opacity .2s .4s ease-out, transform .2s .4s ease-out;
+  -moz-transition: -moz-opacity .2s .4s ease-out, transform .2s .4s ease-out;
+  -ms-transition: -ms-opacity .2s .4s ease-out, transform .2s .4s ease-out;
+  -o-transition: -o-opacity .2s .4s ease-out, transform .2s .4s ease-out;
+  transition: opacity .2s .4s ease-out, transform .2s .4s ease-out; }
 
 .screen.active {
   opacity: 1;
   pointer-events: auto;
-  -webkit-transition: -webkit-all .2s ease-out;
-  -moz-transition: -moz-all .2s ease-out;
-  -ms-transition: -ms-all .2s ease-out;
-  -o-transition: -o-all .2s ease-out;
-  transition: all .2s ease-out; }
+  -webkit-transition: -webkit-opacity .2s ease-out, transform .2s ease-out;
+  -moz-transition: -moz-opacity .2s ease-out, transform .2s ease-out;
+  -ms-transition: -ms-opacity .2s ease-out, transform .2s ease-out;
+  -o-transition: -o-opacity .2s ease-out, transform .2s ease-out;
+  transition: opacity .2s ease-out, transform .2s ease-out; }
 
 .overlay {
   z-index: 9999;
@@ -109,18 +117,27 @@ button {
   color: #CCC;
   font-weight: 700;
   font-size: 1.5em;
-  border-bottom: 1px solid #CCC;
   padding: 0 0 8px 48px;
   text-transform: none;
-  margin-bottom: 32px; }
+  margin-bottom: 32px;
+  position: relative; }
+
+.screen h1:before {
+  content: "";
+  position: absolute;
+  width: 97.5%;
+  right: 0;
+  background: currentColor;
+  height: 2px;
+  bottom: 0; }
 
 .screen h1:after {
   content: "";
   position: absolute;
   width: .4em;
   height: 1em;
-  background-color: #CCC;
-  left: 12px;
+  background: currentColor;
+  left: .4em;
   transform: skewX(-45deg); }
 
 /* Panels ------------*/
@@ -407,21 +424,6 @@ body.loaded .info {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
-#screen_about.loading:before {
-  background-position: calc(50% + (40em - 90px)) calc(50% + (17.5em - 90px)), 0 0 !important; }
-
-#screen_about.loading .panel,
-#screen_about.loading .panel .note {
-  background: rgba(255, 255, 255, 0.25); }
-
-#screen_about.loading .panel,
-#screen_about.loading #loading {
-  color: #222; }
-
-#screen_about.loading .credits,
-#screen_about.loading .panel h2 {
-  background: rgba(0, 0, 0, 0.85); }
-
 /*=======================*/
 /* SCREEN : GAME COMPLETE
 /*=======================*/
@@ -503,15 +505,18 @@ body.loaded .info {
 /*=======================*/
 /* SCREEN : MAIN
 /*=======================*/
-#screen_main, #screen_about.loading:before {
-  background: url(../img/mwpsb_logo.svg) no-repeat, url(../img/bg.jpg) no-repeat;
-  background-size: 180px 180px, cover;
-  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;
-  background-blend-mode: overlay; }
+/* Particles canvas ------------*/
+#particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -ms-filter: blur(2px);
+  -o-filter: blur(2px);
+  filter: blur(2px); }
 
-/*=======================*/
-/* SIDE BAR
-/*=======================*/
+/* Sidebar ------------*/
 #sidebar {
   position: absolute;
   left: 0;
@@ -599,11 +604,7 @@ html:not(.debug) #bt_resetCube {
   transform-style: preserve-3d;
   width: 27em;
   height: 27em;
-  -webkit-animation: levitate 8s ease-in-out infinite;
-  -moz-animation: levitate 8s ease-in-out infinite;
-  -ms-animation: levitate 8s ease-in-out infinite;
-  -o-animation: levitate 8s ease-in-out infinite;
-  animation: levitate 8s ease-in-out infinite; }
+  transform: translate3d(27em, 27em, -27em); }
 
 @-webkit-keyframes levitate {
   0%, 100% {
@@ -641,11 +642,45 @@ html:not(.debug) #bt_resetCube {
   left: 0;
   transform-style: preserve-3d;
   transform-origin: 13.5em 13.5em 0em;
-  transition: transform .3s ease-in-out; }
+  will-change: transform, opacity;
+  transition: transform .3s ease-in-out, opacity .2s ease-in-out; }
 
 body:not(.moving) .cube:hover {
   cursor: pointer; }
 
+body.selecting .cube:not(.selected) {
+  opacity: .15;
+  -webkit-animation: transparency 2s ease-out infinite;
+  -moz-animation: transparency 2s ease-out infinite;
+  -ms-animation: transparency 2s ease-out infinite;
+  -o-animation: transparency 2s ease-out infinite;
+  animation: transparency 2s ease-out infinite; }
+
+@-webkit-keyframes transparency {
+  0%, 100% {
+    opacity: .15; }
+  50% {
+    opacity: .35; } }
+@-moz-keyframes transparency {
+  0%, 100% {
+    opacity: .15; }
+  50% {
+    opacity: .35; } }
+@-ms-keyframes transparency {
+  0%, 100% {
+    opacity: .15; }
+  50% {
+    opacity: .35; } }
+@-o-keyframes transparency {
+  0%, 100% {
+    opacity: .15; }
+  50% {
+    opacity: .35; } }
+@keyframes transparency {
+  0%, 100% {
+    opacity: .15; }
+  50% {
+    opacity: .35; } }
 /* Cube positioning ------------*/
 .cube1-1-1 {
   transform: translate3d(0em, 0em, 9em); }
@@ -732,12 +767,14 @@ body:not(.moving) .cube:hover {
 /* /!\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\ */
 #tridiv {
   perspective: 800px;
+  backface-visibility: hidden;
   position: absolute;
   overflow: hidden;
   width: 100%;
   height: 100%;
   background: transparent;
   font-size: 100%;
+  transform: translateZ(0);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -930,7 +967,8 @@ body:not(.moving) .cube:hover {
   width: 9em;
   height: 3em;
   margin: -1.5em 0 0 -4.5em;
-  transition: all .2s ease-out; }
+  transition: transform .2s ease-out;
+  will-change: transform; }
 
 .pyramid > .face-wrapper {
   width: 9em;
@@ -1489,47 +1527,13 @@ html:not(.noGlow) .color-blue .roof .face {
 /*=======================*/
 /* CUBE ROTATION MENU
 /*=======================*/
-body.selecting .cube:not(.selected) {
-  opacity: .15;
-  transition: opacity .2s ease-in-out;
-  -webkit-animation: transparency 2s ease-out infinite;
-  -moz-animation: transparency 2s ease-out infinite;
-  -ms-animation: transparency 2s ease-out infinite;
-  -o-animation: transparency 2s ease-out infinite;
-  animation: transparency 2s ease-out infinite; }
-
-@-webkit-keyframes transparency {
-  0%, 100% {
-    opacity: .15; }
-  50% {
-    opacity: .35; } }
-@-moz-keyframes transparency {
-  0%, 100% {
-    opacity: .15; }
-  50% {
-    opacity: .35; } }
-@-ms-keyframes transparency {
-  0%, 100% {
-    opacity: .15; }
-  50% {
-    opacity: .35; } }
-@-o-keyframes transparency {
-  0%, 100% {
-    opacity: .15; }
-  50% {
-    opacity: .35; } }
-@keyframes transparency {
-  0%, 100% {
-    opacity: .15; }
-  50% {
-    opacity: .35; } }
 #rotationMenu {
   position: absolute;
   width: 130px;
   height: 130px;
   opacity: 0;
   pointer-events: none;
-  transition: all .2s ease-in-out;
+  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
   z-index: 20;
   transform: scale(1.5) translate(-50%, -50%); }
 

@@ -90,7 +90,7 @@
       <div class="container">
         <h1>INSPIRATION//cube:source</h1>
         <div class="content">
-          
+          <canvas id="glitch" width="1280" height="360"></canvas>
         </div>
         <button class="cta close">Close</button>
       </div>
@@ -244,8 +244,7 @@
       </aside>
       <nav id="rotationMenu">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="circulus" style="transform-origin: 50% 50% 0px; transform: translate3d(0px, 0px, 0px); touch-action: none; -webkit-user-select: none;">
-          <g id="symbolsContainer">
-           <g id="itemsContainer">
+          <g id="itemsContainer">
               <g class="item" id="bt_front" role="link" tabindex="0" xlink:href="" xlink:title="" transform="matrix(1,0,0,1,0,0)" data-svg-origin="250 250">
                   <path class="sector" d="M375,250 l125,0 A250,250 0 0,0 380.2350851219826,36.60172774066339 l-65.1175425609913,106.69913612966829 A125,125 0 0,1 375,250"></path>
                   <g class="icon" width="40" height="40" transform="translate(160 -90)" viewBox="0 0 40 40">
@@ -284,10 +283,11 @@
               </g>
           </g>
           <g id="trigger" class="trigger menu-trigger" role="button">
-              <circle cx="250" cy="250" r="45"></circle>
+            <circle cx="250" cy="250" r="45"></circle>
           </g>
       </svg>
       </nav>
+      <canvas id="particles"></canvas>
       <div id="tridiv">
         <div id="scene">
           <div id="psychoCube"></div>
@@ -414,6 +414,7 @@
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/cube.js"></script>
     <script src="js/camera.js"></script>
+    <script src="js/particles.js"></script>
     <script src="js/audio.js"></script>
     <script src="js/main.js"></script>
   </body>

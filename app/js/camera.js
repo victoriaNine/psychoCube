@@ -68,8 +68,8 @@ function setCameraRotation(e) {
     var newRotateY = rotateY + deltaY * dirY;
 
     // Update the inline style string
-    var newTransform = "rotateX("+newRotateX+"deg) rotateY("+newRotateY+"deg) rotateZ("+transformValues.rotateZ+"deg) scale3d("+transformValues.scale+")";
-    $("#scene").css("transform",newTransform);
+    var newTransform = "rotateX("+newRotateX+"deg) rotateY("+newRotateY+"deg) rotateZ("+transformValues.rotateZ+"deg) scale3d("+transformValues.scale3d+")";
+    $("#scene").css("transform", newTransform);
   }
 }
 
@@ -79,7 +79,7 @@ function setCameraZoom(e) {
 
   // Get the current camera zoom
   var transformValues = getCurrentTransform($("#scene")[0]);
-  var scale = parseFloat(transformValues.scale);
+  var scale = parseFloat(transformValues.scale3d);
 
   // Update it with the mousewheel's delta value
   var delta = e.originalEvent.wheelDelta / 1000 * -1; // Inverted zoom in/out controls
@@ -93,51 +93,4 @@ function setCameraZoom(e) {
   var newScaleString = newScale+","+newScale+","+newScale;
   var newTransform = "rotateX("+transformValues.rotateX+"deg) rotateY("+transformValues.rotateY+"deg) rotateZ("+transformValues.rotateZ+"deg) scale3d("+newScaleString+")";
   $("#scene").css("transform", newTransform);
-}
-
-function getCurrentTransform(element) {
-  // Fetching the inline style string
-  var transform = element.style.transform;
-
-  // Fetching the rotateX value in the string
-  var rotateX = transform.slice(transform.indexOf("rotateX("), transform.length);
-  rotateX = rotateX.replace("rotateX(", "");
-  rotateX = rotateX.slice(0, rotateX.indexOf(")"));
-  rotateX = parseFloat(rotateX);
-  if(!rotateX || isNaN(rotateX)) rotateX = 0;
-
-  // Fetching the rotateY value in the string
-  var rotateY = transform.slice(transform.indexOf("rotateY("), transform.length);
-  rotateY = rotateY.replace("rotateY(", "");
-  rotateY = rotateY.slice(0, rotateY.indexOf(")"));
-  rotateY = parseFloat(rotateY);
-  if(!rotateY || isNaN(rotateY)) rotateY = 0;
-
-  // Fetching the rotateZ value in the string
-  var rotateZ = transform.slice(transform.indexOf("rotateZ("), transform.length);
-  rotateZ = rotateZ.replace("rotateZ(", "");
-  rotateZ = rotateZ.slice(0, rotateZ.indexOf(")"));
-  rotateZ = parseFloat(rotateZ);
-  if(!rotateZ || isNaN(rotateZ)) rotateZ = 0;
-
-  // Fetching the scale3d value in the string
-  var scale = transform.slice(transform.indexOf("scale3d("), transform.length);
-  scale = scale.replace("scale3d(", "");
-  scale = scale.slice(0, scale.indexOf(")"));
-  if(!scale) scale = "1, 1, 1";
-
-  // Fetching the translate3d value in the string
-  var translate = transform.slice(transform.indexOf("translate3d("), transform.length);
-  translate = translate.replace("translate3d(", "");
-  translate = translate.slice(0, translate.indexOf(")"));
-  if(!translate) translate = "0, 0, 0";
-
-  // Returning all values inside an object
-  return {
-    rotateX: rotateX,
-    rotateY: rotateY,
-    rotateZ: rotateZ,
-    scale: scale,
-    translate: translate
-  };
 }
