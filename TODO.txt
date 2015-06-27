@@ -20,18 +20,18 @@
  ! High scores
  ! Main screen (rotation menu)
 
-~ UI JS :
+! UI JS :
  ! Disable cube keyboard listener when inactive
  ! Game complete screen
  ! Show high scores
  ! About screen
- ~ Screen transitions & animations
+ ! Screen transitions & animations
 ! Loading screen
 
-~ Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
+! Psycho-Pass BGM (onBlur & onFocus : Pause & Resume)
  ! Loop
  ! Pause onBlur
- ~ Resume onFocus
+ ! Resume onFocus
 - SFX :
  - Hover menu
  - Toggle option
@@ -42,15 +42,15 @@
  - Error
 ! Mute switch
 
-~ Inspiration screen
+! Inspiration screen
  ! CSS & JS
- - Pictures montage
+ ! Pictures montage
 
 - Responsive
 - Clean JS & Comment
 - Clean CSS
 
-- Three.js BG (http://www.ro.me/tech, district13.co.in)
+X Three.js BG (http://www.ro.me/tech, district13.co.in)
 
 - Clean JS & Comment
 - Clean CSS

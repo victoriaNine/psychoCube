@@ -10,14 +10,14 @@ var ctx = canvas.getContext("2d");
 /* FIREFLIES ---------*/
 var fireflies = [];
 
-var maxLifetime = 20; // in seconds
+var maxLifetime = 60; // in seconds
 var minLifetime = 10;
 
 var maxSize = 10;
 var minSize = 2;
 
-var maxSpeed = 60;
-var minSpeed = 30;
+var maxSpeed = 30;
+var minSpeed = 15;
 
 var maxVarianceX = 50;
 var firefliesNb = 200;
@@ -32,6 +32,17 @@ document.addEventListener("DOMContentLoaded", function() {
 	window.addEventListener('resize', setSizes);
 
   	initParticles();
+
+  	TweenMax.to($({someValue: .75}), 4, {someValue: 1.5, repeat:-1, yoyo:true, ease:Power3.easeInOut,
+	  onUpdate:function(tween) {
+	    $("#particles").css("-webkit-filter", "blur("+tween.target[0].someValue+"px)");
+	    $("#particles").css("-moz-filter", "blur("+tween.target[0].someValue+"px)");
+	    $("#particles").css("-ms-filter", "blur("+tween.target[0].someValue+"px)");
+	    $("#particles").css("-o-filter", "blur("+tween.target[0].someValue+"px)");
+	    $("#particles").css("filter", "blur("+tween.target[0].someValue+"px)");
+	  },
+	  onUpdateParams:["{self}"]
+	});
 });
 
 function initParticles() {

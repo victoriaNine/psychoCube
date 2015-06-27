@@ -83,6 +83,9 @@ $(document).ready(function() {
   $protoCube = $("#protoCube").clone();
   $protoPyramid = $("#protoPyramid").clone();
   $("#scene").find("#protoCube, #protoPyramid").remove();
+
+  // Set the cube positions
+  setCubePositions();
 });
 
 
@@ -124,7 +127,7 @@ function loadingScreen() {
               $("#screen_about .info").html("Click here to close");
 
               // Start the BGM and go to the game screen
-              //$audioEngine.BGM.play();
+              $audioEngine.BGM.play();
               toGameScreen();
             }, 600);
           }
@@ -158,21 +161,17 @@ function toGameScreen() {
     else initGame(true);
   }
 
-  toggleScreen("main", true);
-  // Sidebar animation
-  /*var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
-  timeline.set("#sidebar button", { transition:"none" });
-  timeline.from("#sidebar", .5, { opacity:0, transform:"translateX(-18em)", ease:Power4.easeOut });
-  timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);*/
-
   // Add a scrollbar to the menu (for smaller screen sizes)
   $("#menu").mCustomScrollbar({ theme:"minimal", autoHideScrollbar: true });
 
-  // Disable the glow FX by default and load the game
-  glowSwitch();
+  // Disable the glow FX by default
+  glowSwitch(false);
 
+  // Levitate the Psycho-Cube
   TweenMax.fromTo("#psychoCube", 4, { transform:"translate3d(27em,27em,-27em)" }, { transform:"translate3d(27em,29em,-27em)", repeat:-1, yoyo:true, ease:Power2.easeInOut }); 
 
+  // Show the screen and load the game
+  toggleScreen("main", true);
   load();
 }
 
@@ -285,13 +284,17 @@ function initGame(isNewGame, reinit) {
   var cubeSetup = function(timeline) {
     buildCube(function() {
       // Set the camera to the default viewing angle and fade the cube in
-      timeline.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
+      timeline.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut,
         onComplete: function() { $("#scene").css("transform", defaultAngle); }
       });
       if(!reinit) {
-        timeline.set("#sidebar button", { transition:"none" });
-        timeline.from("#sidebar", .5, { opacity:0, transform:"translateX(-18em)", ease:Power4.easeOut });
-        timeline.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
+        // Sidebar animation
+        var sidebar = new TimelineMax({ onComplete:function() { clearProps(this); } });
+        sidebar.set("#sidebar button", { transition:"none" });
+        sidebar.from("#sidebar", .5, { opacity:0, transform:"translateX(-18em)", ease:Power4.easeOut });
+        sidebar.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
+
+        timeline.add(sidebar);
       }
 
       // Start a new game
@@ -544,9 +547,9 @@ function addListeners() {
   /* Pause the game and mute the sounds when the window is inactive ------------*/
   $(window).on("blur", function() {
     pause();
-    if($audioEngine.ready) $audioEngine.mute();
+    if($audioEngine.ready) soundSwitch(false);
   }).on("focus", function() {
-    if($audioEngine.ready) $audioEngine.unMute();
+    if($audioEngine.ready) soundSwitch(true);
   });
 
   /* Ask the player to confirm before closing the window ------------*/
@@ -732,7 +735,7 @@ function rotate(e, action) {
   // And removing any remaining actions following it
   if($actionIndex < $actionArray.length) $actionArray.splice(-1, $actionIndex);
 
-  // Update the  history buttons status
+  // Update the history buttons status
   checkHistoryButtons();
 
   // Applying the rotation to the cube and incrementing the action counter
@@ -798,14 +801,14 @@ function debugMode(state) {
 }
 
 function glowSwitch(state) {
-  if(state == true) { $("html").addClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
-  else if(state == false) { $("html").removeClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  if(state == true) { $("html").removeClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  else if(state == false) { $("html").addClass("noGlow"); $("#bt_glowSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
   else { $("html").toggleClass("noGlow"); $("#bt_glowSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
 }
 
 function soundSwitch(state) {
-  if(state == true) { $audioEngine.unMute(); $("#bt_soundSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
-  else if(state == false) { $audioEngine.mute(); $("#bt_soundSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  if(state == true) { $audioEngine.unMute(); $("#bt_soundSwitch i").removeClass("fa-toggle-off").addClass("fa-toggle-on"); }
+  else if(state == false) { $audioEngine.mute(); $("#bt_soundSwitch i").removeClass("fa-toggle-on").addClass("fa-toggle-off"); }
   else { $audioEngine.toggleMute(); $("#bt_soundSwitch i").toggleClass("fa-toggle-on fa-toggle-off"); }
 }
 

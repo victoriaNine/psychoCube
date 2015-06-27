@@ -419,12 +419,6 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   position: absolute;
   width: 100%;
   height: 100%;
-
-  -webkit-filter:blur(2px);
-  -moz-filter:blur(2px);
-  -ms-filter:blur(2px);
-  -o-filter:blur(2px);
-  filter:blur(2px);
 }
 
 /* Sidebar ------------*/
@@ -510,13 +504,6 @@ html:not(.debug) #bt_resetCube { display: none; }
   width: 27em;
   height: 27em;
   transform: translate3d(27em,27em,-27em);
-
-  //@include animation("levitate 8s ease-in-out infinite");
-}
-
-@include keyframes(levitate) {
-  0%, 100% { transform: translate3d(27em,27em,-27em); }
-  50% { transform: translate3d(27em,29em, -27em); }
 }
 
 #protoCube, #protoPyramid { display:none; }
@@ -531,35 +518,19 @@ html:not(.debug) #bt_resetCube { display: none; }
   transform-origin: 13.5em 13.5em 0em;
   will-change: transform, opacity;
 
-  transition: transform .3s ease-in-out, opacity .2s ease-in-out;
+  transition: opacity .2s ease-in-out;
 }
 
 body:not(.moving) .cube:hover { cursor: pointer; }
 
 body.selecting .cube:not(.selected) {
   opacity:.15;
-
   @include animation("transparency 2s ease-out infinite");
 }
 
 @include keyframes(transparency) {
   0%, 100% { opacity:.15; }
   50% { opacity:.35; }
-}
-
-/* Cube positioning ------------*/
-@for $z from 1 through 3 {
-  @for $y from 1 through 3 {
-    @for $x from 1 through 3 {
-      $translateX : $x * 9 - 9;
-      $translateY : $y * 9 - 9;
-      $translateZ : $z * -9 + 18;
-
-      .cube#{$z}-#{$y}-#{$x} { 
-        transform: translate3d(#{$translateX}em, #{$translateY}em, #{$translateZ}em);
-      }
-    }
-  }
 }
 
 /* Tridiv style base START ------------*/
@@ -999,7 +970,7 @@ html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease
 
 #circulus .menu-trigger {
     fill: rgba(200, 200, 200, 0.5);
-    pointer-events: auto; /* KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
+    /*pointer-events: auto;  KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
     transition: fill .15s ease-out;
 }
 

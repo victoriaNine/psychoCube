@@ -301,22 +301,20 @@ function BGM() {
       this.crossfading = true;
 
       var crossfade, bgm = this;
-      var jumpToEnd = function() { crossfade.seek(crossfade.totalDuration(), false); };
+      var jumpToEnd = function() { crossfade.progress(100); };
 
-      checkFocus(function() {
-        TweenMax.lagSmoothing(0);
-        crossfade = TweenMax.to(bgm.sourceArray[bgm.currentFile].gainNode.gain, 3, {value: gain, ease: Circ.easeOut,
-          onStart:function() { 
-            $(window).on("blur", jumpToEnd);
-          },
-          onComplete:function() {
-            bgm.crossfading = false;
-            TweenMax.lagSmoothing(1000, 16);
+      TweenMax.lagSmoothing(0);
+      crossfade = TweenMax.to(bgm.sourceArray[bgm.currentFile].gainNode.gain, 3, {value: gain, ease: Circ.easeOut,
+        onStart:function() { 
+          $(window).on("blur", jumpToEnd);
+        },
+        onComplete:function() {
+          bgm.crossfading = false;
+          TweenMax.lagSmoothing(1000, 16);
 
-            $(window).off("blur", jumpToEnd);
-            if(callback && typeof callback == "function") callback();
-          }
-        });
+          $(window).off("blur", jumpToEnd);
+          if(callback && typeof callback == "function") callback();
+        }
       });
     }
   }
