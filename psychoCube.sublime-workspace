@@ -471,7 +471,7 @@
 			"file": "app/index.html",
 			"settings":
 			{
-				"buffer_size": 21641,
+				"buffer_size": 21621,
 				"line_ending": "Windows"
 			}
 		},
@@ -479,7 +479,7 @@
 			"file": "app/css/main.scss",
 			"settings":
 			{
-				"buffer_size": 26236,
+				"buffer_size": 26100,
 				"line_ending": "Windows"
 			}
 		},
@@ -545,13 +545,19 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/psd"
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube"
 	],
 	"file_history":
 	[
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/index - Copie.html",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/js/PrismSlider.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/js/utils/easing.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/js/utils/rAF.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/js/slideshow2.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/js/slideshow3.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/index3.html",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/TrackballControls.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/audio.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css.map",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.scss",
@@ -559,7 +565,6 @@
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/img/menu.svg",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu (1).svg",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu.svg",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/index - Copie.html",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/index_iPad.html",
 		"/C/wamp/www/devTests/adopteUnMec/mTab/css/style.scss",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/css/style.scss",
@@ -671,15 +676,7 @@
 		"/E/labs/waltzRevolution/app/css/fonts/onlinefontconverter.com/converted-files/font.css",
 		"/E/labs/waltzRevolution/app/index.html",
 		"/E/labs/waltzRevolution/app/js/controller.js",
-		"/E/labs/waltzRevolution/app/css/main.scss",
-		"/E/labs/waltzRevolution/node_modules/grunt-usemin/lib/file.js",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/mout/object/forOwn.js",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/configstore/node_modules/js-yaml/node_modules/argparse/node_modules/lodash/object/forOwnRight.js",
-		"/E/labs/waltzRevolution/bower_components/modernizr/feature-detects/forms-speechinput.js",
-		"/E/labs/waltzRevolution/node_modules/grunt-modernizr/node_modules/uglify-js/test/unit/compress/expected/forstatement.js",
-		"/E/labs/waltzRevolution/node_modules/bower/node_modules/tar-fs/node_modules/tar-stream/node_modules/readable-stream/lib/_stream_passthrough.js",
-		"/E/labs/waltzRevolution/node_modules/grunt-autoprefixer/node_modules/autoprefixer-core/node_modules/postcss/lib/css-syntax-error.js",
-		"/E/labs/waltzRevolution/node_modules/grunt/node_modules/findup-sync/node_modules/glob/node_modules/minimatch/test/extglob-ending-with-state-char.js"
+		"/E/labs/waltzRevolution/app/css/main.scss"
 	],
 	"find":
 	{
@@ -698,6 +695,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"50% \\+ 17.",
+			"50% + 17.",
+			"50% +",
 			"bg",
 			"not",
 			"<span class=\"col col5\"></span>",
@@ -822,10 +822,7 @@
 			"fontSize7",
 			"radius",
 			"Record",
-			"newRec",
-			"};",
-			"fontSize18px",
-			"$fontSize18px"
+			"newRec"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -943,7 +940,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -952,15 +949,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 21641,
+						"buffer_size": 21621,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2285,
-								2285
+								1834,
+								1834
 							]
 						],
 						"settings":
@@ -970,10 +967,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 600.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -982,15 +979,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26236,
+						"buffer_size": 26100,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								701,
-								701
+								3497,
+								3497
 							]
 						],
 						"settings":
@@ -1000,10 +997,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1395.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -1019,8 +1016,8 @@
 						"selection":
 						[
 							[
-								28350,
-								28350
+								588,
+								588
 							]
 						],
 						"settings":
@@ -1030,10 +1027,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 11898.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1049,8 +1046,8 @@
 						"selection":
 						[
 							[
-								1268,
-								1268
+								1138,
+								1138
 							]
 						],
 						"settings":
@@ -1062,7 +1059,7 @@
 						"translation.y": 270.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -1149,7 +1146,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 270.0,
+	"side_bar_width": 285.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

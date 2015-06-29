@@ -113,6 +113,60 @@ button {
   text-shadow: none;
 }
 
+/* Responsive fixes ------------*/
+@media (max-width: 1024px) {
+  html, body { font-size:12px; }
+}
+
+@media (orientation:portrait) {
+  html.isTablet body:after {
+    content:"";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .95) url(../img/rotateTablet.png) no-repeat 50% 50%;
+    top:0;
+    left: 0;
+    z-index: 9999;
+  }
+
+  html.isTablet body * { display:none; }
+}
+
+html.isPhone body:after {
+  content:"";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .95) url(../img/logo.png) no-repeat;
+  background-position: 50% calc(50% - 1em);
+  background-size: 90%;
+  top:0;
+  left: 0;
+  z-index: 9998;
+}
+
+@media (orientation:landscape) {
+  html.isPhone body:after { background-position: 50% calc(50% - 3em); }
+}
+
+html.isPhone body:before {
+  content: "desktop and tablet only";
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  background-color:$brightBlue;
+  font-size: 2em;
+  z-index: 9999;
+  top: calc(50% + 1em);
+  padding: 8px;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-style: italic;
+}
+
+html.isPhone body * { display:none; }
+
 
 /*=======================*/
 /* COMPONENTS
@@ -158,7 +212,7 @@ button {
   top: calc(50% - 20em);
 }
 
-@media (max-height: 768px) {
+@media (max-height: 768px) and (min-width: 1366px) {
   .container { top: calc(50% - 17.5em); }
 }
 
@@ -253,9 +307,14 @@ button {
 .w700 { font-weight: 700; }
 
 /* Logo ------------*/
-.logo { width:648px; height: 73px; background-size: contain; background-repeat: no-repeat; background-position: 50% 50%; }
-.logo.black { background-image: url("../img/logo_black.png"); }
-.logo.white { background-image: url("../img/logo_white.png"); }
+.logo {
+  width:648px;
+  height:73px;
+  background-image: url("../img/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
 
 /* CTA ------------*/
 .cta {
@@ -278,8 +337,7 @@ button {
 /*=======================*/
 /* SCREEN : ABOUT
 /*=======================*/
-#screen_about .logo { @extend .logo.white; width:375px; height: 55px; margin-bottom: 55px; }
-#screen_about.loading .logo { @extend .logo.black; }
+#screen_about .logo { width:375px; height: 55px; margin-bottom: 55px; }
 
 #screen_about .col { height: calc(100% - 110px); vertical-align: bottom; }
 #screen_about .col1 { width:375px; }
@@ -314,6 +372,7 @@ button {
 
 .credits.inspiration { cursor:pointer; }
 .credits.inspiration:hover .value { color:$brightBlue; }
+#glitch { width: 100%; }
 
 .info {
   background: $brightBlue;
@@ -344,22 +403,32 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   margin-left: .5em;
 }
 
-#psychoCube_model {
-  background: url("../img/cube_2.png") no-repeat;
-  width: 306px;
-  height: 275px;
+#cubeModel {
+  background: url("../img/cubeModel.png") no-repeat;
+  width: 300px;
+  height: 300px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5em;
+  margin-top: 4em;
 }
 
-#screen_about.active #psychoCube_model {
+#screen_about.active #cubeModel {
   @include animation("levitate 8s ease-in-out infinite");
 }
 
 @include keyframes(levitate) {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(1em); }
+}
+
+@media (max-width: 1024px) {
+  #screen_about .logo, #screen_about .col1 { width:285px; }
+  #screen_about .col2 { width:350px; }
+  #screen_about .rowContainer { height:320px; }
+
+  #panel_mouse { height: 130px; }
+
+  #panel_shortcuts li { padding-left:50px; }
 }
 
 

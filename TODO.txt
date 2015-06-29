@@ -54,10 +54,13 @@ X Three.js BG (http://www.ro.me/tech, district13.co.in)
  ! Clean JS
  ! Clean CSS (delete css animations in favor of JS, delete layout-triggering transitions)
 
-- Favicon
-- Psycho-Cube Model
+! Favicon
+! Psycho-Cube Model
 
-- Responsive
+! Responsive
+ ! Adapt for iPad
+ ! "Rotate to landscape" overlay
+ ! No mobile phones screen
 
 - Clean JS & Comment
 - Clean CSS

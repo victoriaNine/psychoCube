@@ -52,6 +52,55 @@ button {
   color: #FFF;
   text-shadow: none; }
 
+/* Responsive fixes ------------*/
+@media (max-width: 1024px) {
+  html, body {
+    font-size: 12px; } }
+@media (orientation: portrait) {
+  html.isTablet body:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95) url(../img/rotateTablet.png) no-repeat 50% 50%;
+    top: 0;
+    left: 0;
+    z-index: 9999; }
+
+  html.isTablet body * {
+    display: none; } }
+html.isPhone body:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95) url(../img/logo.png) no-repeat;
+  background-position: 50% calc(50% - 1em);
+  background-size: 90%;
+  top: 0;
+  left: 0;
+  z-index: 9998; }
+
+@media (orientation: landscape) {
+  html.isPhone body:after {
+    background-position: 50% calc(50% - 3em); } }
+html.isPhone body:before {
+  content: "desktop and tablet only";
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  background-color: #37AEB8;
+  font-size: 2em;
+  z-index: 9999;
+  top: calc(50% + 1em);
+  padding: 8px;
+  box-sizing: border-box;
+  font-weight: 700;
+  font-style: italic; }
+
+html.isPhone body * {
+  display: none; }
+
 /*=======================*/
 /* COMPONENTS
 /*=======================*/
@@ -110,7 +159,7 @@ button {
   left: calc(50% - 40em);
   top: calc(50% - 20em); }
 
-@media (max-height: 768px) {
+@media (max-height: 768px) and (min-width: 1366px) {
   .container {
     top: calc(50% - 17.5em); } }
 .screen h1 {
@@ -237,15 +286,10 @@ button {
 .logo {
   width: 648px;
   height: 73px;
+  background-image: url("../img/logo.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50% 50%; }
-
-.logo.black, #screen_about.loading .logo {
-  background-image: url("../img/logo_black.png"); }
-
-.logo.white, #screen_about .logo {
-  background-image: url("../img/logo_white.png"); }
 
 /* CTA ------------*/
 .cta {
@@ -338,6 +382,9 @@ button {
 .credits.inspiration:hover .value {
   color: #37AEB8; }
 
+#glitch {
+  width: 100%; }
+
 .info {
   background: #37AEB8;
   color: #222;
@@ -384,15 +431,15 @@ body.loaded .info {
   display: inline-block;
   margin-left: .5em; }
 
-#psychoCube_model {
-  background: url("../img/cube_2.png") no-repeat;
-  width: 306px;
-  height: 275px;
+#cubeModel {
+  background: url("../img/cubeModel.png") no-repeat;
+  width: 300px;
+  height: 300px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5em; }
+  margin-top: 4em; }
 
-#screen_about.active #psychoCube_model {
+#screen_about.active #cubeModel {
   -webkit-animation: levitate 8s ease-in-out infinite;
   -moz-animation: levitate 8s ease-in-out infinite;
   -ms-animation: levitate 8s ease-in-out infinite;
@@ -424,6 +471,21 @@ body.loaded .info {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
+@media (max-width: 1024px) {
+  #screen_about .logo, #screen_about .col1 {
+    width: 285px; }
+
+  #screen_about .col2 {
+    width: 350px; }
+
+  #screen_about .rowContainer {
+    height: 320px; }
+
+  #panel_mouse {
+    height: 130px; }
+
+  #panel_shortcuts li {
+    padding-left: 50px; } }
 /*=======================*/
 /* SCREEN : GAME COMPLETE
 /*=======================*/
