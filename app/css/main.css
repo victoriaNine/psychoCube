@@ -393,33 +393,33 @@ body.loaded .info {
   margin-top: 5em; }
 
 #screen_about.active #psychoCube_model {
-  -webkit-animation: levitateModel 8s ease-in-out infinite;
-  -moz-animation: levitateModel 8s ease-in-out infinite;
-  -ms-animation: levitateModel 8s ease-in-out infinite;
-  -o-animation: levitateModel 8s ease-in-out infinite;
-  animation: levitateModel 8s ease-in-out infinite; }
+  -webkit-animation: levitate 8s ease-in-out infinite;
+  -moz-animation: levitate 8s ease-in-out infinite;
+  -ms-animation: levitate 8s ease-in-out infinite;
+  -o-animation: levitate 8s ease-in-out infinite;
+  animation: levitate 8s ease-in-out infinite; }
 
-@-webkit-keyframes levitateModel {
+@-webkit-keyframes levitate {
   0%, 100% {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
-@-moz-keyframes levitateModel {
+@-moz-keyframes levitate {
   0%, 100% {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
-@-ms-keyframes levitateModel {
+@-ms-keyframes levitate {
   0%, 100% {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
-@-o-keyframes levitateModel {
+@-o-keyframes levitate {
   0%, 100% {
     transform: translateY(0); }
   50% {
     transform: translateY(1em); } }
-@keyframes levitateModel {
+@keyframes levitate {
   0%, 100% {
     transform: translateY(0); }
   50% {
@@ -522,6 +522,13 @@ body.loaded .info {
   z-index: 10;
   background: rgba(0, 0, 0, 0.95);
   color: #CCC; }
+
+#sidebar, #sidebar * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none; }
 
 #sidebar .logo {
   width: 200px;
@@ -777,7 +784,7 @@ body.selecting .cube:not(.selected) {
   height: 9em; }
 
 .block .face {
-  background-color: rgba(24, 24, 24, 0.75);
+  background-color: rgba(18, 18, 18, 0.75);
   box-shadow: inset 0 0 1em 0.25em rgba(255, 255, 255, 0.025); }
 
 .block .ft {
@@ -865,7 +872,7 @@ body.selecting .cube:not(.selected) {
 .pyramid > .face-wrapper .face {
   width: 9em;
   height: 9em;
-  background-color: rgba(24, 24, 24, 0.75); }
+  background-color: rgba(18, 18, 18, 0.75); }
 
 .pyramid > .ft {
   transform: scaleZ(1.20185) scaleY(1.20185) rotateX(56.30993deg); }
@@ -1441,7 +1448,7 @@ html:not(.noGlow) .color-blue .roof .face {
 
 /* You can change these default styles any way you want */
 #circulus .item .sector {
-  fill: rgba(24, 24, 24, 0.75);
+  fill: rgba(18, 18, 18, 0.75);
   transition: all .15s ease-out; }
 
 #circulus .item:hover .sector,

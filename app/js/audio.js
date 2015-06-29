@@ -242,7 +242,7 @@ function BGM() {
 
     source.buffer = buffer;
     this.songLength = source.buffer.duration;
-    gainNode.gain.value = this.muted ? 0 : .5;
+    gainNode.gain.value = this.muted ? 0 : .15;
 
     source.connect(gainNode);
     gainNode.connect(this.audioCtx.destination);
@@ -301,18 +301,13 @@ function BGM() {
       this.crossfading = true;
 
       var crossfade, bgm = this;
-      var jumpToEnd = function() { crossfade.progress(100); };
 
       TweenMax.lagSmoothing(0);
       crossfade = TweenMax.to(bgm.sourceArray[bgm.currentFile].gainNode.gain, 3, {value: gain, ease: Circ.easeOut,
-        onStart:function() { 
-          $(window).on("blur", jumpToEnd);
-        },
         onComplete:function() {
           bgm.crossfading = false;
           TweenMax.lagSmoothing(1000, 16);
 
-          $(window).off("blur", jumpToEnd);
           if(callback && typeof callback == "function") callback();
         }
       });
@@ -395,7 +390,17 @@ function SFX() {
   this.audioCtx;
   this.bufferArray = [];
 
-  this.files = ['audio/sfx/back'];
+  this.files = ['audio/sfx/turn1',
+                'audio/sfx/turn2',
+                'audio/sfx/interference1',
+                'audio/sfx/interference2',
+                'audio/sfx/hover',
+                'audio/sfx/confirm',
+                'audio/sfx/error',
+                'audio/sfx/close',
+                'audio/sfx/gameComplete',
+                'audio/sfx/cameraReset'
+               ];
 
   this.filesLoaded = false;
 
@@ -427,31 +432,28 @@ function SFX() {
     var source = this.audioCtx.createBufferSource();
     var gainNode = this.audioCtx.createGain ? this.audioCtx.createGain() : this.audioCtx.createGainNode();
 
-      source.buffer = buffer;
+    source.buffer = buffer;
     source.connect(gainNode);
-      gainNode.connect(this.audioCtx.destination);
+    gainNode.connect(this.audioCtx.destination);
 
-      gainNode.gain.value = .25;
-      source.start(0);
+    gainNode.gain.value = .25;
+    source.start(0);
   }
 
   this.play = function(sfxName) {
     if(this.muted) return;
     var sfx;
 
-    if(sfxName == "back") sfx = this.bufferArray[0];
-    if(sfxName == "confirm") sfx = this.bufferArray[1];
-    if(sfxName == "count") sfx = this.bufferArray[2];
-    if(sfxName == "hover") sfx = this.bufferArray[3];
-    if(sfxName == "noteInput") sfx = this.bufferArray[4];
-    if(sfxName == "noteInputTied") sfx = this.bufferArray[5];
-    if(sfxName == "pauseOpen") sfx = this.bufferArray[6];
-    if(sfxName == "pauseClose") sfx = this.bufferArray[7];
-    if(sfxName == "play") sfx = this.bufferArray[8];
-    if(sfxName == "stageComplete") sfx = this.bufferArray[9];
-    if(sfxName == "stageCompleteRecord") sfx = this.bufferArray[10];
-    if(sfxName == "stageFailed") sfx = this.bufferArray[11];
-    if(sfxName == "star") sfx = this.bufferArray[12];
+    if(sfxName == "turn1") sfx = this.bufferArray[0];
+    if(sfxName == "turn2") sfx = this.bufferArray[1];
+    if(sfxName == "interference1") sfx = this.bufferArray[2];
+    if(sfxName == "interference2") sfx = this.bufferArray[3];
+    if(sfxName == "hover") sfx = this.bufferArray[4];
+    if(sfxName == "confirm") sfx = this.bufferArray[5];
+    if(sfxName == "error") sfx = this.bufferArray[6];
+    if(sfxName == "close") sfx = this.bufferArray[7];
+    if(sfxName == "gameComplete") sfx = this.bufferArray[8];
+    if(sfxName == "cameraReset") sfx = this.bufferArray[9];
 
     if(sfx) this.createSource(sfx);
   }

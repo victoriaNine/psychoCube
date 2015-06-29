@@ -45,6 +45,17 @@ var $listenersAdded;
 
 var $audioEngine;
 
+var $timelines = { loading:null, cubeSetup:null, sidebar:null }
+var $consoleMsg = { welcome: {
+                      msg: "%cOkay I know, Rubik's cubes are tough. Try debugMode() or resetCube(true) for a \"little\" nudge.",
+                      style: "color:#222; background:#37AEB8; font-size: 16pt"
+                    },
+                    notReady: {
+                      msg: "%cI'm not ready yet! Start the game first.",
+                      style: "color:#222; background:#CC5880; font-size: 16pt"
+                    }
+                  }
+
 
 //===============================
 // MAIN INITIALIZATION
@@ -64,12 +75,13 @@ $(document).ready(function() {
   };
 
   // Show the loading screen
-  var timeline = new TimelineMax({ onComplete: function() { clearProps(this); } });
-  timeline.from("#screen_about .container", 2, { opacity:0, ease: RoughEase.ease.config({ template: Bounce.easeOut, strength: 1, points: 20, taper: "none", randomize: true, clamp: true }) });
-  timeline.to("#screen_about .container", .05, { transform:"skewX(60deg) scale(1.25)" }, 1);
-  timeline.to("#screen_about .container", .05, { transform:"none" }, 1.1);
-  timeline.to("#screen_about .logo", .05, { opacity:.5, transform:"skewX(-60deg) scale(1.25)" }, 1.5);
-  timeline.to("#screen_about .logo", .05, { opacity:1, transform:"none" }, 1.6);
+  $timelines.loading = new TimelineMax({ onComplete: function() { clearProps(this); } });
+  $timelines.loading.set("#screen_about .container", { display:"block" })
+  $timelines.loading.from("#screen_about .container", 2, { opacity:0, ease: RoughEase.ease.config({ template: Bounce.easeOut, strength: 1, points: 20, taper: "none", randomize: true, clamp: true }) });
+  $timelines.loading.to("#screen_about .container", .05, { transform:"skewX(60deg) scale(1.25)" }, 1);
+  $timelines.loading.to("#screen_about .container", .05, { transform:"none" }, 1.1);
+  $timelines.loading.to("#screen_about .logo", .05, { opacity:.5, transform:"skewX(-60deg) scale(1.25)" }, 1.5);
+  $timelines.loading.to("#screen_about .logo", .05, { opacity:1, transform:"none" }, 1.6);
 
   // Add event listeners on the loaded files
   $(document).on("loadingBGM loadingSFX", loadingScreen);
@@ -86,6 +98,42 @@ $(document).ready(function() {
 
   // Set the cube positions
   setCubePositions();
+
+  // Preload sidebar animation
+  $timelines.sidebar = new TimelineMax({ paused:true, onComplete:function() { clearProps(this); } });
+  $timelines.sidebar.set("#sidebar button", { transition:"none" });
+  $timelines.sidebar.from("#sidebar", .5, { opacity:0, transform:"translateX(-18em)", ease:Power4.easeOut });
+  $timelines.sidebar.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
+
+  // UI SFX
+  $("button").mouseenter(function() {
+    setTimeout(function() {
+      if($audioEngine.ready) $audioEngine.SFX.play("hover");
+    }, 500);
+  });
+
+  $(".info, .inspiration, a").mouseenter(function() {
+    if($audioEngine.ready) $audioEngine.SFX.play("hover");
+  });
+
+  $("#sidebar button:not(#bt_resetCamera), .inspiration, a").on(eventtype, function() {
+    if($audioEngine.ready) $audioEngine.SFX.play("confirm");
+  });
+
+  $("#bt_resetCamera").on(eventtype, function() {
+    if($audioEngine.ready) $audioEngine.SFX.play("cameraReset");
+  });
+
+  $(".close:not(#bt_confirm)").on(eventtype, function() {
+    if($audioEngine.ready) $audioEngine.SFX.play("close");
+  });
+
+  $("input").focus(function() {
+    if($audioEngine.ready) $audioEngine.SFX.play("confirm");
+  });
+
+  // Add the console message
+  console.log($consoleMsg.welcome.msg, $consoleMsg.welcome.style);
 });
 
 
@@ -120,6 +168,9 @@ function loadingScreen() {
 
           // If we're initializing the game
           if(!$game) {
+            // Play SFX
+            $audioEngine.SFX.play("confirm");
+
             setTimeout(function() {
               // Wait until the screen fades out to remove the background
               // And update the info button
@@ -131,6 +182,9 @@ function loadingScreen() {
               toGameScreen();
             }, 600);
           }
+          else
+            // Play SFX
+            if($audioEngine.ready) $audioEngine.SFX.play("close");
         });
 
         /* Inspiration screen event listeners  ------------*/
@@ -230,6 +284,9 @@ function glitchPicture(state) {
           var validPart = margin + Math.round(Math.random() * (corrupted.length - margin - 1));
           corrupted = corrupted.substr(0, validPart) + corrupted.charAt(validPart + 1) + corrupted.charAt(validPart) + corrupted.substr(validPart + 2);
         }
+
+        // Play SFX
+        if($audioEngine.ready) $audioEngine.SFX.play("interference"+Math.floor(Math.random() * 2 + 1));
       }
 
       img.src = corrupted;
@@ -281,39 +338,32 @@ function initGame(isNewGame, reinit) {
   // Check if the history buttons should be enabled
   checkHistoryButtons();
 
-  var cubeSetup = function(timeline) {
+  var cubeSetup = function() {
     buildCube(function() {
       // Set the camera to the default viewing angle and fade the cube in
-      timeline.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut,
+      $timelines.cubeSetup.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut,  clearProps:"all",
         onComplete: function() { $("#scene").css("transform", defaultAngle); }
       });
-      if(!reinit) {
-        // Sidebar animation
-        var sidebar = new TimelineMax({ onComplete:function() { clearProps(this); } });
-        sidebar.set("#sidebar button", { transition:"none" });
-        sidebar.from("#sidebar", .5, { opacity:0, transform:"translateX(-18em)", ease:Power4.easeOut });
-        sidebar.staggerFrom("#sidebar button", .2, { transform:"rotateX(90deg)" }, .1);
-
-        timeline.add(sidebar);
-      }
+      if(!reinit)
+        $timelines.cubeSetup.add($timelines.sidebar.play()); // Sidebar animation
 
       // Start a new game
       newGame();
     });
   }
 
-  var timeline = new TimelineMax();
+  $timelines.cubeSetup = new TimelineMax();
   if(reinit) {
     // If the game is being reinitialized, tween the camera to its initial angle and make the cube fade
     // Before building the new cube
-    timeline.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
-    timeline.call(cubeSetup, [timeline]);
+    $timelines.cubeSetup.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    $timelines.cubeSetup.call(cubeSetup);
   }
   else {
     // If this is the first initialization, set the camera to its initial angle and the cube's opacity to zero
     // So that it fades in while being built
-    timeline.set("#scene", { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
-    cubeSetup(timeline);
+    $timelines.cubeSetup.set("#scene", { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    cubeSetup();
   }
 }
 
@@ -369,19 +419,32 @@ function gameComplete() {
   $("#screen_gameComplete .saveCount").find(".value").html($saveCount);
 
   setTimeout(function() {
+    // Play SFX
+    $audioEngine.SFX.play("gameComplete");
+
     // Show the end screen
     toggleScreen("gameComplete", true);
 
     $("#bt_confirm").on(eventtype, function() {
       // If the player name has been entered
       if($("#input_playerName").val().length > 0) {
+        // Save the player name
         $playerName = $("#input_playerName").val();
+
+        // Reset input value
+        setTimeout(function() { $("#input_playerName").val(""); }, 600);
 
         // Save the game a last time and put the data in the high scores
         saveGame();
         saveScore();
+
+        // Play SFX
+        $audioEngine.SFX.play("confirm");
       }
       else {
+        // Play SFX
+        $audioEngine.SFX.play("error");
+
         // Visual feedback for the player
         $("#input_playerName").prop("disabled", true);
         setTimeout(function() { $("#input_playerName").prop("disabled", false); }, 1000);
@@ -445,7 +508,7 @@ function addListeners() {
     });
   });
 
-  /* Side menu buttons ------------*/
+  /* Side bar buttons ------------*/
   $("#bt_pause").on(eventtype, togglePause);
   $("#bt_undo").on(eventtype, undo);
   $("#bt_redo").on(eventtype, redo);
@@ -468,7 +531,7 @@ function addListeners() {
   $("#bt_highScores").on(eventtype, toHighScores);
   $("#bt_about").on(eventtype, function() { toggleScreen("about", true); });
 
-  $("#bt_resetCube").on(eventtype, resetCube);
+  $("#bt_resetCube").on(eventtype, function() { resetCube() });
 
   $("#screen_highScores .close").on(eventtype, function() {
     toggleScreen("highScores", false);

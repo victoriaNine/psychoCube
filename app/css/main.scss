@@ -8,7 +8,7 @@ $blue: rgba(0, 0, 200, 0);
 $darkGrey:#222;
 $brightBlue: #37AEB8;
 $palePink: #CC5880;
-$translucentDarkGrey: rgba(24, 24, 24,.75);
+$translucentDarkGrey: rgba(18, 18, 18, .75);
 
 $fontSize12px: 0.75em;
 $fontSize14px: 0.875em;
@@ -354,10 +354,10 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 }
 
 #screen_about.active #psychoCube_model {
-  @include animation("levitateModel 8s ease-in-out infinite");
+  @include animation("levitate 8s ease-in-out infinite");
 }
 
-@include keyframes(levitateModel) {
+@include keyframes(levitate) {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(1em); }
 }
@@ -432,6 +432,14 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   z-index: 10;
   background:rgba(0, 0, 0, .95);
   color:#CCC;
+}
+
+#sidebar, #sidebar * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 #sidebar .logo {

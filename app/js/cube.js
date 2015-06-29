@@ -414,16 +414,17 @@ function buildCube(callback) {
   callback();
 }
 
-function resetCube() {
+function resetCube(instantWin) {
+  if(!$isReady) { console.log($consoleMsg.notReady.msg, $consoleMsg.notReady.style); return; }
+
   // For each cube
   $(".cube").each(function() {
     // Determine the initial coordinates using the cube's ID
     var id = this.id.replace("cube","");
     var initCoord = id.split("-");
 
-    // Update the cube's data and class name with the initial coordinates
+    // Update the cube's data with the initial coordinates
     $(this).data({ "z": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
-    $(this).attr("class","cube "+this.id);
 
     // Fetch the cube's sticker map
     var cubeStickers = stickersMap[id];
@@ -435,8 +436,9 @@ function resetCube() {
       var currentOrientation = getOrientation($(sticker).data("face"));
 
       // Fetch its initial ones
-      var initValue = getInitialOrientation(sticker, cubeStickers);
-      var initOrientation = initValue.replace("pyramid-","");
+      var initValues = getInitialOrientation(sticker, cubeStickers);
+      var initOrientation = initValues[0].replace("pyramid-","");
+      var initCoord = initValues[1].split("-");
 
       // Update its data with its original coordinates
       $(sticker).data({ "face": parseInt(initCoord[0]), "y": parseInt(initCoord[1]), "x": parseInt(initCoord[2]) });
@@ -446,13 +448,19 @@ function resetCube() {
       parentCube.data("stickerData")[initOrientation] = $(sticker).data();
 
       // Update the sticker's classes
-      $(sticker).removeClass(currentOrientation).addClass(initValue);
+      $(sticker).removeClass(currentOrientation).addClass(initValues[0]);
     });
+
+    // Tween the cube back to its original position
+    TweenMax.to("#"+this.id, .4, { transform: cubePositions[$(this).data("z")+"-"+$(this).data("y")+"-"+$(this).data("x")], ease: Power2.easeInOut });
   });
 
   // Reset the actions
   $actionArray = [];
   $actionIndex = 0;
+
+  // If the "instantWin" flag is on, trigger the game completion
+  if(instantWin) gameComplete();
 }
 
 function randomizeCube() {
@@ -502,7 +510,10 @@ function rotateCube(axis, coord, direction) {
     $(this).find(".pyramid").each(function() {
       updateSticker(axisName, this, direction);
     });
-  })
+  });
+
+  // Play SFX
+  $audioEngine.SFX.play("turn"+Math.floor(Math.random() * 2 + 1));
 }
 
 
@@ -651,7 +662,7 @@ function getOrientation(stickerCoord) {
   return "pyramid-"+orientation;
 }
 
-function getInitialOrientation(sticker) {
+function getInitialOrientation(sticker, cubeMap) {
   var orientation, coord;
 
   // For each color
@@ -660,10 +671,14 @@ function getInitialOrientation(sticker) {
     if(sticker.classList.contains("color-"+colorMap[face])) {
       // Return the orientation corresponding to that color
       orientation = face;
+      // And if requested, the original coordinates of the sticker
+      // (ie. the coordinates of the sticker in its initial orientation)
+      if(cubeMap) coord = cubeMap[face];
     }
   }
 
-  return "pyramid-"+orientation;
+  // Return both infos in an array
+  return ["pyramid-"+orientation, coord];
 }
 
 
