@@ -116,7 +116,7 @@ $(document).ready(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("hover");
   });
 
-  $("#sidebar button:not(#bt_resetCamera), .inspiration, a").on(eventtype, function() {
+  $("#sidebar button:not(#bt_resetCamera), .inspiration, a, .cube:not(.selected)").on(eventtype, function() {
     if($audioEngine.ready) $audioEngine.SFX.play("confirm");
   });
 
@@ -124,7 +124,7 @@ $(document).ready(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("cameraReset");
   });
 
-  $(".close:not(#bt_confirm)").on(eventtype, function() {
+  $(".close:not(#bt_confirm), .cube.selected").on(eventtype, function() {
     if($audioEngine.ready) $audioEngine.SFX.play("close");
   });
 
