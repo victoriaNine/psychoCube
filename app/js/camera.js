@@ -28,7 +28,7 @@ function setCameraRotation(e) {
     var rotateY = transformValues.rotateY;
 
     // For mobile devices, check the touch events instead to detect the camera movements
-    if(mobileCheck()) e = e.originalEvent.touches[0];
+    if(mobileCheck()) e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 
     // X-axis : calculate delta value since the last up/down movement
     currentX = e.pageY;

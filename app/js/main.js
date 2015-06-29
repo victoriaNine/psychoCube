@@ -720,7 +720,8 @@ function rotationMenu(e) {
   if(cancelSelection(e) || $("body").hasClass("paused")) return;
 
   // For mobile devices, check the touch events instead to detect the cube selection
-  if(mobileCheck()) e = e.originalEvent.touches[0];
+  if(mobileCheck()) e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+  console.log(e);
 
   var posX = e.pageX;
   var posY = e.pageY;
