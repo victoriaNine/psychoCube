@@ -114,7 +114,7 @@ $(document).ready(function() {
     }, 500);
   });
 
-  $(".info, .inspiration, a").mouseenter(function() {
+  $(".info, .inspiration, a, #rotationMenu .item, #trigger").mouseenter(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("hover");
   });
 
