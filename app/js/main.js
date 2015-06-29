@@ -74,6 +74,8 @@ $(document).ready(function() {
       }
   };
 
+  if(phoneCheck()) return;
+
   // Show the loading screen
   $timelines.loading = new TimelineMax({ onComplete: function() { clearProps(this); } });
   $timelines.loading.set("#screen_about .container", { display:"block" })
