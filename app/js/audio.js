@@ -399,7 +399,8 @@ function SFX() {
                 'audio/sfx/error',
                 'audio/sfx/close',
                 'audio/sfx/gameComplete',
-                'audio/sfx/cameraReset'
+                'audio/sfx/cameraReset',
+                'audio/sfx/cubeSelect'
                ];
 
   this.filesLoaded = false;
@@ -454,6 +455,7 @@ function SFX() {
     if(sfxName == "close") sfx = this.bufferArray[7];
     if(sfxName == "gameComplete") sfx = this.bufferArray[8];
     if(sfxName == "cameraReset") sfx = this.bufferArray[9];
+    if(sfxName == "cubeSelect") sfx = this.bufferArray[10];
 
     if(sfx) this.createSource(sfx);
   }

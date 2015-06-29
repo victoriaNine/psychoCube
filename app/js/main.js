@@ -728,7 +728,7 @@ function rotationMenu(e) {
   $("#rotationMenu").css({ transform:"translate(calc(-50% + "+posX+"px), calc(-50% + "+posY+"px)" });
 
   // Play SFX
-  $audioEngine.SFX.play("confirm");
+  $audioEngine.SFX.play("cubeSelect");
 
   // If a cube is being selected 
   if(!$("body").hasClass("selecting")) {
