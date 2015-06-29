@@ -124,7 +124,7 @@ $(document).ready(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("cameraReset");
   });
 
-  $(".close:not(#bt_confirm), .cube.selected").on(eventtype, function() {
+  $(".close:not(#bt_confirm), .cube.selected, #trigger").on(eventtype, function() {
     if($audioEngine.ready) $audioEngine.SFX.play("close");
   });
 
