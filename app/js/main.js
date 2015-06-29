@@ -116,7 +116,7 @@ $(document).ready(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("hover");
   });
 
-  $("#sidebar button:not(#bt_resetCamera), .inspiration, a, .cube:not(.selected)").on(eventtype, function() {
+  $("#sidebar button:not(#bt_resetCamera), .inspiration, a").on(eventtype, function() {
     if($audioEngine.ready) $audioEngine.SFX.play("confirm");
   });
 
@@ -124,7 +124,7 @@ $(document).ready(function() {
     if($audioEngine.ready) $audioEngine.SFX.play("cameraReset");
   });
 
-  $(".close:not(#bt_confirm), .cube.selected, #trigger").on(eventtype, function() {
+  $(".close:not(#bt_confirm)").on(eventtype, function() {
     if($audioEngine.ready) $audioEngine.SFX.play("close");
   });
 
@@ -725,6 +725,9 @@ function rotationMenu(e) {
   // Position the rotation menu where the player clicked
   $("#rotationMenu").css({ transform:"translate(calc(-50% + "+posX+"px), calc(-50% + "+posY+"px)" });
 
+  // Play SFX
+  $audioEngine.SFX.play("confirm");
+
   // If a cube is being selected 
   if(!$("body").hasClass("selecting")) {
     // Open the rotation menu after it has finished moving to the designated place
@@ -750,8 +753,10 @@ function cancelSelection(e) {
       // Cancel the selection
       $(".cube.selected").removeClass("selected");
       $("body").removeClass("selecting").off(eventtype, cancelSelection);
-
       $("#rotationMenu").removeClass("open");
+
+      // Play SFX
+      $audioEngine.SFX.play("close");
 
       check = true;
     }
