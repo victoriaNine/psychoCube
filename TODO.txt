@@ -62,5 +62,5 @@ X Three.js BG (http://www.ro.me/tech, district13.co.in)
  ! "Rotate to landscape" overlay
  ! No mobile phones screen
 
-- Clean JS & Comment
-- Clean CSS
+! Clean JS & Comment
+! Clean CSS
