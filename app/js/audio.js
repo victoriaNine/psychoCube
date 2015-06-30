@@ -18,7 +18,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
 
   // Load buffer asynchronously
   var request = new XMLHttpRequest();
-  request.open("GET", url+"?"+new Date().getTime(), true);
+  request.open("GET", url, true);
   request.responseType = "arraybuffer";
 
   var loader = this;
