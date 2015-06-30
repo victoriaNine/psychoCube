@@ -45,7 +45,7 @@ var $listenersAdded;
 
 var $audioEngine;
 
-var $timelines = { loading:null, cubeSetup:null, sidebar:null }
+var $timelines = { loading:null, loadingHue:null, cubeSetup:null, sidebar:null }
 var $consoleMsg = { welcome: {
                       msg: "%cOkay I know, Rubik's cubes are tough. Try debugMode() or resetCube(true) for a \"little\" nudge.",
                       style: "color:#222; background:#37AEB8; font-size: 16pt"
@@ -84,6 +84,9 @@ $(document).ready(function() {
   $timelines.loading.to("#screen_about .container", .05, { transform:"none" }, 1.1);
   $timelines.loading.to("#screen_about .logo", .05, { opacity:.5, transform:"skewX(-60deg) scale(1.25)" }, 1.5);
   $timelines.loading.to("#screen_about .logo", .05, { opacity:1, transform:"none" }, 1.6);
+
+  $timelines.loadingHue = new TimelineMax({ paused:true });
+  $timelines.loadingHue.fromTo("#loadingHue", 1, { backgroundColor:"#CC5880" }, { backgroundColor:"#37AEB8" });
 
   // Add event listeners on the loaded files
   $(document).on("loadingBGM loadingSFX", loadingScreen);
@@ -155,10 +158,9 @@ function loadingScreen() {
   var fadeIn = isNaN(currentValue) ? true : false;
   if(isNaN(currentValue) || !isFinite(currentValue)) currentValue = 0;
 
-  var fadeHue = TweenMax.fromTo("#loadingHue", 1, { backgroundColor:"#CC5880" }, { backgroundColor:"#37AEB8" });
   scrollToValue($("#loading .value"), currentValue, totalPercent.toFixed(1), true, fadeIn, false, true).eventCallback("onComplete",
     function() {
-      fadeHue.progress(totalPercent / 100);
+      $timelines.loadingHue.progress(totalPercent / 100);
 
       if(totalPercent == 100) {
         $(document).off("loadingBGM loadingSFX", loadingScreen);
