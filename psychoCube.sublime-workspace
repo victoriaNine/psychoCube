@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"margin-",
+				"margin-left: "
+			],
+			[
+				"padding",
+				"padding: "
+			],
+			[
+				"vide",
+				"videName"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
 				"max-",
 				"max-width: "
 			],
@@ -62,10 +78,6 @@
 			[
 				"text",
 				"text-align: "
-			],
-			[
-				"padding",
-				"padding-bottom: "
 			],
 			[
 				"border",
@@ -480,20 +492,22 @@
 			}
 		},
 		{
-			"file": "app/css/main.scss",
+			"file": "TODO.txt",
 			"settings":
 			{
-				"buffer_size": 26951,
+				"buffer_size": 1600,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "TODO.txt",
+			"contents": "$red: rgba(200, 0, 0, 0);\n$orange: rgba(200, 100, 0, 0);\n$white: rgba(200, 200, 200, 0);\n$green: rgba(0, 200, 0, 0);\n$yellow: rgba(200, 200, 0, 0);\n$blue: rgba(0, 0, 200, 0);\n\n$darkGrey:#222;\n$brightBlue: #37AEB8;\n$palePink: #CC5880;\n$translucentDarkGrey: rgba(18, 18, 18, .75);\n\n$fontSize12px: 0.75em;\n$fontSize14px: 0.875em;\n$fontSize18px: 1.125em;\n$fontSize24px: 1.5em;\n\n\n/*=======================*/\n/* MIXINS\n/*=======================*/\n@mixin keyframes($animation-name) {\n  @-webkit-keyframes #{$animation-name} {\n    @content;\n  }\n  @-moz-keyframes #{$animation-name} {\n    @content;\n  }  \n  @-ms-keyframes #{$animation-name} {\n    @content;\n  }\n  @-o-keyframes #{$animation-name} {\n    @content;\n  }  \n  @keyframes #{$animation-name} {\n    @content;\n  }\n}\n\n@mixin animation($str) {\n  -webkit-animation: #{$str};\n  -moz-animation: #{$str};\n  -ms-animation: #{$str};\n  -o-animation: #{$str};\n  animation: #{$str};      \n}\n\n@mixin transform($str) {\n  -webkit-transform: #{$str};\n  -moz-transform: #{$str};\n  -ms-transform: #{$str};\n  -o-transform: #{$str};\n  transform: #{$str};\n}\n\n@mixin transition($str) {\n  -webkit-transition: -webkit-#{$str};\n  -moz-transition: -moz-#{$str};\n  -ms-transition: -ms-#{$str};\n  -o-transition: -o-#{$str};\n  transition: #{$str};\n}\n\n\n/*=======================*/\n/* GENERAL RULES\n/*=======================*/\nhtml, body {\n  width: 100%;\n  height: 100%;\n  overflow:hidden;\n  background:#DDD;\n  color: $darkGrey;\n  text-transform: uppercase;\n  font-family: \"Open Sans\", sans-serif;\n  font-weight: 400;\n}\n\nbody {\n  background:url(../img/mwpsb_logo.svg) no-repeat,\n             url(../img/bg.jpg) no-repeat;\n  background-size: 180px 180px, cover;\n  background-position: calc(100% - 2em) calc(100% - 2em), 50% 100%;\n  background-blend-mode:overlay;\n}\n\nbody.moving { cursor:move; cursor:-webkit-grabbing; }\n\na { color:inherit; text-decoration: none; }\na:hover { color:$brightBlue; }\n\nbutton {\n  border:none;\n  background:none;\n  font-family: inherit;\n  outline: none;\n  cursor:pointer;\n  text-transform: inherit;\n  display: block;\n  color:inherit;\n  position: relative;\n}\n\n::-moz-selection {\n  background:  $brightBlue;\n  color:       #FFF;\n  text-shadow: none;\n}\n\n::selection {\n  background:  $brightBlue;\n  color:       #FFF;\n  text-shadow: none;\n}\n\n/* Responsive fixes ------------*/\n@media (max-width: 1024px) {\n  html, body { font-size:12px; }\n}\n\n@media (orientation:portrait) {\n  html.isTablet body:after {\n    content:\"\";\n    position: absolute;\n    width: 100%;\n    height: 100%;\n    background: rgba(0, 0, 0, .95) url(../img/rotateTablet.png) no-repeat 50% 50%;\n    top:0;\n    left: 0;\n    z-index: 9999;\n  }\n\n  html.isTablet body * { display:none; }\n}\n\nhtml.isPhone body:after {\n  content:\"\";\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  background: rgba(0, 0, 0, .95) url(../img/logo.png) no-repeat;\n  background-position: 50% calc(50% - 1em);\n  background-size: 90%;\n  top:0;\n  left: 0;\n  z-index: 9998;\n}\n\n@media (orientation:landscape) {\n  html.isPhone body:after { background-position: 50% calc(50% - 3em); }\n}\n\nhtml.isPhone body:before {\n  content: \"desktop and tablet only\";\n  position: absolute;\n  width: 100%;\n  text-align: center;\n  background-color:$brightBlue;\n  font-size: 2em;\n  z-index: 9999;\n  top: calc(50% + 1em);\n  padding: 8px;\n  box-sizing: border-box;\n  font-weight: 700;\n  font-style: italic;\n}\n\nhtml.isPhone body * { display:none; }\n\n\n/*=======================*/\n/* COMPONENTS\n/*=======================*/\n/* Containers ------------*/\n.screen {\n  position:absolute;\n  width: 100%;\n  height: 100%;\n  top:0;\n  left:0;\n\n  opacity: 0;\n  pointer-events:none;\n  @include transition(\"opacity .2s .4s ease-out, transform .2s .4s ease-out\");\n}\n\n.screen.active {\n  opacity: 1;\n  pointer-events:auto;\n  @include transition(\"opacity .2s ease-out, transform .2s ease-out\");\n}\n\n.overlay { z-index: 9999; @include transform(\"translateY(-5px)\"); }\n\n.overlay:before {\n  content:\"\";\n  background: rgba(0, 0, 0, .95);\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top:0;\n  left:0;\n}\n\n.overlay.active { @include transform(\"translateY(0)\"); }\n\n.container {\n  width: 80em;\n  height: 40em;\n  position: absolute;\n  left: calc(50% - 40em);\n  top: calc(50% - 20em);\n}\n\n@media (max-height: 768px) and (min-width: 1366px) {\n  .container { top: calc(50% - 17.5em); }\n}\n\n.screen h1 {\n  color: #CCC;\n  font-weight: 700;\n  font-size: $fontSize24px;\n  padding: 0 0 8px 48px;\n  text-transform: none;\n  margin-bottom: 32px;\n  position: relative;\n}\n\n.screen h1:before {\n  content: \"\";\n  position: absolute;\n  width: 97.5%;\n  right: 0;\n  background: currentColor;\n  height: 2px;\n  bottom: 0;\n}\n\n.screen h1:after {\n  content: \"\";\n  position: absolute;\n  width: .4em;\n  height: 1em;\n  background: currentColor;\n  left: .4em;\n  @include transform(\"skewX(-45deg)\")\n}\n\n/* Panels ------------*/\n.panel, .credits { width:100%; margin-bottom: 15px; position: relative; color:#999; }\n.panel { padding:60px 24px 24px; line-height: 1.25em; background:rgba(255, 255, 255, .05); }\n.panel h2, .table .title {\n  font-style: italic;\n  font-weight: 700;\n  background:rgba(0, 0, 0, .5);\n  color:#CCC;\n}\n.panel h2 {\n  padding:8px;\n  margin-bottom: 24px;\n  position: absolute;\n  top:0;\n  left:0;\n  width: 100%;\n}\n.panel p { width: 100%; }\n\n.panel li {\n  position:relative;\n  padding-left:40px;\n  font-family: \"Abel\";\n}\n\n.panel li:after {\n  content:attr(data-shortcut);\n  position:absolute;\n  left:0;\n  top:0;\n  color:$brightBlue;\n  font-family: \"Open Sans\";\n  font-weight: 700;\n  font-style: italic;\n}\n\n/* Columns, Rows & Tables ------------*/\n.colContainer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  display: flex;\n  justify-content: space-between;\n}\n\n.col { position: relative; display: inline-block; }\n\n.rowContainer { display: flex; flex-direction: column; }\n\n.table { position:relative; }\n.table .row:not(.title) { font-family: \"Abel\", sans-serif; color:$brightBlue; font-size: $fontSize18px; }\n.table .row:not(.title):nth-child(2n+1) { background: rgba(255,255,255,.05); }\n.table .col { padding:8px 8px 8px 12px; }\n.table .col:not(:first-child):after { content:\"\"; position:absolute; height:100%; width:1px; background:rgba(255,255,255,.1); top:0; left:0; }\n\n/* Common styles ------------*/\n.brightBlue { color:$brightBlue; }\n.italic { font-style: italic; }\n.w700 { font-weight: 700; }\n\n/* Logo ------------*/\n.logo {\n  width:648px;\n  height:73px;\n  background-image: url(\"../img/logo.png\");\n  background-size: contain;\n  background-repeat: no-repeat;\n  background-position: 50% 50%;\n}\n\n/* CTA ------------*/\n.cta {\n  background:rgba(255, 255, 255, .075);\n  color:#CCC;\n  font-style: italic;\n  font-weight: 700;\n  height:40px;\n  width: 150px;\n  text-align: left;\n  font-size: $fontSize18px;\n  padding-left:24px;\n  z-index: 0;\n  margin-top: 32px;\n\n  transition: all .25s .5s ease-out;\n}\n\n\n/*=======================*/\n/* SCREEN : ABOUT\n/*=======================*/\n#screen_about .logo { width:375px; height: 55px; margin-bottom: 55px; }\n\n#screen_about .col { height: calc(100% - 110px); vertical-align: bottom; }\n#screen_about .col1 { width:375px; }\n#screen_about .col2 { width:485px; margin-left:15px; }\n#screen_about .rowContainer { height:370px; }\n\n#panel_keyboards, #panel_shortcuts { flex:1; }\n#panel_mouse { height: 150px; }\n\n#panel_mouse p { font-family: \"Abel\", sans-serif; }\n#panel_mouse span { font-family: \"Open Sans\"; }\n\n#panel_shortcuts ul { display: inline-block; }\n#panel_shortcuts ul:first-of-type { margin-right: 24px; }\n#panel_shortcuts li { padding-left:80px; }\n\n.panel .note {\n  font-size: $fontSize12px;\n  line-height: 1.175em;\n  position: absolute;\n  bottom:0;\n  left:0;\n  background:rgba(255, 255, 255, .05);\n  padding: 8px 0 8px 16px;\n  border-left:8px solid $brightBlue;\n}\n\n.credits, .info { padding: 8px; }\n.credits { background:rgba(0, 0, 0, .5); }\n.credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }\n.credits .value { font-family: \"Abel\", sans-serif; float:right; transition: color .3s ease-out; }\n\n.credits.inspiration { cursor:pointer; }\n.credits.inspiration:hover .value { color:$brightBlue; }\n#glitch { width: 100%; }\n\n.info {\n  background: $brightBlue;\n  color: #222;\n  font-style: italic;\n  font-size: $fontSize14px;\n  font-weight: 600;\n  cursor:pointer;\n  pointer-events:none;\n  opacity: 0;\n  @include transform(\"translateY(-15px)\");\n\n  transition:background .15s ease-out, opacity 1s ease-out, transform 1s ease-out;\n}\n\n.info:hover { background:$palePink; }\nbody.loaded .info { pointer-events:auto; opacity: 1; @include transform(\"translateY(0)\"); }\n\n#loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }\n#loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }\n#loading .value { float: right; text-align: right; font-size: 4em; font-weight: 700; font-style: italic; margin-top: -24px; }\n\n#loadingHue {\n  height: 2em;\n  width: .5em;\n  background-color: $palePink;\n  display: inline-block;\n  margin-left: .5em;\n}\n\n#cubeModel {\n  background: url(\"../img/cubeModel.png\") no-repeat;\n  width: 300px;\n  height: 300px;\n  margin-left: auto;\n  margin-right: auto;\n  margin-top: 4em;\n}\n\n#screen_about.active #cubeModel {\n  @include animation(\"levitate 8s ease-in-out infinite\");\n}\n\n@include keyframes(levitate) {\n  0%, 100% { @include transform(\"translateY(0)\"); }\n  50% { @include transform(\"translateY(1em)\"); }\n}\n\n@media (max-width: 1024px) {\n  #screen_about .logo, #screen_about .col1 { width:285px; }\n  #screen_about .col2 { width:350px; }\n  #screen_about .rowContainer { height:320px; }\n\n  #panel_mouse { height: 130px; }\n\n  #panel_shortcuts li { padding-left:50px; }\n}\n\n\n/*=======================*/\n/* SCREEN : GAME COMPLETE\n/*=======================*/\n#screen_gameComplete input {\n  background-color: transparent;\n  border: none;\n  outline: none;\n  width: 300px;\n\n  transition: all .3s ease-out;\n}\n\n#screen_gameComplete input:focus, #screen_gameComplete input[disabled] { background-color: rgba(255,255,255,.05); padding-left:8px; }\n\n#screen_gameComplete input::-webkit-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* WebKit browsers */\n#screen_gameComplete input[disabled]::-webkit-input-placeholder { color:$palePink; }\n\n#screen_gameComplete input:-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 4 to 18 */\n#screen_gameComplete input[disabled]:-moz-placeholder { color:$palePink; }\n\n#screen_gameComplete input::-moz-placeholder { color:$brightBlue; text-transform: uppercase; } /* Mozilla Firefox 19+ */\n#screen_gameComplete input[disabled]::-moz-placeholder { color:$palePink; }\n\n#screen_gameComplete input:-ms-input-placeholder { color:$brightBlue; text-transform: uppercase; } /* Internet Explorer 10+ */\n#screen_gameComplete input[disabled]:-ms-input-placeholder { color:$palePink; }\n\n#screen_gameComplete input,\n#screen_gameComplete .value {\n  font-family: \"Abel\", sans-serif;\n  color:$brightBlue;\n  font-size: $fontSize24px;\n}\n\n#screen_gameComplete .content { display:flex; flex-wrap:wrap; }\n#screen_gameComplete .panel { flex:1; flex-basis: calc(50% - 15px); }\n#screen_gameComplete .panel:nth-child(2n+1) { margin-right: 15px; }\n\n\n/*=======================*/\n/* SCREEN : HIGH SCORES\n/*=======================*/\n#screen_highScores .col1 { width:50px; }\n#screen_highScores .col2, #screen_highScores .col3 { width:200px; }\n#screen_highScores .col4, #screen_highScores .col5 { width:150px; }\n\n#screen_highScores .row:not(.title) .col2 { text-transform: none; }\n\n\n/*=======================*/\n/* SCREEN : MAIN\n/*=======================*/\n/* Particles canvas ------------*/\n#particles {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n}\n\n/* Sidebar ------------*/\n#sidebar {\n  position: absolute;\n  left: 0;\n  top: 0;\n  padding-top:3em;\n  width:18em;\n  height: 100%;\n  z-index: 10;\n  background:rgba(0, 0, 0, .95);\n  color:#CCC;\n}\n\n#sidebar, #sidebar * {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n}\n\n#sidebar .logo {\n  width: 80%;\n  height: 30px;\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 1.5em;\n}\n\n.timer { margin-bottom: 1.5em; padding-left:3em; }\n.timer .label { position: relative; }\n.timer .value {\n  font-family: \"Abel\", sans-serif;\n  font-size: 2em;\n  margin-top: .1em;\n  display: block;\n}\n#totalTime { margin-bottom: 3em; }\n\n@media (max-height:768px) {\n  #menu {\n    height:calc(100% - 225px);\n    overflow-y:hidden;\n  }\n}\n\n#menu button {\n  width:100%;\n  height:2.5em;\n  line-height:2.5em;\n  background:rgba(255, 255, 255, .025);\n  margin-bottom: 1px;\n  text-align: left;\n  padding-left:3em;\n  font-style: italic;\n  font-size: .9em;\n\n  transition: all .25s .5s ease-out;\n}\n\n#menu button:before, .cta:before {\n  content:\"\";\n  width: .75em;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: -1;\n  background: $brightBlue;\n\n  transition:width .5s cubic-bezier(0,1,1,-0.5), background .25s ease-out;\n}\n\n#menu button[disabled]:before, .cta[disabled]:before { background: $palePink; }\n#menu button:hover, body.paused #bt_pause, .cta:hover { color:$darkGrey; font-weight:900; }\n#menu button:hover:before, body.paused #bt_pause:before, .cta:hover:before { width: 100%; }\n\n#menu button i { float:right; margin-right: 1.5em; line-height: 2.5em; }\n\nhtml:not(.debug) #bt_resetCube { display: none; }\n\n\n/*=======================*/\n/* PSYCHO-CUBE\n/*=======================*/\n#psychoCube {\n  position: absolute;\n  transform-style: preserve-3d;\n  width: 27em;\n  height: 27em;\n  @include transform(\"translate3d(27em,27em,-27em)\");\n}\n\n#protoCube, #protoPyramid { display:none; }\n\n.cube {\n  position: absolute;\n  width: 9em;\n  height: 9em;\n  top: 0;\n  left: 0;\n  transform-style: preserve-3d;\n  transform-origin: 13.5em 13.5em 0em;\n\n  will-change: transform, opacity;\n  transition: opacity .2s ease-in-out;\n}\n\nbody:not(.moving) .cube:hover { cursor: pointer; }\n\nbody.selecting .cube:not(.selected) {\n  opacity:.15;\n  @include animation(\"transparency 2s ease-out infinite\");\n}\n\n@include keyframes(transparency) {\n  0%, 100% { opacity:.15; }\n  50% { opacity:.35; }\n}\n\n/* Tridiv style base START ------------*/\n/* /!\\ You need to add vendor prefixes in order to render the CSS properly (or simply use http://leaverou.github.io/prefixfree/) /!\\ */\n#tridiv {\n  perspective: 800px;\n  backface-visibility: hidden;\n  position: absolute;\n  overflow: hidden;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  font-size: 100%;\n  @include transform(\"translateZ(0)\");\n\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n}\n\n#scene, .shape, .face, .face-wrapper, .cr {\n  position: absolute;\n  transform-style: preserve-3d;\n}\n#scene {\n  width: 80em;\n  height: 80em;\n  left: calc(50% - (80em - 18em) / 2);\n  top: calc(50% - 80em / 2);\n  transform-origin: 50% 50% -27em;\n}\n.shape {\n  top: 50%;\n  left: 50%;\n  width: 0;\n  height: 0;\n  transform-origin: 50%;\n}\n.face, .face-wrapper {\n  overflow: hidden;\n  transform-origin: 0 0;\n  backface-visibility: hidden;\n  /* hidden by default, prevent blinking and other weird rendering glitchs */\n}\n.face {\n  background-size: 100% 100%!important;\n  background-position: center;\n}\n.face-wrapper .face {\n  left: 100%;\n  width: 100%;\n  height: 100%\n}\n.photon-shader {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%\n}\n.side {\n  left: 50%;\n}\n.cr, .cr .side {\n  height: 100%;\n}\n[class*=\"cuboid\"] .ft, [class*=\"cuboid\"] .bk {\n  width: 100%;\n  height: 100%;\n}\n[class*=\"cuboid\"] .bk {\n  left: 100%;\n}\n[class*=\"cuboid\"] .rt {\n  @include transform(\"rotateY(-90deg) translateX(-50%)\");\n}\n[class*=\"cuboid\"] .lt {\n  @include transform(\"rotateY(90deg) translateX(-50%)\");\n}\n[class*=\"cuboid\"] .tp {\n  @include transform(\"rotateX(90deg) translateY(-50%)\");\n}\n[class*=\"cuboid\"] .bm {\n  @include transform(\"rotateX(-90deg) translateY(-50%)\");\n}\n[class*=\"cuboid\"] .lt {\n  left: 100%;\n}\n[class*=\"cuboid\"] .bm {\n  top: 100%;\n}\n[class*=\"pyramid\"] > .face-wrapper .face {\n  @include transform(\"rotateZ(45deg) translateX(-35.35%) translateY(35.35%)\");\n}\n[class*=\"pyramid\"] > .bk {\n  left: 100%;\n}\n[class*=\"pyramid\"] > .bm {\n  top: 100%;\n  @include transform(\"rotateX(-90deg) translateY(-50%)\");\n}\n[class*=\"pyramid\"] > .rt, [class*=\"pyramid\"] > .lt {\n  transform-origin: 50% 0;\n}\n/* Tridiv style base END ------------*/\n\n/* Block cubes ------------*/\n.block {\n  @include transform(\"translate3D(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0)\");\n  opacity:1;\n  width:9em;\n  height:9em;\n  margin:-4.5em 0 0 -4.5em;\n}\n.block .ft {\n  @include transform(\"translateZ(4.5em)\");\n}\n.block .bk {\n  @include transform(\"translateZ(-4.5em) rotateY(180deg)\");\n}\n.block .rt, .block .lt {\n  width:9em;\n  height:9em;\n}\n.block .tp, .block .bm {\n  width:9em;\n  height:9em;\n}\n.block .face {\n  background-color:$translucentDarkGrey;\n  box-shadow: inset 0 0 1em .25em rgba(255, 255, 255, .025);\n}\n.block .ft {\n  width:9em;\n  margin-left:0;\n}\n.block .bk {\n  width:9em;\n  margin-left:0;\n}\n.block .rt, .block .lt {\n  width:9em;\n}\n.block .tp, .block .bm, .block .tp .photon-shader, .block .bm .photon-shader {\n  border-radius:0;\n}\n.block .cr {\n  width:0;\n  left:0;\n}\n.block .cr-0 {\n  @include transform(\"translate3D(9em, 0, 4.5em)\");\n}\n.block .cr-1 {\n  @include transform(\"translate3D(9em, 0, -4.5em)\");\n}\n.block .cr-2 {\n  @include transform(\"translate3D(0, 0, -4.5em)\");\n}\n.block .cr-3 {\n  @include transform(\"translate3D(0, 0, 4.5em)\");\n}\n.block .cr-0 .s0 {\n  @include transform(\"rotateY(15deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-0 .s1 {\n  @include transform(\"rotateY(45deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-0 .s2 {\n  @include transform(\"rotateY(75deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-1 .s0 {\n  @include transform(\"rotateY(105deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-1 .s1 {\n  @include transform(\"rotateY(135deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-1 .s2 {\n  @include transform(\"rotateY(165deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-2 .s0 {\n  @include transform(\"rotateY(195deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-2 .s1 {\n  @include transform(\"rotateY(225deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-2 .s2 {\n  transform: rotateY(255deg) translate3D(-50%, 0, -0.025em);\n  @include transform(\"rotateY(225deg) translate3D(-50%, 0, -0.025em)\");\n}\n.block .cr-3 .s0 {\n  transform: rotateY(285deg) translate3D(-50%, 0, -0.025em);\n  skjk==\n}\n.block .cr-3 .s1 {\n  transform: rotateY(315deg) translate3D(-50%, 0, -0.025em);\n}\n.block .cr-3 .s2 {\n  transform: rotateY(345deg) translate3D(-50%, 0, -0.025em);\n}\n.block .side {\n  width:0.025em;\n}\n\n/* Pyramid stickers ------------*/\n.pyramid {\n  opacity:1;\n  width:9em;\n  height:3em;\n  margin:-1.5em 0 0 -4.5em;\n  transition:transform .2s ease-out;\n\n  will-change: transform;\n}\n.pyramid > .face-wrapper {\n  width:9em;\n  height:4.5em;\n}\n.pyramid > .face-wrapper .face {\n  width:9em;\n  height:9em;\n  background-color:$translucentDarkGrey;\n}\n.pyramid > .ft {\n  transform:scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(56.30993247402022deg);\n}\n.pyramid > .bk {\n  transform:scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(-56.30993247402022deg) rotateY(180deg);\n}\n.pyramid > .rt {\n  transform:scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(56.30993247402022deg) rotateY(-90deg);\n}\n.pyramid > .lt {\n  transform:scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(-56.30993247402022deg) rotateY(90deg);\n}\n.pyramid > .bm {\n  width:9em;\n  height:9em;\n}\n\n/* Pyramid orientations ------------*/\n.pyramid-front {\n  transform:translate3D(0, 0, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg);\n}\n.pyramid-back {\n  transform:translate3D(0, 0, -6em) rotateX(90deg) rotateY(0deg) rotateZ(0deg);\n}\n.pyramid-top {\n  transform:translate3D(0, -6em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);\n}\n.pyramid-bottom {\n  transform: translate3D(0, 6em, 0) rotateX(180deg) rotateY(0deg) rotateZ(0deg);\n}\n.pyramid-left {\n  transform:translate3D(-6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(-90deg);\n}\n.pyramid-right {\n  transform:translate3D(6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(90deg);\n}\n\n/* Pyramid colors ------------*/\n// front : red\n.color-red > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($red, .5); }\nhtml:not(.noGlow) .color-red > .face-wrapper .face { @include animation(\"redBorder 2s ease-out infinite\"); }\n\n// back : orange\n.color-orange > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($orange, .5); }\nhtml:not(.noGlow) .color-orange > .face-wrapper .face { @include animation(\"orangeBorder 2s ease-out infinite\"); }\n\n// top : white\n.color-white > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($white, .5); }\nhtml:not(.noGlow) .color-white > .face-wrapper .face { @include animation(\"whiteBorder 2s ease-out infinite\"); }\n\n// bottom : green\n.color-green > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($green, .5); }\nhtml:not(.noGlow) .color-green > .face-wrapper .face { @include animation(\"greenBorder 2s ease-out infinite\"); }\n\n// left : yellow\n.color-yellow > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($yellow, .5); }\nhtml:not(.noGlow) .color-yellow > .face-wrapper .face { @include animation(\"yellowBorder 2s ease-out infinite\"); }\n\n// right : blue\n.color-blue > .face-wrapper .face { box-shadow: inset 0 0 0 1px opacify($blue, .5); }\nhtml:not(.noGlow) .color-blue > .face-wrapper .face { @include animation(\"blueBorder 2s ease-out infinite\"); }\n\n@include keyframes(redBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($red, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($red, .75); }\n}\n\n@include keyframes(orangeBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($orange, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($orange, .75); }\n}\n\n@include keyframes(whiteBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($white, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($white, .75); }\n}\n\n@include keyframes(greenBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($green, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($green, .75); }\n}\n\n@include keyframes(yellowBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($yellow, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($yellow, .75); }\n}\n\n@include keyframes(blueBorder) {\n  0%, 100% { box-shadow: inset 0 0 0 1px opacify($blue, .5); }\n  50% { box-shadow: inset 0 0 4px 1px opacify($blue, .75); }\n}\n\n/* Pyramid square roofs ------------*/\n$roofWidth: .75;\n\n.roof {\n  transform: translate3D(0, #{-1 - $roofWidth / 2}em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);\n  opacity: 1;\n  width: #{$roofWidth}em;\n  height: .25em;\n  margin: -0.125em 0 0 -#{$roofWidth / 2}em;\n}\n.roof .ft {\n  transform:translateZ(#{$roofWidth / 2}em);\n}\n.roof .bk {\n  transform:translateZ(-#{$roofWidth / 2}em) rotateY(180deg);\n}\n.roof .rt, .roof .lt {\n  width:#{$roofWidth}em;\n  height:.25em;\n}\n.roof .tp, .roof .bm {\n  width:#{$roofWidth}em;\n  height:#{$roofWidth}em;\n}\n\n/* Pyramid square roofs colors ------------*/\n.color-red .roof .face { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, .5); }\nhtml:not(.noGlow) .color-red .roof .face { @include animation(\"redRoof 2s ease-out infinite\"); }\n\n.color-orange .roof .face { background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5); }\nhtml:not(.noGlow) .color-orange .roof .face { @include animation(\"orangeRoof 2s ease-out infinite\"); }\n\n.color-white .roof .face { background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5); }\nhtml:not(.noGlow) .color-white .roof .face { @include animation(\"whiteRoof 2s ease-out infinite\"); }\n\n.color-green .roof .face { background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5); }\nhtml:not(.noGlow) .color-green .roof .face { @include animation(\"greenRoof 2s ease-out infinite\"); }\n\n.color-yellow .roof .face { background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5); }\nhtml:not(.noGlow) .color-yellow .roof .face { @include animation(\"yellowRoof 2s ease-out infinite\"); }\n\n.color-blue .roof .face { background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5); }\nhtml:not(.noGlow) .color-blue .roof .face { @include animation(\"blueRoof 2s ease-out infinite\"); }\n\n@include keyframes(redRoof) {\n  0%, 100% { background: opacify($red, .25); box-shadow: inset 0 0 0 1px opacify($red, 0.5); }\n  50% { background: opacify($red, .5); box-shadow: inset 0 0 4px 1px opacify($red, .75); }\n}\n\n@include keyframes(orangeRoof) {\n  0%, 100% { background: opacify($orange, .25); box-shadow: inset 0 0 0 1px opacify($orange, .5); }\n  50% { background: opacify($orange, .5); box-shadow: inset 0 0 4px 1px opacify($orange, .75); }\n}\n\n@include keyframes(whiteRoof) {\n  0%, 100% { background: opacify($white, .25); box-shadow: inset 0 0 0 1px opacify($white, .5); }\n  50% { background: opacify($white, .5); box-shadow: inset 0 0 4px 1px opacify($white, .75); }\n}\n\n@include keyframes(greenRoof) {\n  0%, 100% { background: opacify($green, .25); box-shadow: inset 0 0 0 1px opacify($green, .5); }\n  50% { background: opacify($green, .5); box-shadow: inset 0 0 4px 1px opacify($green, .75); }\n}\n\n@include keyframes(yellowRoof) {\n  0%, 100% { background: opacify($yellow, .25); box-shadow: inset 0 0 0 1px opacify($yellow, .5); }\n  50% { background: opacify($yellow, .5); box-shadow: inset 0 0 4px 1px opacify($yellow, .75); }\n}\n\n@include keyframes(blueRoof) {\n  0%, 100% { background: opacify($blue, .25); box-shadow: inset 0 0 0 1px opacify($blue, .5); }\n  50% { background: opacify($blue, .5); box-shadow: inset 0 0 4px 1px opacify($blue, .75); }\n}\n\n\n/*=======================*/\n/* CUBE ROTATION MENU\n/*=======================*/\n#rotationMenu {\n  position: absolute;\n  width: 130px;\n  height: 130px;\n  opacity:0;\n  pointer-events:none;\n  transition: opacity .2s ease-in-out, transform .2s ease-in-out;\n  z-index: 20;\n\n  transform:scale(1.5) translate(-50%, -50%);\n}\n\n#rotationMenu.open {\n  opacity:1;\n  transform:scale(1) translate(-50%, -50%);\n  pointer-events:auto;\n}\n\n/* SVG elements ------------*/\n#circulus {\n    display: block;\n    margin: 0 auto;\n    //overflow: visible; /* uncomment this if you are using bouncing animations*/\n}\n\n#circulus .item { \n    cursor: pointer; // SVG \"a\" elements don't get this by default, so you need to explicitly set it\n    outline: none;\n}\n\n/* You can change these default styles any way you want */\n#circulus .item .sector {\n    fill: $translucentDarkGrey;\n    transition: all .15s ease-out;\n}\n\n#circulus .item:hover .sector,\n#circulus .item:focus .sector {\n    fill: $brightBlue;\n}\n\n#circulus text { font-family: \"FontAwesome\"; fill:#CCC; font-size:4em; text-anchor:middle; transition: fill .15s ease-out; }\n#circulus .item:hover text { fill:$darkGrey; }\n\n#circulus .menu-trigger {\n    fill: rgba(200, 200, 200, 0.5);\n    /*pointer-events: auto;  KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */\n    transition: fill .15s ease-out;\n}\n\n#circulus .menu-trigger:hover, #circulus .menu-trigger:focus { fill:$palePink; cursor: pointer; }\n#circulus symbol { overflow: visible; } /* KEEP THIS so that text will not get cut off it it is wider than the icon width */",
+			"file": "app/css/main.scss",
+			"file_size": 28396,
+			"file_write_time": 130803900758365103,
 			"settings":
 			{
-				"buffer_size": 1515,
-				"line_ending": "Windows",
-				"name": "- Rubik's cube rotation logic"
+				"buffer_size": 27342,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -539,22 +553,40 @@
 	"expanded_folders":
 	[
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app"
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css"
 	],
 	"file_history":
 	[
+		"/C/wamp/www/devTests/mmc/seezon/mTab/js/main.js",
+		"/C/wamp/www/devTests/mmc/seezon/mTab/css/style.scss",
+		"/C/wamp/www/devTests/mmc/seezon/mFooter/css/style.scss",
+		"/C/wamp/www/devTests/mmc/seezon/mFooter/js/main.js",
+		"/C/wamp/www/devTests/mmc/seezon/mFooter/index_spAndroid.html",
+		"/C/wamp/www/devTests/mmc/seezon/mFooter/index_iPad.html",
+		"/C/wamp/www/devTests/mmc/seezon/mTab/index_spAndroid.html",
+		"/C/wamp/www/devTests/mmc/seezon/mTab/index_iPad.html",
+		"/C/wamp/www/devTests/festivalDesPains/custom/js/main.js",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.scss",
+		"/C/wamp/www/devTests/festivalDesPains/custom/css/main.scss",
+		"/C/wamp/www/devTests/festivalDesPains/custom/index.html",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/index.html",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/main.js",
+		"/C/wamp/www/devTests/festivalDesPains/custom/js/main",
+		"/C/wamp/www/devTests/adopteUnMec/mTab/css/style.scss",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css.map",
+		"/C/wamp/www/devTests/sense8/mFooter/index_iPad.html",
+		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/TODO.txt",
 		"/C/wamp/www/orion9/css/default.css",
 		"/C/Users/vbissengue.LAP-EBZ30/Desktop/index.html",
 		"/C/wamp/www/devTests/sense8/mTab/index_spAndroid.html",
 		"/C/wamp/www/devTests/sense8/mTab/css/style.scss",
-		"/C/wamp/www/devTests/sense8/mFooter/index_iPad.html",
 		"/C/wamp/www/devTests/sense8/mFooter/index_spAndroid.html",
 		"/C/wamp/www/devTests/sense8/mFooter/js/main.js",
 		"/C/wamp/www/devTests/sense8/mFooter/css/style.scss",
 		"/C/wamp/www/devTests/sense8/mTab/js/main.js",
 		"/C/wamp/www/devTests/sense8/mTab/index_iPad.html",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/forHire/concept.txt",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/main.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/cube.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/audio.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/index - Copie.html",
@@ -566,14 +598,11 @@
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/PrismEffectSlider/index3.html",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/js/TrackballControls.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.css.map",
-		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/css/main.scss",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/img/mwpsb_logo.svg",
 		"/C/Users/vbissengue.LAP-EBZ30/Documents/psychoCube/app/img/menu.svg",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu (1).svg",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/svg-menu.svg",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/index_iPad.html",
-		"/C/wamp/www/devTests/adopteUnMec/mTab/css/style.scss",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/css/style.scss",
 		"/C/wamp/www/devTests/adopteUnMec/mTab/js/main.js",
 		"/C/wamp/www/devTests/adopteUnMec/mFooter/js/main.js",
@@ -656,21 +685,7 @@
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/js/quaternion.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/js/rubik.js",
 		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/js/oz.js",
-		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/js/css3.oz.js",
-		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/css/style.css",
-		"/E/labs/psychoCube/package.json",
-		"/E/labs/psychoCube/bower.json",
-		"/E/labs/psychoCube/Gruntfile.js",
-		"/E/labs/waltzRevolution/app/js/audio.js",
-		"/E/labs/waltzRevolution/app/js/song.js",
-		"/E/labs/waltzRevolution/app/css/main.css",
-		"/D/wamp/www/test/synthcube/index.html",
-		"/D/uTorrent/AUTODESK.MAYA.V2016.WIN64-ISO/nfo.nfo",
-		"/E/labs/waltzRevolution/app/js/waltz.json",
-		"/E/labs/waltzRevolution/app/js/jquery.ba-throttle-debounce.min.js",
-		"/E/labs/waltzRevolution/.gitignore",
-		"/E/labs/waltzRevolution/app/js/game_OK.js",
-		"/E/labs/waltzRevolution/app/js/game_latest.js"
+		"/C/Users/vbissengue.LAP-EBZ30/Downloads/rubiks-cube_1331197276_demo_package/js/css3.oz.js"
 	],
 	"find":
 	{
@@ -689,6 +704,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"transform",
+			"setSec",
+			"{ theme:\"minimal\", autoHideScrollbar: true }",
+			"transform",
 			"media",
 			"loading",
 			"logo",
@@ -812,11 +831,7 @@
 			"18px",
 			"panel",
 			"Size(20)",
-			"Size(20",
-			"pane",
-			"fontSize22px",
-			"hud",
-			"calc"
+			"Size(20"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -950,8 +965,8 @@
 						"selection":
 						[
 							[
-								21602,
-								21518
+								2459,
+								2459
 							]
 						],
 						"settings":
@@ -961,27 +976,55 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 6030.0,
+						"translation.y": 1083.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/css/main.scss",
+					"file": "TODO.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 26951,
+						"buffer_size": 1600,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2344,
-								2344
+								495,
+								495
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 585.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/css/main.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 27342,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18467,
+								18467
 							]
 						],
 						"settings":
@@ -991,36 +1034,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "TODO.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1515,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1515,
-								1515
-							]
-						],
-						"settings":
-						{
-							"auto_name": "- Rubik's cube rotation logic",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 465.0,
+						"translation.y": 11752.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1110,7 +1124,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 246.0,
+	"side_bar_width": 288.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

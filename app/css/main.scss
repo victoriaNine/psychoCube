@@ -243,7 +243,7 @@ html.isPhone body * { display:none; }
   height: 1em;
   background: currentColor;
   left: .4em;
-  transform: skewX(-45deg);
+  @include transform("skewX(-45deg)")
 }
 
 /* Panels ------------*/
@@ -330,7 +330,7 @@ html.isPhone body * { display:none; }
   z-index: 0;
   margin-top: 32px;
 
-  transition: all .25s .5s ease-out;
+  @include transition("all .25s .5s ease-out");
 }
 
 
@@ -368,7 +368,7 @@ html.isPhone body * { display:none; }
 .credits, .info { padding: 8px; }
 .credits { background:rgba(0, 0, 0, .5); }
 .credits .label { font-style: italic; font-size: $fontSize14px; font-weight: 600; color:#CCC; }
-.credits .value { font-family: "Abel", sans-serif; float:right; transition: color .3s ease-out; }
+.credits .value { font-family: "Abel", sans-serif; float:right; @include transition("color .3s ease-out"); }
 
 .credits.inspiration { cursor:pointer; }
 .credits.inspiration:hover .value { color:$brightBlue; }
@@ -383,13 +383,13 @@ html.isPhone body * { display:none; }
   cursor:pointer;
   pointer-events:none;
   opacity: 0;
-  transform: translateY(-15px);
 
-  transition:background .15s ease-out, opacity 1s ease-out, transform 1s ease-out;
+  @include transform("translateY(-15px)");
+  @include transition("background .15s ease-out, opacity 1s ease-out, transform 1s ease-out");
 }
 
 .info:hover { background:$palePink; }
-body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
+body.loaded .info { pointer-events:auto; opacity: 1; @include transform("translateY(0)"); }
 
 #loading { color:#CCC; border-bottom: 1px currentColor solid; padding-bottom: 8px; }
 #loading .label { text-transform: none; font-size: 2em; font-weight: 300; vertical-align: super; }
@@ -417,8 +417,8 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
 }
 
 @include keyframes(levitate) {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(1em); }
+  0%, 100% { @include transform("translateY(0)"); }
+  50% { @include transform("translateY(1em)"); }
 }
 
 @media (max-width: 1024px) {
@@ -441,7 +441,7 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   outline: none;
   width: 300px;
 
-  transition: all .3s ease-out;
+  @include transition("all .3s ease-out");
 }
 
 #screen_gameComplete input:focus, #screen_gameComplete input[disabled] { background-color: rgba(255,255,255,.05); padding-left:8px; }
@@ -547,7 +547,7 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   font-style: italic;
   font-size: .9em;
 
-  transition: all .25s .5s ease-out;
+  @include transition("all .25s .5s ease-out");
 }
 
 #menu button:before, .cta:before {
@@ -560,7 +560,7 @@ body.loaded .info { pointer-events:auto; opacity: 1; transform: translateY(0); }
   z-index: -1;
   background: $brightBlue;
 
-  transition:width .5s cubic-bezier(0,1,1,-0.5), background .25s ease-out;
+  @include transition("width .5s cubic-bezier(0,1,1,-0.5), background .25s ease-out");
 }
 
 #menu button[disabled]:before, .cta[disabled]:before { background: $palePink; }
@@ -577,10 +577,12 @@ html:not(.debug) #bt_resetCube { display: none; }
 /*=======================*/
 #psychoCube {
   position: absolute;
-  transform-style: preserve-3d;
   width: 27em;
   height: 27em;
-  transform: translate3d(27em,27em,-27em);
+
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  @include transform("translate3d(27em,27em,-27em)");
 }
 
 #protoCube, #protoPyramid { display:none; }
@@ -591,11 +593,13 @@ html:not(.debug) #bt_resetCube { display: none; }
   height: 9em;
   top: 0;
   left: 0;
-  transform-style: preserve-3d;
-  transform-origin: 13.5em 13.5em 0em;
   will-change: transform, opacity;
 
-  transition: opacity .2s ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform-origin: 13.5em 13.5em 0em;
+  transform-style: preserve-3d;
+  transform-origin: 13.5em 13.5em 0em;
+  @include transition("opacity .2s ease-in-out");
 }
 
 body:not(.moving) .cube:hover { cursor: pointer; }
@@ -621,7 +625,7 @@ body.selecting .cube:not(.selected) {
   height: 100%;
   background: transparent;
   font-size: 100%;
-  transform: translateZ(0);
+  @include transform("translateZ(0)");
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -632,6 +636,7 @@ body.selecting .cube:not(.selected) {
 
 #scene, .shape, .face, .face-wrapper, .cr {
   position: absolute;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
 #scene {
@@ -639,6 +644,7 @@ body.selecting .cube:not(.selected) {
   height: 80em;
   left: calc(50% - (80em - 18em) / 2);
   top: calc(50% - 80em / 2);
+  -webkit-transform-origin: 50% 50% -27em;
   transform-origin: 50% 50% -27em;
 }
 .shape {
@@ -646,10 +652,12 @@ body.selecting .cube:not(.selected) {
   left: 50%;
   width: 0;
   height: 0;
+  -webkit-transform-origin: 50%;
   transform-origin: 50%;
 }
 .face, .face-wrapper {
   overflow: hidden;
+  -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
   backface-visibility: hidden;
   /* hidden by default, prevent blinking and other weird rendering glitchs */
@@ -684,16 +692,16 @@ body.selecting .cube:not(.selected) {
   left: 100%;
 }
 [class*="cuboid"] .rt {
-  transform: rotateY(-90deg) translateX(-50%);
+  @include transform("rotateY(-90deg) translateX(-50%)");
 }
 [class*="cuboid"] .lt {
-  transform: rotateY(90deg) translateX(-50%);
+  @include transform("rotateY(90deg) translateX(-50%)");
 }
 [class*="cuboid"] .tp {
-  transform: rotateX(90deg) translateY(-50%);
+  @include transform("rotateX(90deg) translateY(-50%)");
 }
 [class*="cuboid"] .bm {
-  transform: rotateX(-90deg) translateY(-50%);
+  @include transform("rotateX(-90deg) translateY(-50%)");
 }
 [class*="cuboid"] .lt {
   left: 100%;
@@ -702,33 +710,34 @@ body.selecting .cube:not(.selected) {
   top: 100%;
 }
 [class*="pyramid"] > .face-wrapper .face {
-  transform: rotateZ(45deg) translateX(-35.35%) translateY(35.35%);
+  @include transform("rotateZ(45deg) translateX(-35.35%) translateY(35.35%)");
 }
 [class*="pyramid"] > .bk {
   left: 100%;
 }
 [class*="pyramid"] > .bm {
   top: 100%;
-  transform: rotateX(-90deg) translateY(-50%);
+  @include transform("rotateX(-90deg) translateY(-50%)");
 }
 [class*="pyramid"] > .rt, [class*="pyramid"] > .lt {
+  -webkit-transform-origin: 50% 0;
   transform-origin: 50% 0;
 }
 /* Tridiv style base END ------------*/
 
 /* Block cubes ------------*/
 .block {
-  transform:translate3D(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0);
+  @include transform("translate3D(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0)");
   opacity:1;
   width:9em;
   height:9em;
   margin:-4.5em 0 0 -4.5em;
 }
 .block .ft {
-  transform:translateZ(4.5em);
+  @include transform("translateZ(4.5em)");
 }
 .block .bk {
-  transform:translateZ(-4.5em) rotateY(180deg);
+  @include transform("translateZ(-4.5em) rotateY(180deg)");
 }
 .block .rt, .block .lt {
   width:9em;
@@ -761,52 +770,52 @@ body.selecting .cube:not(.selected) {
   left:0;
 }
 .block .cr-0 {
-  transform: translate3D(9em, 0, 4.5em);
+  @include transform("translate3D(9em, 0, 4.5em)");
 }
 .block .cr-1 {
-  transform: translate3D(9em, 0, -4.5em);
+  @include transform("translate3D(9em, 0, -4.5em)");
 }
 .block .cr-2 {
-  transform: translate3D(0, 0, -4.5em);
+  @include transform("translate3D(0, 0, -4.5em)");
 }
 .block .cr-3 {
-  transform: translate3D(0, 0, 4.5em);
+  @include transform("translate3D(0, 0, 4.5em)");
 }
 .block .cr-0 .s0 {
-  transform: rotateY(15deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(15deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-0 .s1 {
-  transform: rotateY(45deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(45deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-0 .s2 {
-  transform: rotateY(75deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(75deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-1 .s0 {
-  transform: rotateY(105deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(105deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-1 .s1 {
-  transform: rotateY(135deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(135deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-1 .s2 {
-  transform: rotateY(165deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(165deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-2 .s0 {
-  transform: rotateY(195deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(195deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-2 .s1 {
-  transform: rotateY(225deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(225deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-2 .s2 {
-  transform: rotateY(255deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(255deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-3 .s0 {
-  transform: rotateY(285deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(285deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-3 .s1 {
-  transform: rotateY(315deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(315deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .cr-3 .s2 {
-  transform: rotateY(345deg) translate3D(-50%, 0, -0.025em);
+  @include transform("rotateY(345deg) translate3D(-50%, 0, -0.025em)");
 }
 .block .side {
   width:0.025em;
@@ -818,7 +827,7 @@ body.selecting .cube:not(.selected) {
   width:9em;
   height:3em;
   margin:-1.5em 0 0 -4.5em;
-  transition:transform .2s ease-out;
+  @include transition("transform .2s ease-out");
 
   will-change: transform;
 }
@@ -832,16 +841,16 @@ body.selecting .cube:not(.selected) {
   background-color:$translucentDarkGrey;
 }
 .pyramid > .ft {
-  transform:scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(56.30993247402022deg);
+  @include transform("scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(56.30993247402022deg)");
 }
 .pyramid > .bk {
-  transform:scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(-56.30993247402022deg) rotateY(180deg);
+  @include transform("scaleZ(1.2018504251546631) scaleY(1.2018504251546631) rotateX(-56.30993247402022deg) rotateY(180deg)");
 }
 .pyramid > .rt {
-  transform:scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(56.30993247402022deg) rotateY(-90deg);
+  @include transform("scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(56.30993247402022deg) rotateY(-90deg)");
 }
 .pyramid > .lt {
-  transform:scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(-56.30993247402022deg) rotateY(90deg);
+  @include transform("scaleX(1.2018504251546631) scaleY(1.2018504251546631) rotateZ(-56.30993247402022deg) rotateY(90deg)");
 }
 .pyramid > .bm {
   width:9em;
@@ -850,22 +859,22 @@ body.selecting .cube:not(.selected) {
 
 /* Pyramid orientations ------------*/
 .pyramid-front {
-  transform:translate3D(0, 0, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg);
+  @include transform("translate3D(0, 0, 6em) rotateX(90deg) rotateY(0deg) rotateZ(180deg)");
 }
 .pyramid-back {
-  transform:translate3D(0, 0, -6em) rotateX(90deg) rotateY(0deg) rotateZ(0deg);
+  @include transform("translate3D(0, 0, -6em) rotateX(90deg) rotateY(0deg) rotateZ(0deg)");
 }
 .pyramid-top {
-  transform:translate3D(0, -6em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  @include transform("translate3D(0, -6em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg)");
 }
 .pyramid-bottom {
-  transform: translate3D(0, 6em, 0) rotateX(180deg) rotateY(0deg) rotateZ(0deg);
+  @include transform("translate3D(0, 6em, 0) rotateX(180deg) rotateY(0deg) rotateZ(0deg)");
 }
 .pyramid-left {
-  transform:translate3D(-6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(-90deg);
+  @include transform("translate3D(-6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(-90deg)");
 }
 .pyramid-right {
-  transform:translate3D(6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(90deg);
+  @include transform("translate3D(6em, 0, 0) rotateX(90deg) rotateY(0deg) rotateZ(90deg)");
 }
 
 /* Pyramid colors ------------*/
@@ -927,17 +936,17 @@ html:not(.noGlow) .color-blue > .face-wrapper .face { @include animation("blueBo
 $roofWidth: .75;
 
 .roof {
-  transform: translate3D(0, #{-1 - $roofWidth / 2}em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  @include transform("translate3D(0, #{-1 - $roofWidth / 2}em, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg)");
   opacity: 1;
   width: #{$roofWidth}em;
   height: .25em;
   margin: -0.125em 0 0 -#{$roofWidth / 2}em;
 }
 .roof .ft {
-  transform:translateZ(#{$roofWidth / 2}em);
+  @include transform("translateZ(#{$roofWidth / 2}em)");
 }
 .roof .bk {
-  transform:translateZ(-#{$roofWidth / 2}em) rotateY(180deg);
+  @include transform("translateZ(-#{$roofWidth / 2}em) rotateY(180deg)");
 }
 .roof .rt, .roof .lt {
   width:#{$roofWidth}em;
@@ -1007,15 +1016,15 @@ html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease
   height: 130px;
   opacity:0;
   pointer-events:none;
-  transition: opacity .2s ease-in-out, transform .2s ease-in-out;
   z-index: 20;
 
-  transform:scale(1.5) translate(-50%, -50%);
+  @include transition("opacity .2s ease-in-out, transform .2s ease-in-out");
+  @include transform("scale(1.5) translate(-50%, -50%)");
 }
 
 #rotationMenu.open {
   opacity:1;
-  transform:scale(1) translate(-50%, -50%);
+  @include transform("scale(1) translate(-50%, -50%)");
   pointer-events:auto;
 }
 
@@ -1034,7 +1043,7 @@ html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease
 /* You can change these default styles any way you want */
 #circulus .item .sector {
     fill: $translucentDarkGrey;
-    transition: all .15s ease-out;
+    @include transition("all .15s ease-out");
 }
 
 #circulus .item:hover .sector,
@@ -1042,13 +1051,13 @@ html:not(.noGlow) .color-blue .roof .face { @include animation("blueRoof 2s ease
     fill: $brightBlue;
 }
 
-#circulus text { font-family: "FontAwesome"; fill:#CCC; font-size:4em; text-anchor:middle; transition: fill .15s ease-out; }
+#circulus text { font-family: "FontAwesome"; fill:#CCC; font-size:4em; text-anchor:middle; @include transition("fill .15s ease-out"); }
 #circulus .item:hover text { fill:$darkGrey; }
 
 #circulus .menu-trigger {
     fill: rgba(200, 200, 200, 0.5);
     /*pointer-events: auto;  KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
-    transition: fill .15s ease-out;
+    @include transition("fill .15s ease-out");
 }
 
 #circulus .menu-trigger:hover, #circulus .menu-trigger:focus { fill:$palePink; cursor: pointer; }

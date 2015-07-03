@@ -62,7 +62,7 @@ X Three.js BG (http://www.ro.me/tech, district13.co.in)
  ! "Rotate to landscape" overlay
  ! No mobile phones screen
  - Fix padding
- - Fix transforms
+ ! Fix transforms
  - Check touch events
  - Check Canvas data glitches
 
