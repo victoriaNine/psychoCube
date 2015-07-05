@@ -287,13 +287,15 @@ html.isPhone body * { display:none; }
   width: 100%;
   height: 100%;
   position: absolute;
+  display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: space-between;
   justify-content: space-between;
 }
 
 .col { position: relative; display: inline-block; }
 
-.rowContainer { display: flex; flex-direction: column; }
+.rowContainer { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; }
 
 .table { position:relative; }
 .table .row:not(.title) { font-family: "Abel", sans-serif; color:$brightBlue; font-size: $fontSize18px; }
@@ -344,7 +346,7 @@ html.isPhone body * { display:none; }
 #screen_about .col2 { width:485px; margin-left:15px; }
 #screen_about .rowContainer { height:370px; }
 
-#panel_keyboards, #panel_shortcuts { flex:1; }
+#panel_keyboards, #panel_shortcuts { -webkit-flex:1; flex:1; }
 #panel_mouse { height: 150px; }
 
 #panel_mouse p { font-family: "Abel", sans-serif; }
@@ -465,8 +467,8 @@ body.loaded .info { pointer-events:auto; opacity: 1; @include transform("transla
   font-size: $fontSize24px;
 }
 
-#screen_gameComplete .content { display:flex; flex-wrap:wrap; }
-#screen_gameComplete .panel { flex:1; flex-basis: calc(50% - 15px); }
+#screen_gameComplete .content { display: -webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; }
+#screen_gameComplete .panel { -webkit-flex:1; flex:1; -webkit-flex-basis: calc(50% - 15px); flex-basis: calc(50% - 15px); }
 #screen_gameComplete .panel:nth-child(2n+1) { margin-right: 15px; }
 
 

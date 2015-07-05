@@ -61,10 +61,10 @@ X Three.js BG (http://www.ro.me/tech, district13.co.in)
  ! Adapt for iPad
  ! "Rotate to landscape" overlay
  ! No mobile phones screen
- - Fix padding
+ ! Fix padding (prefixing flex model)
  ! Fix transforms
- - Check touch events
- - Check Canvas data glitches
+ ! Check rotation menu positioning
+ ! Check Canvas data glitches
 
 ! Clean JS & Comment
 ! Clean CSS
