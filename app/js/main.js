@@ -766,10 +766,10 @@ function cancelSelection(e) {
   var check = false;
   var target = e ? e.currentTarget : null;
 
-  // If a cube is being selected
-  if($("body").hasClass("selecting")) {
-    // And the player has either just clicked on that cube or an empty area, or there is no target at all
-    if(!target || $(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
+  // If a cube is being selected, or there is no target at all
+  if($("body").hasClass("selecting") || !target) {
+    // And the player has either just clicked on that cube or an empty area
+    if($(".cube.selected")[0] == target || $(e.target).closest(".cube").length == 0) {
       // Cancel the selection
       $(".cube.selected").removeClass("selected");
       $("body").removeClass("selecting").off(eventtype, cancelSelection);
