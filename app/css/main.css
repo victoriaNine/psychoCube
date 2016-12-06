@@ -769,7 +769,7 @@ html:not(.debug) #bt_resetCube {
   height: 9em;
   top: 0;
   left: 0;
-  will-change: transform, opacity;
+  will-change: transform;
   -webkit-transform-style: preserve-3d;
   -webkit-transform-origin: 13.5em 13.5em 0em;
   transform-style: preserve-3d;
@@ -1825,3 +1825,5 @@ html:not(.noGlow) .color-blue .roof .face {
   overflow: visible; }
 
 /* KEEP THIS so that text will not get cut off it it is wider than the icon width */
+
+/*# sourceMappingURL=main.css.map */

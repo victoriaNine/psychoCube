@@ -21,28 +21,28 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
 
-  var loader = this;
+  var that = this;
 
-  request.onload = function() {
-  	loader.loadCount++;
+  request.onload = function () {
+  	that.loadCount++;
     // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
+    that.context.decodeAudioData(
       request.response,
-      function(buffer) {
-        if (!buffer) {
-          alert('error decoding file data: ' + url);
+      function (buffer) {
+        if (!buffer || !buffer.length) {
+          console.error('error decoding file data: ' + url);
           return;
         }
 
-        buffer.name = url.slice(url.lastIndexOf("/")+1, url.lastIndexOf("."));
-        loader.bufferList[index] = buffer;
-        if (loader.loadCount == loader.urlList.length) 
-          loader.onload(loader.bufferList);
+        buffer.name = url.slice(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+        that.bufferList[index] = buffer;
+        if (that.loadCount === that.urlList.length) {
+          that.onload(that.bufferList);
+        }
       },
-      function(error) { 
-      	console.log(request);
+      function (error) { 
       	if(url.match(".wav")) {
-      		console.error('decodeAudioData error', error);
+      		console.error('decodeAudioData error', url);
       		return;
       	}
 
@@ -50,40 +50,40 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
       	if(url.match(".ogg")) newURL = url.replace(".ogg", ".mp3");
       	else if(url.match(".mp3")) newURL = url.replace(".mp3", ".wav");
 
-      	loader.loadBuffer(newURL, index);
+      	that.loadBuffer(newURL, index);
       }
     );
   }
 
   request.onprogress = function(e) {
-  	loader.requestArray[index] = e;
+  	that.requestArray[index] = e;
 
   	var loaded = 0;
   	var total = 0;
   	var notReady = false;
 
-  	for(var i = 0; i < loader.requestArray.length; i++) {
-  		if(!loader.requestArray[i] || loader.requestArray[i].total == 0) {
+  	for(var i = 0; i < that.requestArray.length; i++) {
+  		if(!that.requestArray[i] || that.requestArray[i].total == 0) {
   			notReady = true;
   			break;
   		}
 
-  		loaded += loader.requestArray[i].loaded;
-  		total += loader.requestArray[i].total;
+  		loaded += that.requestArray[i].loaded;
+  		total += that.requestArray[i].total;
   	}
 
   	if(notReady) return;
 
-  	if(loader.type == "bgm") {
+  	if(that.type == "bgm") {
 	  	$audioEngine.loadBGM = loaded;
 	  	$audioEngine.loadBGMTotal = total;
 	}
-	if(loader.type == "sfx") {
+	if(that.type == "sfx") {
 	  	$audioEngine.loadSFX = loaded;
 	  	$audioEngine.loadSFXTotal = total;
 	}
 
-  	$(document).trigger("loading"+loader.type.toUpperCase());
+  	$(document).trigger("loading"+that.type.toUpperCase());
   }
 
   request.onerror = function() { alert('BufferLoader: XHR error'); }

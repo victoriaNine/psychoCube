@@ -25,6 +25,7 @@ var support = {animations : Modernizr.cssanimations},
 var $game;
 var $isNewGame = false;
 var $isReady = false;
+var $resizedFinished = null
 
 var $playerName = "";
 var $finishDate = null;
@@ -45,7 +46,7 @@ var $listenersAdded;
 
 var $audioEngine;
 
-var $timelines = { loading:null, loadingHue:null, cubeSetup:null, sidebar:null }
+var $timelines = { loading:null, loadingHue:null, cubeSetup:null, sidebar:null };
 var $consoleMsg = { welcome: {
                       msg: "%cOkay I know, Rubik's cubes are tough. Try debugMode() or resetCube(true) for a \"little\" nudge.",
                       style: "color:#222; background:#37AEB8; font-size: 16pt"
@@ -54,7 +55,7 @@ var $consoleMsg = { welcome: {
                       msg: "%cI'm not ready yet! Start the game first.",
                       style: "color:#222; background:#CC5880; font-size: 16pt"
                     }
-                  }
+                  };
 
 
 //===============================
@@ -73,6 +74,24 @@ $(document).ready(function() {
           $("html").addClass("ie"+version);
       }
   };
+
+  function pixelRatioAdjust () {
+      var html             = document.querySelector("html");
+      var body             = document.body;
+      var devicePixelRatio = window.devicePixelRatio = window.devicePixelRatio || 1;
+
+      window.screen       = window.screen || {};
+      screen.actualWidth  = window.screen.width * devicePixelRatio;
+      screen.actualHeight = window.screen.height * devicePixelRatio;
+
+      var scalar           = 1 / devicePixelRatio;
+      var offset           = (devicePixelRatio * 100 - 100) / 2;
+      html.style.width     = "calc(100vw * " + devicePixelRatio + ")";
+      html.style.height    = "calc(100vh * " + devicePixelRatio + ")";
+      body.style.transform = "scale(" + scalar + ") translate(-" + offset + "%, -" + offset + "%)";
+  }
+
+  pixelRatioAdjust();
 
   // iOS7 Safari bug fix
   if(navigator.userAgent.match(/iPad;.*CPU.*OS 7_\d/i)
@@ -358,12 +377,13 @@ function initGame(isNewGame, reinit) {
   // Check if the history buttons should be enabled
   checkHistoryButtons();
 
-  var cubeSetup = function() {
+  function cubeSetup () {
     buildCube(function() {
       // Set the camera to the default viewing angle and fade the cube in
-      $timelines.cubeSetup.to("#scene", 1, { opacity:1, transform:defaultAngle, ease:Power4.easeOut,  clearProps:"all",
+      $timelines.cubeSetup.to("#scene .face", 1, { opacity:1, ease:Power4.easeOut, clearProps:"all" });
+      $timelines.cubeSetup.to("#scene", 1, { transform:defaultAngle, ease:Power4.easeOut, clearProps:"all",
         onComplete: function() { $("#scene").css("transform", defaultAngle); }
-      });
+      }, "-=1");
       if(!reinit)
         $timelines.cubeSetup.add($timelines.sidebar.play()); // Sidebar animation
 
@@ -376,13 +396,15 @@ function initGame(isNewGame, reinit) {
   if(reinit) {
     // If the game is being reinitialized, tween the camera to its initial angle and make the cube fade
     // Before building the new cube
-    $timelines.cubeSetup.to("#scene", 1, { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    $timelines.cubeSetup.to("#scene .face", 1, { opacity:0 });
+    $timelines.cubeSetup.to("#scene", 1, { transform:"matrix(1, 0, 0, 1, 0, 0)" }, "-=1");
     $timelines.cubeSetup.call(cubeSetup);
   }
   else {
     // If this is the first initialization, set the camera to its initial angle and the cube's opacity to zero
     // So that it fades in while being built
-    $timelines.cubeSetup.set("#scene", { opacity:0, transform:"matrix(1, 0, 0, 1, 0, 0)" });
+    $timelines.cubeSetup.set("#scene .face", { opacity:0 });
+    $timelines.cubeSetup.set("#scene", { transform:"matrix(1, 0, 0, 1, 0, 0)" });
     cubeSetup();
   }
 }
@@ -659,6 +681,24 @@ function addListeners() {
     return confirmationMessage;                                // Gecko and WebKit
   });
 
+  /* Replace the cubes when the window is resized ------------*/
+  $(window).on("resize", function () {
+    if (!$isReady) {
+      return;
+    }
+
+    if (!$resizedFinished) {
+        $(".cube").each(function () {
+          TweenMax.to("#"+this.id, .4, { transform: cubePositions[$(this).data("z")+"-"+$(this).data("y")+"-"+$(this).data("x")], ease: Power2.easeInOut });
+        });
+    }
+
+    clearTimeout($resizedFinished);
+    $resizedFinished = setTimeout(function () {
+        $resizedFinished = null;
+    }, 500);
+  });
+
   // Add a flag when the listeners have been added
   $listenersAdded = true;
 }
@@ -732,7 +772,7 @@ function togglePause() {
 //===============================
 // ROTATION MENU
 //===============================
-function rotationMenu(e) {
+function rotationMenu (e) {
   var target = e.currentTarget;
   // If the cube selection has been cancelled or the game is paused, cancel the request
   if(cancelSelection(e) || $("body").hasClass("paused")) return;
@@ -740,8 +780,8 @@ function rotationMenu(e) {
   // For mobile devices, check the touch events instead to detect the cube selection
   if(mobileCheck()) e = e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
 
-  var posX = e.pageX;
-  var posY = e.pageY;
+  var posX = e.pageX * window.devicePixelRatio;
+  var posY = e.pageY * window.devicePixelRatio;
   // Position the rotation menu where the player clicked
   TweenMax.set("#rotationMenu", { xPercent: -50, x: posX, yPercent: -50, y: posY, scale:1 });
 
@@ -854,7 +894,7 @@ function redo() {
   rotateCube(nextAction.axis, nextAction.coord, nextAction.direction);
   $totalActions++;
 
-  // Update the  history buttons status
+  // Update the history buttons status
   checkHistoryButtons();
 }
 

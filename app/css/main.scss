@@ -595,7 +595,7 @@ html:not(.debug) #bt_resetCube { display: none; }
   height: 9em;
   top: 0;
   left: 0;
-  will-change: transform, opacity;
+  will-change: transform;//, opacity;
 
   -webkit-transform-style: preserve-3d;
   -webkit-transform-origin: 13.5em 13.5em 0em;

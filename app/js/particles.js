@@ -13,8 +13,8 @@ var fireflies = [];
 var maxLifetime = 60; // in seconds
 var minLifetime = 10;
 
-var maxSize = 10;
-var minSize = 2;
+var maxSize = 20;
+var minSize = 4;
 
 var maxSpeed = 30;
 var minSpeed = 15;
@@ -30,19 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //===============================
 	setSizes();
 	window.addEventListener('resize', setSizes);
-
   	initParticles();
-
-  	TweenMax.to($({someValue: .75}), 4, {someValue: 1.5, repeat:-1, yoyo:true, ease:Power3.easeInOut,
-	  onUpdate:function(tween) {
-	    $("#particles").css("-webkit-filter", "blur("+tween.target[0].someValue+"px)");
-	    $("#particles").css("-moz-filter", "blur("+tween.target[0].someValue+"px)");
-	    $("#particles").css("-ms-filter", "blur("+tween.target[0].someValue+"px)");
-	    $("#particles").css("-o-filter", "blur("+tween.target[0].someValue+"px)");
-	    $("#particles").css("filter", "blur("+tween.target[0].someValue+"px)");
-	  },
-	  onUpdateParams:["{self}"]
-	});
 });
 
 function initParticles() {
@@ -94,24 +82,35 @@ function Firefly() {
 	}
 
 	this.draw = function() {
+		var timePercentage;
+		var gradient;
+
 		this.x += Math.cos(timer / FPS) * this.varianceX / FPS;
 		this.y -= this.speed / FPS;
 
 		this.currentTime = (timer / FPS) - this.starttime;
-		var timePercentage = this.currentTime * 100 / this.lifetime;
-		this.opacity = .75 - (timePercentage / 100) * .75;
+		timePercentage   = this.currentTime * 100 / this.lifetime;
+		this.opacity     = .75 - (timePercentage / 100) * .75;
 
 		if(this.currentTime >= this.lifetime) this.init();
 
-		ctx.beginPath();
-	  	ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-	  	ctx.closePath();
+	  	gradient = ctx.createRadialGradient(
+	        this.x + this.size / 2,
+	        this.y + this.size / 2,
+	        0,
+	        this.x + this.size / 2,
+	        this.y + this.size / 2,
+	        this.size / 2
+	    );
+	    gradient.addColorStop(0, "rgba(" + this.color + ", " + this.opacity + ")");
+	    gradient.addColorStop(0.75, "rgba(" + this.color + ", " + this.opacity * 0.75 + ")");
+	    gradient.addColorStop(1, "rgba(" + this.color + ", 0)");
 
-	  	ctx.save();
-	  	ctx.globalCompositeOperation = "overlay";
-	  	ctx.fillStyle = 'rgba('+this.color+','+this.opacity+')';
-	  	ctx.fill();
-	  	ctx.restore();
+	    ctx.save();
+	    ctx.globalCompositeOperation = "overlay";
+	    ctx.fillStyle = gradient;
+	    ctx.fillRect(this.x, this.y, this.size, this.size);
+	    ctx.restore();
 	}
 
 	this.init();
